@@ -213,10 +213,13 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .emptyp{margin:0;padding:22px 16px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:12px}
 
 .trip{display:grid;gap:8px;padding-bottom:10px;border-bottom:1px dashed var(--been)}
-.trip .tdel{justify-self:end;color:var(--muted)}
+.jdel{font:inherit;font-size:14px;font-weight:700;padding:7px 16px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.jdel[data-sure]{border-color:var(--want);color:var(--want)}
+.jdel:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.trip .jfoot{justify-content:flex-end}
 .jfoot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .jfoot .link{font-weight:700}
-.jsaved{margin-left:auto;font-size:13px;color:var(--been);font-weight:700}
+.jsaved{font-size:13px;color:var(--been);font-weight:700}
 .jsave{font:inherit;font-size:14px;font-weight:700;padding:8px 18px;border-radius:8px;border:0;background:var(--been);color:var(--surface);cursor:pointer}
 .jsave:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .yr{white-space:nowrap}
@@ -429,7 +432,7 @@ const T = {
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
   tabsAria:"Delovi aplikacije", tabList:"Države", tabJournal:"Dnevnik", tabPlan:"Plan", tabQuiz:"Kviz",
   viewAria:"Prikaz mape", viewFlat:"Mapa", viewGlobe:"Globus", globeFail:"Globus trenutno ne može da se učita.", hintGlobe:"Okreni globus prstom, dodirni državu da je označiš",
-  addTrip:"Dodaj putovanje", saveTrip:"Sačuvaj", tripSaved:"Sačuvano", delTrip:"Ukloni ovo putovanje", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
+  addTrip:"Dodaj putovanje", saveTrip:"Sačuvaj", tripSaved:"Sačuvano", delTrip:"Ukloni", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
   jTitle:"Dnevnik putovanja", jEmpty:"Još nema upisanih putovanja. Označi državu kao obiđenu, pa joj preko dugmeta ⓘ dodaj godinu i gradove.", jNoYear:"Bez godine",
   jTrips:"putovanja: {n}", jNew:"nove države: {n}", jNewTag:"prvi put", jMissing:"bez upisanog putovanja: {n}", jSum:"Putovanja: {t} · Države: {c}",
   pTitle:"Lista želja po prioritetu", pEmpty:"Lista želja je prazna. Označi zvezdicom države koje želiš da posetiš.", prio:"Prioritet", pNext:"sledeće",
@@ -466,7 +469,7 @@ const T = {
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
   tabsAria:"App sections", tabList:"Countries", tabJournal:"Journal", tabPlan:"Plan", tabQuiz:"Quiz",
   viewAria:"Map view", viewFlat:"Map", viewGlobe:"Globe", globeFail:"The globe can't load right now.", hintGlobe:"Drag to rotate, tap a country to mark it",
-  addTrip:"Add a trip", saveTrip:"Save", tripSaved:"Saved", delTrip:"Remove this trip", sure:"Remove for sure?", fBest:"Best time",
+  addTrip:"Add a trip", saveTrip:"Save", tripSaved:"Saved", delTrip:"Remove", sure:"Remove for sure?", fBest:"Best time",
   jTitle:"Travel journal", jEmpty:"No trips yet. Mark a country as visited, then add the year and cities with the ⓘ button.", jNoYear:"No year",
   jTrips:"trips: {n}", jNew:"new countries: {n}", jNewTag:"first time", jMissing:"no trip details: {n}", jSum:"Trips: {t} · Countries: {c}",
   pTitle:"Wish list by priority", pEmpty:"Your wish list is empty. Star the countries you want to visit.", prio:"Priority", pNext:"next",
@@ -841,16 +844,21 @@ function infoHTML(code){
 let openInfo = null;
 
 let savedFlash = null, savedTimer = null;
+const editing = new Set();          // putovanja koja se menjaju, a još nisu sačuvana ("kod:redni broj")
 function journalHTML(code, where){
   const trips = tripsOf(code), list = trips.length ? trips : [{}];
-  return `<div class="journal"><div class="jh">${t("myTrip")}</div>${list.map((n,i)=>{ const id = `j-${where}-${code}-${i}`; return `<div class="trip">
+  return `<div class="journal"><div class="jh">${t("myTrip")}</div>${list.map((n,i)=>{
+    const id = `j-${where}-${code}-${i}`, key = `${code}:${i}`, saved = tripFilled(n) && !editing.has(key);
+    return `<div class="trip" data-trip="${key}">
     <div class="jrow">
       <label for="${id}-y">${t("year")}<input id="${id}-y" data-j="year" data-code="${code}" data-i="${i}" inputmode="numeric" maxlength="4" placeholder="2024" value="${esc(n.year)}"></label>
       <label for="${id}-c">${t("cities")}<input id="${id}-c" data-j="cities" data-code="${code}" data-i="${i}" placeholder="${t("citiesPh")}" value="${esc(n.cities)}"></label>
     </div>
     <label for="${id}-n">${t("note")}<textarea id="${id}-n" data-j="note" data-code="${code}" data-i="${i}" rows="2" placeholder="${t("notePh")}">${esc(n.note)}</textarea></label>
-    ${list.length > 1 ? `<button class="link tdel" type="button" data-deltrip="${code}" data-i="${i}">${t("delTrip")}</button>` : ""}
-  </div>`; }).join("")}<div class="jfoot"><button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button><span class="jsaved" role="status">${savedFlash===code ? "✓ " + t("tripSaved") : ""}</span><button class="jsave" type="button" data-savetrip="${code}">${t("saveTrip")}</button></div></div>`;
+    <div class="jfoot"><span class="jsaved" role="status">${savedFlash===key ? "✓ " + t("tripSaved") : ""}</span>
+      <button class="jsave" type="button" data-savetrip="${code}" data-i="${i}" ${saved ? "hidden" : ""}>${t("saveTrip")}</button>
+      <button class="jdel" type="button" data-deltrip="${code}" data-i="${i}" ${saved ? "" : "hidden"}>${t("delTrip")}</button></div>
+  </div>`; }).join("")}<div class="jfoot"><button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button></div></div>`;
 }
 function moreHTML(code, where){ return (marks[code]==="been" ? journalHTML(code, where) : marks[code]==="want" ? prioHTML(code) : "") + infoHTML(code); }
 
@@ -1621,6 +1629,11 @@ document.addEventListener("input", e=>{
   if(v.trim()) n.trips[i][f] = v; else delete n.trips[i][f];
   document.querySelectorAll(`[data-j="${f}"][data-code="${code}"][data-i="${i}"]`).forEach(o=>{ if(o!==e.target) o.value = v; });
   if(f==="cities"){ drawCities(); if(view==="globe") drawGlobe(); }
+  editing.add(`${code}:${i}`);       // izmena: ponovo se nudi „Sačuvaj“ umesto „Ukloni“
+  document.querySelectorAll(`.trip[data-trip="${code}:${i}"]`).forEach(el=>{
+    el.querySelector(".jsave").hidden = false; const d = el.querySelector(".jdel"); d.hidden = true; delete d.dataset.sure; d.textContent = t("delTrip");
+    el.querySelector(".jsaved").textContent = "";
+  });
   changed();
 });
 function applyLang(){
@@ -1656,9 +1669,13 @@ document.addEventListener("click", e=>{
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
   if(b.dataset.savetrip){
+    const code = b.dataset.savetrip, tr = tripsOf(code)[+b.dataset.i];
+    for(const k of [...editing]) if(k.startsWith(code+":")) editing.delete(k);
+    if(notes[code]){ notes[code].trips = notes[code].trips.filter(tripFilled); if(!notes[code].trips.length) delete notes[code]; }
+    const at = tr ? tripsOf(code).indexOf(tr) : -1;
     lsSet();
     if(docRef){ dirty = true; clearTimeout(timer); flush(); }
-    savedFlash = b.dataset.savetrip; render();
+    savedFlash = at >= 0 ? `${code}:${at}` : null; render();
     clearTimeout(savedTimer); savedTimer = setTimeout(()=>{ savedFlash = null; document.querySelectorAll(".jsaved").forEach(e=>{ e.textContent = ""; }); }, 3000);
     return;
   }
@@ -1669,7 +1686,9 @@ document.addEventListener("click", e=>{
   }
   if(b.dataset.deltrip){
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = t("sure"); return; }
-    const n = notes[b.dataset.deltrip]; if(n) n.trips.splice(+b.dataset.i, 1);
+    const dc = b.dataset.deltrip, n = notes[dc];
+    if(n){ n.trips.splice(+b.dataset.i, 1); if(!n.trips.length) delete notes[dc]; }
+    for(const k of [...editing]) if(k.startsWith(dc+":")) editing.delete(k);
     changed(); render(); return;
   }
   if(b.dataset.prio){
