@@ -178,6 +178,10 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .backup p{margin:0;font-size:13px;color:var(--muted)}
 .backup .row{display:flex;flex-wrap:wrap;gap:8px}
 .backup .savebtn{font-size:13px}
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.backup{position:relative}
+label.savebtn{user-select:none}
+label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .bkmsg{font-size:13px;color:var(--muted);min-height:0}
 .bkmsg:empty{display:none}
 .bkmsg.err{color:var(--want)}
@@ -269,8 +273,8 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
     <p data-i18n="bkText">Sačuvaj oznake i beleške u datoteku, pa ih vrati na drugom uređaju ili posle brisanja podataka pregledača.</p>
     <div class="row">
       <button class="savebtn" id="bkExport" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 2v8m-3.2-3.2L8 10l3.2-3.2M2.5 11v2.5h11V11"/></svg><span data-i18n="bkExport">Izvezi podatke</span></button>
-      <button class="savebtn" id="bkImport" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3.2 3.2L8 2.5l3.2 3.2M2.5 11v2.5h11V11"/></svg><span data-i18n="bkImport">Uvezi podatke</span></button>
-      <input type="file" id="bkFile" accept=".json,application/json" hidden>
+      <label class="savebtn" id="bkImport" for="bkFile" role="button" tabindex="0"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3.2 3.2L8 2.5l3.2 3.2M2.5 11v2.5h11V11"/></svg><span data-i18n="bkImport">Uvezi podatke</span></label>
+      <input type="file" id="bkFile" class="vh">
     </div>
     <div class="bkask" id="bkAsk" hidden></div>
     <div class="bkmsg" id="bkMsg" role="status"></div>
@@ -1217,10 +1221,13 @@ function askImport(){
   box.querySelector("button.primary").focus();
 }
 $("bkExport").addEventListener("click", exportBackup);
-$("bkImport").addEventListener("click", ()=>{ bkMsg(""); $("bkFile").value = ""; $("bkFile").click(); });
+$("bkImport").addEventListener("click", ()=>{ bkMsg(""); $("bkFile").value = ""; });
+$("bkImport").addEventListener("keydown", e=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); bkMsg(""); $("bkFile").value = ""; $("bkFile").click(); } });
+const readText = f => f.text ? f.text() : new Promise((ok, bad)=>{ const r = new FileReader(); r.onload = ()=>ok(r.result); r.onerror = ()=>bad(r.error); r.readAsText(f); });
 $("bkFile").addEventListener("change", async e=>{
   const f = e.target.files && e.target.files[0]; if(!f) return;
-  let raw; try{ raw = JSON.parse(await f.text()); }catch(err){ bkMsg(f.size ? t("bkBad") : t("bkReadErr"), true); return; }
+  let text; try{ text = await readText(f); }catch(err){ bkMsg(t("bkReadErr"), true); return; }
+  let raw; try{ raw = JSON.parse(String(text).replace(/^\uFEFF/, "")); }catch(err){ bkMsg(t("bkBad"), true); return; }
   const d = cleanBackup(raw);
   if(!d){ bkMsg(t("bkBad"), true); return; }
   pendingImport = d; askImport();
