@@ -1252,7 +1252,7 @@ function drawGlobe(){
     ctx.beginPath(); path(f.geometry);
     ctx.globalAlpha = !f.code ? .6 : (hs && !hs.has(f.code) ? .35 : 1);
     ctx.fillStyle = f.code ? gFill(f.code) : col.land; ctx.fill();
-    ctx.strokeStyle = col.surface; ctx.lineWidth = .6; ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.strokeStyle = col.ocean; ctx.lineWidth = .7; ctx.stroke(); ctx.globalAlpha = 1;
   }
   if(G.byCode.RS){ ctx.globalAlpha = hs && !hs.has("RS") ? .35 : 1; ctx.beginPath(); path(G.byCode.RS.geometry); ctx.fillStyle = gFill("RS"); ctx.fill(); ctx.globalAlpha = 1; }
   const center = [-G.rot[0], -G.rot[1]], vis = ll => d3.geoDistance(ll, center) < Math.PI/2 - .02;
@@ -1375,7 +1375,8 @@ function computeAdj(){
       let s = grid.get(k); if(!s) grid.set(k, s = new Set()); s.add(code);
     }
   });
-  const link = (a,b) => { if(a===b) return; (adj[a] = adj[a] || new Set()).add(b); (adj[b] = adj[b] || new Set()).add(a); };
+  const far = new Set(["FR-BR","BR-FR","FR-SR","SR-FR"]);   // Francuska Gvajana nije razlog za predlog
+  const link = (a,b) => { if(a===b || far.has(a+"-"+b)) return; (adj[a] = adj[a] || new Set()).add(b); (adj[b] = adj[b] || new Set()).add(a); };
   for(const [k, s] of grid){
     const [gx, gy] = k.split(",").map(Number);
     for(const [dx,dy] of [[0,0],[1,0],[0,1],[1,1],[1,-1]]){
