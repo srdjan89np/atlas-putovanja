@@ -214,7 +214,11 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .trip{display:grid;gap:8px;padding-bottom:10px;border-bottom:1px dashed var(--been)}
 .trip .tdel{justify-self:end;color:var(--muted)}
-.journal > .link{justify-self:start;font-weight:700}
+.jfoot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.jfoot .link{font-weight:700}
+.jsaved{margin-left:auto;font-size:13px;color:var(--been);font-weight:700}
+.jsave{font:inherit;font-size:14px;font-weight:700;padding:8px 18px;border-radius:8px;border:0;background:var(--been);color:var(--surface);cursor:pointer}
+.jsave:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .yr{white-space:nowrap}
 
 .yblock{margin-bottom:16px}
@@ -425,7 +429,7 @@ const T = {
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
   tabsAria:"Delovi aplikacije", tabList:"Države", tabJournal:"Dnevnik", tabPlan:"Plan", tabQuiz:"Kviz",
   viewAria:"Prikaz mape", viewFlat:"Mapa", viewGlobe:"Globus", globeFail:"Globus trenutno ne može da se učita.", hintGlobe:"Okreni globus prstom, dodirni državu da je označiš",
-  addTrip:"Dodaj putovanje", delTrip:"Ukloni ovo putovanje", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
+  addTrip:"Dodaj putovanje", saveTrip:"Sačuvaj", tripSaved:"Sačuvano", delTrip:"Ukloni ovo putovanje", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
   jTitle:"Dnevnik putovanja", jEmpty:"Još nema upisanih putovanja. Označi državu kao obiđenu, pa joj preko dugmeta ⓘ dodaj godinu i gradove.", jNoYear:"Bez godine",
   jTrips:"putovanja: {n}", jNew:"nove države: {n}", jNewTag:"prvi put", jMissing:"bez upisanog putovanja: {n}", jSum:"Putovanja: {t} · Države: {c}",
   pTitle:"Lista želja po prioritetu", pEmpty:"Lista želja je prazna. Označi zvezdicom države koje želiš da posetiš.", prio:"Prioritet", pNext:"sledeće",
@@ -462,7 +466,7 @@ const T = {
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
   tabsAria:"App sections", tabList:"Countries", tabJournal:"Journal", tabPlan:"Plan", tabQuiz:"Quiz",
   viewAria:"Map view", viewFlat:"Map", viewGlobe:"Globe", globeFail:"The globe can't load right now.", hintGlobe:"Drag to rotate, tap a country to mark it",
-  addTrip:"Add a trip", delTrip:"Remove this trip", sure:"Remove for sure?", fBest:"Best time",
+  addTrip:"Add a trip", saveTrip:"Save", tripSaved:"Saved", delTrip:"Remove this trip", sure:"Remove for sure?", fBest:"Best time",
   jTitle:"Travel journal", jEmpty:"No trips yet. Mark a country as visited, then add the year and cities with the ⓘ button.", jNoYear:"No year",
   jTrips:"trips: {n}", jNew:"new countries: {n}", jNewTag:"first time", jMissing:"no trip details: {n}", jSum:"Trips: {t} · Countries: {c}",
   pTitle:"Wish list by priority", pEmpty:"Your wish list is empty. Star the countries you want to visit.", prio:"Priority", pNext:"next",
@@ -836,6 +840,7 @@ function infoHTML(code){
 }
 let openInfo = null;
 
+let savedFlash = null, savedTimer = null;
 function journalHTML(code, where){
   const trips = tripsOf(code), list = trips.length ? trips : [{}];
   return `<div class="journal"><div class="jh">${t("myTrip")}</div>${list.map((n,i)=>{ const id = `j-${where}-${code}-${i}`; return `<div class="trip">
@@ -845,7 +850,7 @@ function journalHTML(code, where){
     </div>
     <label for="${id}-n">${t("note")}<textarea id="${id}-n" data-j="note" data-code="${code}" data-i="${i}" rows="2" placeholder="${t("notePh")}">${esc(n.note)}</textarea></label>
     ${list.length > 1 ? `<button class="link tdel" type="button" data-deltrip="${code}" data-i="${i}">${t("delTrip")}</button>` : ""}
-  </div>`; }).join("")}<button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button></div>`;
+  </div>`; }).join("")}<div class="jfoot"><button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button><span class="jsaved" role="status">${savedFlash===code ? "✓ " + t("tripSaved") : ""}</span><button class="jsave" type="button" data-savetrip="${code}">${t("saveTrip")}</button></div></div>`;
 }
 function moreHTML(code, where){ return (marks[code]==="been" ? journalHTML(code, where) : marks[code]==="want" ? prioHTML(code) : "") + infoHTML(code); }
 
@@ -962,11 +967,13 @@ function quizBest(mode, score){
   return b[mode] || 0;
 }
 function startQuiz(mode){
-  const types = mode==="flags" ? ["flag"] : mode==="caps" ? ["cap","capRev"] : (flagSupport() ? ["flag","cap","capRev"] : ["cap","capRev"]);
+  const caps = n => Array.from({length:n}, (_, i) => i%2 ? "capRev" : "cap");
+  // mešano: uvek 5 zastava i 5 glavnih gradova, izmešanim redom
+  const types = shuffle(mode==="flags" ? Array(10).fill("flag") : mode==="caps" ? caps(10) : flagSupport() ? [...Array(5).fill("flag"), ...caps(5)] : caps(10));
   const pool = shuffle(COUNTRIES.filter(c=>INFO[c.code])).slice(0,10);
   quiz.mode = mode; quiz.i = 0; quiz.score = 0; quiz.ans = null;
   quiz.qs = pool.map((c, i)=>{
-    const type = types[(i + Math.floor(Math.random()*types.length)) % types.length];
+    const type = types[i];
     const same = shuffle(COUNTRIES.filter(x=>x.cont===c.cont && x.code!==c.code && INFO[x.code] && INFO[x.code].cap!==INFO[c.code].cap)).slice(0,3);
     return {type, code:c.code, opts: shuffle([c.code, ...same.map(x=>x.code)])};
   });
@@ -1648,6 +1655,13 @@ document.addEventListener("click", e=>{
   if(b.dataset.tab){ setTab(b.dataset.tab); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
+  if(b.dataset.savetrip){
+    lsSet();
+    if(docRef){ dirty = true; clearTimeout(timer); flush(); }
+    savedFlash = b.dataset.savetrip; render();
+    clearTimeout(savedTimer); savedTimer = setTimeout(()=>{ savedFlash = null; document.querySelectorAll(".jsaved").forEach(e=>{ e.textContent = ""; }); }, 3000);
+    return;
+  }
   if(b.dataset.addtrip){
     const n = notes[b.dataset.addtrip] || (notes[b.dataset.addtrip] = {trips:[]});
     if(!n.trips.length) n.trips.push({});
