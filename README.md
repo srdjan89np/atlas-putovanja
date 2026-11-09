@@ -17,7 +17,8 @@ Cela aplikacija je jedna HTML datoteka (`index.html`), bez build koraka i bez se
 - **Dva jezika**: srpski (latinica) i engleski. Izbor se pamti.
 - **Uvodni ekrani** pri prvom otvaranju. Kasnije se otvaraju linkom „Kako radi“.
 - **Svetla i tamna tema**: prati podešavanje sistema.
-- **Mesto za reklamu** (AdMob baner 320×50) usidreno na dnu ekrana.
+- **Rezervna kopija**: izvoz svih oznaka i beleški u JSON datoteku i uvoz iz nje, uz izbor da se podaci dodaju postojećim ili da ih zamene.
+- **Mesto za reklamu** (AdMob baner 320×50) usidreno na dnu ekrana. Na web verziji (`*.github.io`) traka se ne prikazuje.
 
 ## Pokretanje
 
@@ -36,6 +37,8 @@ Oznake, beleške, izabrani jezik i podatak o tome da su uvodni ekrani viđeni č
 | `atlas-putovanja-v1-notes` | beleške (`{"IT":{"year":"2019","cities":"Rim, Firenca","note":"…"}}`) |
 | `atlas-lang` | `sr` ili `en` |
 | `atlas-onboarded` | `1` posle uvodnih ekrana |
+
+Pošto podaci postoje samo u tom pregledaču, koristi **Izvezi podatke** za rezervnu kopiju, a **Uvezi podatke** da ih preneseš na drugi uređaj.
 
 Kada se stranica otvori kao Claude artifact, podaci se dodatno čuvaju i na Claude nalogu, pa se vide na svim uređajima.
 
