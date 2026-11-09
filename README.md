@@ -2,6 +2,8 @@
 
 Aplikacija za praćenje putovanja. Sadrži svih 195 država sveta, a svaku možeš da označiš kao **obiđenu** (✓) ili kao državu koju **želiš da posetiš** (★).
 
+**Otvori aplikaciju:** https://srdjan89np.github.io/atlas-putovanja/
+
 Cela aplikacija je jedna HTML datoteka (`index.html`), bez build koraka i bez servera.
 
 ## Mogućnosti
