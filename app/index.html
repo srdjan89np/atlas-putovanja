@@ -180,7 +180,6 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .jrow{display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px}
 .journal label{display:grid;gap:3px;font-size:12px;color:var(--muted);min-width:0}
 .journal input,.journal textarea{font:inherit;font-size:15px;width:100%;padding:7px 9px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);resize:vertical}
-.journal input.vh{width:1px;height:1px;padding:0;border:0}
 .journal input:focus,.journal textarea:focus{outline:2px solid var(--accent);outline-offset:0}
 .yr{font-family:var(--f-mono);font-size:11px;color:var(--been);margin-left:6px}
 .pick{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
@@ -441,6 +440,7 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
   <button type="button" data-page="quiz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.500"/><path d="M12 9v4.200l2.600 1.600M9.500 2.800h5M12 2.800v2.700"/></svg><span data-i18n="tabQuiz">Kviz</span></button>
   <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.500 4h9v5a4.500 4.500 0 0 1-9 0zM7.500 5.500H4.500c0 3 1.300 4.500 3.300 4.800M16.500 5.500h3c0 3-1.300 4.500-3.300 4.800M12 13.500V17M8.500 20h7M9.500 17h5"/></svg><span data-i18n="ach">Dostignuća</span></button>
 </nav>
+<input type="file" accept="image/*" id="photoFile" class="vh" tabindex="-1" aria-hidden="true">
 <div class="toast" id="toast" role="status" hidden></div>
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
@@ -920,47 +920,70 @@ function idb(){
   return idb.p;
 }
 const idbDo = (mode, fn) => idb().then(db => new Promise((ok, bad)=>{ const tx = db.transaction("p", mode), rq = fn(tx.objectStore("p")); tx.oncomplete = ()=>ok(rq.result); tx.onerror = tx.onabort = ()=>bad(tx.error); }));
-async function shrinkPhoto(file){
+async function shrinkPhoto(file, maxSide, quality){
   let src; try{ src = await createImageBitmap(file); }catch(e){
     src = await new Promise((ok, bad)=>{ const i = new Image(), u = URL.createObjectURL(file); i.onload = ()=>{ URL.revokeObjectURL(u); ok(i); }; i.onerror = ()=>{ URL.revokeObjectURL(u); bad(new Error("image")); }; i.src = u; });
   }
-  const k = Math.min(1, 1280 / Math.max(src.width, src.height)), c = document.createElement("canvas");
+  const k = Math.min(1, maxSide / Math.max(src.width, src.height)), c = document.createElement("canvas");
   c.width = Math.max(1, Math.round(src.width*k)); c.height = Math.max(1, Math.round(src.height*k));
   c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
-  return new Promise((ok, bad)=>c.toBlob(b => b ? ok(b) : bad(new Error("encode")), "image/jpeg", 0.82));
+  return new Promise((ok, bad)=>c.toBlob(b => b ? ok(b) : bad(new Error("encode")), "image/jpeg", quality));
 }
+const blobToDataURL = b => new Promise((ok, bad)=>{ const r = new FileReader(); r.onload = ()=>ok(r.result); r.onerror = ()=>bad(r.error); r.readAsDataURL(b); });
+// Čuvanje ide redom: skladište artifacta, pa IndexedDB uređaja, pa (manja slika) localStorage. Greška je tek ako sva tri otkažu.
 async function photoPut(file){
-  const blob = await shrinkPhoto(file);
-  if(assetsCap){ const r = await assetsCap.upload(blob); photoCache.set("a:"+r.id, r.url); return "a:"+r.id; }
+  const blob = await shrinkPhoto(file, 1280, 0.82), why = [];
+  if(assetsCap){
+    try{ const r = await assetsCap.upload(blob); photoCache.set("a:"+r.id, r.url); return "a:"+r.id; }
+    catch(e){ why.push("assets:" + (e && (e.code || e.message) || "error")); }
+  }
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2,10);
-  await idbDo("readwrite", st => st.put(blob, id));
-  photoCache.set("l:"+id, URL.createObjectURL(blob)); return "l:"+id;
+  try{ await idbDo("readwrite", st => st.put(blob, id)); photoCache.set("l:"+id, URL.createObjectURL(blob)); return "l:"+id; }
+  catch(e){ why.push("idb:" + (e && (e.name || e.message) || "error")); }
+  try{
+    const small = await shrinkPhoto(file, 800, 0.7), url = await blobToDataURL(small);
+    localStorage.setItem("atlas-photo-" + id, url); photoCache.set("l:"+id, url); return "l:"+id;
+  }catch(e){ why.push("ls:" + (e && (e.name || e.message) || "error")); }
+  throw new Error(why.join(", "));
 }
 function photoDel(ref){
   if(!ref) return; photoCache.delete(ref);
-  if(ref[0]==="a"){ if(assetsCap) assetsCap.delete(ref.slice(2)).catch(()=>{}); }
-  else idbDo("readwrite", st => st.delete(ref.slice(2))).catch(()=>{});
+  if(ref[0]==="a"){ if(assetsCap) assetsCap.delete(ref.slice(2)).catch(()=>{}); return; }
+  idbDo("readwrite", st => st.delete(ref.slice(2))).catch(()=>{});
+  try{ localStorage.removeItem("atlas-photo-" + ref.slice(2)); }catch(e){}
 }
 function hydratePhotos(){
   document.querySelectorAll("img[data-photo]:not([src])").forEach(img=>{
     const ref = img.dataset.photo, gone = ()=>{ const s2 = document.createElement("span"); s2.className = "pgone"; s2.textContent = t("photoGone"); img.replaceWith(s2); };
+    const show = u => { photoCache.set(ref, u); document.querySelectorAll(`img[data-photo="${ref}"]:not([src])`).forEach(i=>{ i.src = u; }); };
+    const fromLS = () => { let u = null; try{ u = localStorage.getItem("atlas-photo-" + ref.slice(2)); }catch(e){} if(u) show(u); else gone(); };
     img.onerror = gone;
     if(photoCache.has(ref)) img.src = photoCache.get(ref);
     else if(ref[0]==="a") img.src = "/_blob/" + ref.slice(2);
-    else idbDo("readonly", st => st.get(ref.slice(2))).then(b=>{ if(!b) return gone(); const u = URL.createObjectURL(b); photoCache.set(ref, u); document.querySelectorAll(`img[data-photo="${ref}"]:not([src])`).forEach(i=>{ i.src = u; }); }).catch(gone);
+    else idbDo("readonly", st => st.get(ref.slice(2))).then(b=>{ if(b) show(URL.createObjectURL(b)); else fromLS(); }).catch(fromLS);
   });
 }
-document.addEventListener("change", async e=>{
-  const inp = e.target; if(!inp.dataset || !inp.dataset.photoin) return;
-  const f = inp.files && inp.files[0]; if(!f) return;
-  const code = inp.dataset.photoin, i = +inp.dataset.i || 0, lab = inp.parentNode.querySelector(".plabel");
-  if(lab) lab.textContent = t("photoWait");
+// Jedno stalno polje za izbor fotografije: ostaje u stranici i kad se lista ponovo iscrta dok je otvoren izbor slike.
+let photoTarget = null;
+document.addEventListener("click", e=>{
+  const l = e.target.closest && e.target.closest("[data-phototarget]"); if(!l) return;
+  photoTarget = l.dataset.phototarget; $("photoFile").value = "";
+}, true);
+document.getElementById("photoFile").addEventListener("change", async e=>{
+  const f = e.target.files && e.target.files[0], tgt = photoTarget; if(!f || !tgt) return;
+  const [code, idx] = tgt.split(":"), i = +idx || 0;
+  const labels = () => document.querySelectorAll(`[data-phototarget="${tgt}"]`);
+  labels().forEach(l=>{ l.textContent = t("photoWait"); });
   try{
     const ref = await photoPut(f);
     const n = notes[code] || (notes[code] = {trips:[]}); while(n.trips.length <= i) n.trips.push({});
     if(n.trips[i].photo) photoDel(n.trips[i].photo);
     n.trips[i].photo = ref; changed(); render();
-  }catch(err){ if(lab) lab.textContent = "+ " + t("addPhoto"); inp.value = ""; toast(t("photoFail"), true); }
+  }catch(err){
+    labels().forEach(l=>{ l.textContent = "+ " + t("addPhoto"); });
+    toast(t("photoFail") + " (" + String(err && err.message || err).slice(0, 80) + ")", true);
+  }
+  e.target.value = "";
 });
 const editing = new Set();          // putovanja koja se menjaju, a još nisu sačuvana ("kod:redni broj")
 function journalHTML(code, where){
@@ -974,7 +997,7 @@ function journalHTML(code, where){
     </div>
     <label for="${id}-n">${t("note")}<textarea id="${id}-n" data-j="note" data-code="${code}" data-i="${i}" rows="2" placeholder="${t("notePh")}">${esc(n.note)}</textarea></label>
     <div class="tphoto">${n.photo ? `<img class="timg" data-photo="${esc(n.photo)}" alt="${t("photoAlt")}"><button class="link" type="button" data-delphoto="${code}" data-i="${i}">${t("delPhoto")}</button>`
-      : `<label class="link plabel" for="${id}-p" role="button" tabindex="0">+ ${t("addPhoto")}</label><input type="file" accept="image/*" id="${id}-p" class="vh" data-photoin="${code}" data-i="${i}">`}</div>
+      : `<label class="link plabel" for="photoFile" data-phototarget="${code}:${i}" role="button" tabindex="0">+ ${t("addPhoto")}</label>`}</div>
     <div class="jfoot"><span class="jsaved" role="status">${savedFlash===key ? "✓ " + t("tripSaved") : ""}</span>
       <button class="jsave" type="button" data-savetrip="${code}" data-i="${i}" ${saved ? "hidden" : ""}>${t("saveTrip")}</button>
       <button class="jdel" type="button" data-deltrip="${code}" data-i="${i}" ${saved ? "" : "hidden"}>${t("delTrip")}</button></div>
