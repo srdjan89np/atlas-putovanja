@@ -84,6 +84,7 @@ h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,7vw,44px);l
 .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .chip .n{font-family:var(--f-mono);font-size:11px;opacity:.7;margin-left:4px}
 
+body.searching .bnav,body.searching .adbar{display:none}
 /* lista drži visinu ekrana, da stranica ne skače kad pretraga ostavi samo par država */
 #listarea{min-height:100vh;min-height:100dvh}
 .count{font-size:13px;color:var(--muted);padding:12px 2px 6px}
@@ -118,7 +119,7 @@ li.c.is-want{background:linear-gradient(90deg,var(--want-soft),transparent 70%)}
 .tip strong{font-size:13.5px}
 .tip em{font-style:normal;opacity:.65;font-size:11.5px;margin-top:2px}
 .empty{padding:28px 16px;text-align:center;color:var(--muted)}
-footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center;padding-top:18px;font-size:12.5px;color:var(--muted)}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center;padding-top:0;font-size:12.5px;color:var(--muted)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--muted);margin-right:6px;vertical-align:middle}
 .dot.ok{background:var(--been)}
 .link{font:inherit;font-size:12.5px;background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 0;text-decoration:underline}
@@ -183,7 +184,8 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .yr{font-family:var(--f-mono);font-size:11px;color:var(--been);margin-left:6px}
 .pick{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
 
-.backup{display:grid;gap:8px;margin-top:18px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.sep{border:0;border-top:1px solid var(--line);margin:22px 0}
+.backup{display:grid;gap:8px;margin-top:0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .backup h3{font-family:var(--f-display);font-size:15px;font-weight:700;margin:0}
 .backup p{margin:0;font-size:13px;color:var(--muted)}
 .backup .row{display:flex;flex-wrap:wrap;gap:8px}
@@ -412,6 +414,7 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
     <div class="badges" id="badges"></div>
   </section>
 
+  <hr class="sep">
   <section class="backup" data-i18n-aria="bkTitle" aria-label="Rezervna kopija">
     <h3 data-i18n="bkTitle">Rezervna kopija</h3>
     <p data-i18n="bkText">Sačuvaj oznake i beleške u datoteku, pa ih vrati na drugom uređaju ili posle brisanja podataka pregledača.</p>
@@ -424,6 +427,7 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
     <div class="bkmsg" id="bkMsg" role="status"></div>
   </section>
 
+  <hr class="sep">
   <footer>
     <span id="sync"><span class="dot"></span>Učitavanje…</span>
     <span id="resetBox"><button class="link" id="resetBtn" type="button">Obriši sve oznake</button></span>
@@ -1780,12 +1784,23 @@ $("q").addEventListener("input", e=>{
   // Pretraga samo približi mapu državi; kartica države se ne otvara, da se polje za pretragu ne pomera dok kucaš.
   if(hits && hits.length===1) focusCountry(hits[0]);
   else if(!hits && !picked && view!=="globe" && VB0) setVB(VB0);
-  const bar = document.querySelector(".filters"), top = parseFloat(getComputedStyle(bar).top) || 0;
-  const stuck = bar.getBoundingClientRect().top <= top + 1;
   renderList(); renderMap();
-  // Ako je pretraga zalepljena za vrh, lista ostaje odmah ispod nje i kad se skrati.
-  if(stuck) window.scrollTo(0, Math.ceil($("conts").getBoundingClientRect().bottom + window.scrollY - top) + 1);
+  searchToTop();
 });
+// Dok je pretraga u fokusu, polje stoji na vrhu ekrana (iznad tastature), rezultati su odmah ispod, a donje trake se sklanjaju.
+function searchToTop(){
+  const bar = document.querySelector(".filters"), top = parseFloat(getComputedStyle(bar).top) || 0;
+  const y = Math.ceil($("conts").getBoundingClientRect().bottom + window.scrollY - top) + 1;
+  if(Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y);
+}
+let searchTimers = [];
+$("q").addEventListener("focus", ()=>{
+  document.body.classList.add("searching");
+  searchTimers.forEach(clearTimeout);
+  searchToTop(); searchTimers = [120, 350, 700].map(ms => setTimeout(()=>{ if(document.activeElement===$("q")) searchToTop(); }, ms));   // i posle otvaranja tastature
+});
+$("q").addEventListener("blur", ()=>{ searchTimers.forEach(clearTimeout); document.body.classList.remove("searching"); });
+if(window.visualViewport) window.visualViewport.addEventListener("resize", ()=>{ if(document.activeElement===$("q")) searchToTop(); });
 $("q").addEventListener("keydown", e=>{
   if(e.key!=="Enter") return;
   const hits = searchHits();
