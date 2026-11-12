@@ -240,15 +240,6 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .yhead span{font-size:12.5px;color:var(--muted)}
 .tl{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .tl li + li{border-top:1px solid var(--line)}
-.tli{grid-template-columns:auto minmax(0,1fr) auto !important}
-.tthumb{width:56px;height:56px;object-fit:cover;border-radius:8px;display:block}
-.tthumb:not([src]){visibility:hidden}
-.tphoto{display:grid;gap:6px;justify-items:start}
-.timg{width:100%;max-height:240px;object-fit:cover;border-radius:8px;display:block;background:var(--surface)}
-.timg:not([src]){min-height:80px}
-.plabel{font-weight:700;cursor:pointer}
-.plabel:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.pgone{font-size:12.5px;color:var(--muted)}
 .tli,.pname{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:0;padding:10px 12px;cursor:pointer}
 .tli:focus-visible,.pname:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .tlt strong,.pname strong{display:block}
@@ -440,7 +431,6 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
   <button type="button" data-page="quiz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.500"/><path d="M12 9v4.200l2.600 1.600M9.500 2.800h5M12 2.800v2.700"/></svg><span data-i18n="tabQuiz">Kviz</span></button>
   <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.500 4h9v5a4.500 4.500 0 0 1-9 0zM7.500 5.500H4.500c0 3 1.300 4.500 3.300 4.800M16.500 5.500h3c0 3-1.300 4.500-3.300 4.800M12 13.500V17M8.500 20h7M9.500 17h5"/></svg><span data-i18n="ach">Dostignuća</span></button>
 </nav>
-<input type="file" accept="image/*" id="photoFile" class="vh" tabindex="-1" aria-hidden="true">
 <div class="toast" id="toast" role="status" hidden></div>
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
@@ -491,8 +481,7 @@ const T = {
   shareLbl:"Podeli:", shareFlatAria:"Podeli ravnu mapu", shareGlobeAria:"Podeli globus",
   navAria:"Stranice", navHome:"Početna", qPts:"poena", qRules:"Tačan odgovor nosi {b} poena, a brzina do još {x}. Posle {s} sekundi pitanje se računa kao netačno.",
   qTimeout:"Vreme je isteklo.", qAnswer:"Tačan odgovor: {a}", qOf:"poena od mogućih {n}", qCorrect:"tačnih odgovora", qTimeUsed:"ukupno vreme", qNewBest:"Novi najbolji rezultat.",
-  tabMore:"Više", achToast:"Otključano dostignuće", addPhoto:"Dodaj fotografiju", delPhoto:"Ukloni fotografiju", photoAlt:"Fotografija sa putovanja", photoWait:"Čuvam fotografiju…",
-  photoFail:"Fotografija ne može da se sačuva.", photoGone:"Fotografija nije dostupna na ovom uređaju.",
+  tabMore:"Više", achToast:"Otključano dostignuće",
   tabsAria:"Delovi aplikacije", tabList:"Države", tabJournal:"Dnevnik", tabPlan:"Plan", tabQuiz:"Kviz",
   viewAria:"Prikaz mape", viewFlat:"Mapa", viewGlobe:"Globus", globeFail:"Globus trenutno ne može da se učita.", hintGlobe:"Okreni globus prstom, dodirni državu da je označiš",
   addTrip:"Dodaj putovanje", saveTrip:"Sačuvaj", tripSaved:"Sačuvano", delTrip:"Ukloni", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
@@ -508,7 +497,7 @@ const T = {
   o1t:"Dobrodošao u Atlas putovanja", o1p:"Vodi evidenciju o svim državama koje si obišao i onima koje tek želiš da vidiš. Svih 195 država na jednom mestu.",
   o2t:"Označi države", o2p:"Zvezdica znači da želiš da posetiš državu, a kvačica da si već bio tamo. Ponovni dodir briše oznaku.",
   o3t:"Mapa i globus", o3p:"Dodirni državu na mapi da je označiš. Dugmetom Mapa / Globus biraš ravnu mapu ili globus koji se okreće. Dugme ⓘ otvara podatke o državi.",
-  o4t:"Dnevnik i plan", o4p:"Na početnoj strani, kartica Dnevnik čuva tvoja putovanja po godinama, sa gradovima, beleškama i fotografijom. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
+  o4t:"Dnevnik i plan", o4p:"Na početnoj strani, kartica Dnevnik čuva tvoja putovanja po godinama, sa gradovima i beleškama. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
   o5t:"Dostignuća, kviz i deljenje", o5p:"Otključavaj pečate kako putuješ, proveri znanje u kvizu na vreme i podeli sliku svoje mape. Rezervna kopija je na stranici Dostignuća."},
  en:{eyebrow:"195 countries · ISO 3166", title:"Travel Atlas", visited:"visited", ofWorld:"of the world", onWish:"on the wish list",
   worldMap:"World map", mapAria:"World map with marked countries", loadingMap:"Loading map…", mapFail:"The map can't load right now. The list below still works.",
@@ -534,8 +523,7 @@ const T = {
   shareLbl:"Share:", shareFlatAria:"Share the flat map", shareGlobeAria:"Share the globe",
   navAria:"Pages", navHome:"Home", qPts:"pts", qRules:"A correct answer is worth {b} points, plus up to {x} for speed. After {s} seconds the question counts as wrong.",
   qTimeout:"Time's up.", qAnswer:"Correct answer: {a}", qOf:"points out of {n}", qCorrect:"correct answers", qTimeUsed:"total time", qNewBest:"New best score.",
-  tabMore:"More", achToast:"Achievement unlocked", addPhoto:"Add a photo", delPhoto:"Remove photo", photoAlt:"Trip photo", photoWait:"Saving photo…",
-  photoFail:"The photo can't be saved.", photoGone:"The photo isn't available on this device.",
+  tabMore:"More", achToast:"Achievement unlocked",
   tabsAria:"App sections", tabList:"Countries", tabJournal:"Journal", tabPlan:"Plan", tabQuiz:"Quiz",
   viewAria:"Map view", viewFlat:"Map", viewGlobe:"Globe", globeFail:"The globe can't load right now.", hintGlobe:"Drag to rotate, tap a country to mark it",
   addTrip:"Add a trip", saveTrip:"Save", tripSaved:"Saved", delTrip:"Remove", sure:"Remove for sure?", fBest:"Best time",
@@ -551,7 +539,7 @@ const T = {
   o1t:"Welcome to Travel Atlas", o1p:"Keep track of every country you've visited and the ones you still want to see. All 195 countries in one place.",
   o2t:"Mark countries", o2p:"A star means you want to go, a tick means you've been there. Tap again to clear the mark.",
   o3t:"Map and globe", o3p:"Tap a country on the map to mark it. The Map / Globe switch changes between a flat map and a globe you can spin. The ⓘ button shows country facts.",
-  o4t:"Journal and plan", o4p:"On the home page, the Journal tab keeps your trips by year, with cities, notes and a photo. The Plan tab sorts your wish list by priority and suggests where to go next.",
+  o4t:"Journal and plan", o4p:"On the home page, the Journal tab keeps your trips by year, with cities and notes. The Plan tab sorts your wish list by priority and suggests where to go next.",
   o5t:"Achievements, quiz and sharing", o5p:"Unlock stamps as you travel, race the clock in the flags and capitals quiz, and share an image of your map. Backup lives on the Achievements page."}
 };
 const CONT = {sr:{E:"Evropa",A:"Azija",F:"Afrika",N:"Severna Amerika",S:"Južna Amerika",O:"Okeanija"},
@@ -913,78 +901,6 @@ function infoHTML(code){
 let openInfo = null;
 
 let savedFlash = null, savedTimer = null;
-/* Fotografije: u Claude verziji idu u skladište artifacta (vide se na svim uređajima), inače u IndexedDB ovog uređaja */
-let assetsCap = null; const photoCache = new Map();
-function idb(){
-  if(!idb.p) idb.p = new Promise((ok, bad)=>{ const r = indexedDB.open("atlas-photos", 1); r.onupgradeneeded = ()=>r.result.createObjectStore("p"); r.onsuccess = ()=>ok(r.result); r.onerror = ()=>bad(r.error); });
-  return idb.p;
-}
-const idbDo = (mode, fn) => idb().then(db => new Promise((ok, bad)=>{ const tx = db.transaction("p", mode), rq = fn(tx.objectStore("p")); tx.oncomplete = ()=>ok(rq.result); tx.onerror = tx.onabort = ()=>bad(tx.error); }));
-async function shrinkPhoto(file, maxSide, quality){
-  let src; try{ src = await createImageBitmap(file); }catch(e){
-    src = await new Promise((ok, bad)=>{ const i = new Image(), u = URL.createObjectURL(file); i.onload = ()=>{ URL.revokeObjectURL(u); ok(i); }; i.onerror = ()=>{ URL.revokeObjectURL(u); bad(new Error("image")); }; i.src = u; });
-  }
-  const k = Math.min(1, maxSide / Math.max(src.width, src.height)), c = document.createElement("canvas");
-  c.width = Math.max(1, Math.round(src.width*k)); c.height = Math.max(1, Math.round(src.height*k));
-  c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
-  return new Promise((ok, bad)=>c.toBlob(b => b ? ok(b) : bad(new Error("encode")), "image/jpeg", quality));
-}
-const blobToDataURL = b => new Promise((ok, bad)=>{ const r = new FileReader(); r.onload = ()=>ok(r.result); r.onerror = ()=>bad(r.error); r.readAsDataURL(b); });
-// Čuvanje ide redom: skladište artifacta, pa IndexedDB uređaja, pa (manja slika) localStorage. Greška je tek ako sva tri otkažu.
-async function photoPut(file){
-  const blob = await shrinkPhoto(file, 1280, 0.82), why = [];
-  if(assetsCap){
-    try{ const r = await assetsCap.upload(blob); photoCache.set("a:"+r.id, r.url); return "a:"+r.id; }
-    catch(e){ why.push("assets:" + (e && (e.code || e.message) || "error")); }
-  }
-  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,10);
-  try{ await idbDo("readwrite", st => st.put(blob, id)); photoCache.set("l:"+id, URL.createObjectURL(blob)); return "l:"+id; }
-  catch(e){ why.push("idb:" + (e && (e.name || e.message) || "error")); }
-  try{
-    const small = await shrinkPhoto(file, 800, 0.7), url = await blobToDataURL(small);
-    localStorage.setItem("atlas-photo-" + id, url); photoCache.set("l:"+id, url); return "l:"+id;
-  }catch(e){ why.push("ls:" + (e && (e.name || e.message) || "error")); }
-  throw new Error(why.join(", "));
-}
-function photoDel(ref){
-  if(!ref) return; photoCache.delete(ref);
-  if(ref[0]==="a"){ if(assetsCap) assetsCap.delete(ref.slice(2)).catch(()=>{}); return; }
-  idbDo("readwrite", st => st.delete(ref.slice(2))).catch(()=>{});
-  try{ localStorage.removeItem("atlas-photo-" + ref.slice(2)); }catch(e){}
-}
-function hydratePhotos(){
-  document.querySelectorAll("img[data-photo]:not([src])").forEach(img=>{
-    const ref = img.dataset.photo, gone = ()=>{ const s2 = document.createElement("span"); s2.className = "pgone"; s2.textContent = t("photoGone"); img.replaceWith(s2); };
-    const show = u => { photoCache.set(ref, u); document.querySelectorAll(`img[data-photo="${ref}"]:not([src])`).forEach(i=>{ i.src = u; }); };
-    const fromLS = () => { let u = null; try{ u = localStorage.getItem("atlas-photo-" + ref.slice(2)); }catch(e){} if(u) show(u); else gone(); };
-    img.onerror = gone;
-    if(photoCache.has(ref)) img.src = photoCache.get(ref);
-    else if(ref[0]==="a") img.src = "/_blob/" + ref.slice(2);
-    else idbDo("readonly", st => st.get(ref.slice(2))).then(b=>{ if(b) show(URL.createObjectURL(b)); else fromLS(); }).catch(fromLS);
-  });
-}
-// Jedno stalno polje za izbor fotografije: ostaje u stranici i kad se lista ponovo iscrta dok je otvoren izbor slike.
-let photoTarget = null;
-document.addEventListener("click", e=>{
-  const l = e.target.closest && e.target.closest("[data-phototarget]"); if(!l) return;
-  photoTarget = l.dataset.phototarget; $("photoFile").value = "";
-}, true);
-document.getElementById("photoFile").addEventListener("change", async e=>{
-  const f = e.target.files && e.target.files[0], tgt = photoTarget; if(!f || !tgt) return;
-  const [code, idx] = tgt.split(":"), i = +idx || 0;
-  const labels = () => document.querySelectorAll(`[data-phototarget="${tgt}"]`);
-  labels().forEach(l=>{ l.textContent = t("photoWait"); });
-  try{
-    const ref = await photoPut(f);
-    const n = notes[code] || (notes[code] = {trips:[]}); while(n.trips.length <= i) n.trips.push({});
-    if(n.trips[i].photo) photoDel(n.trips[i].photo);
-    n.trips[i].photo = ref; changed(); render();
-  }catch(err){
-    labels().forEach(l=>{ l.textContent = "+ " + t("addPhoto"); });
-    toast(t("photoFail") + " (" + String(err && err.message || err).slice(0, 80) + ")", true);
-  }
-  e.target.value = "";
-});
 const editing = new Set();          // putovanja koja se menjaju, a još nisu sačuvana ("kod:redni broj")
 function journalHTML(code, where){
   const trips = tripsOf(code), list = trips.length ? trips : [{}];
@@ -996,8 +912,6 @@ function journalHTML(code, where){
       <label for="${id}-c">${t("cities")}<input id="${id}-c" data-j="cities" data-code="${code}" data-i="${i}" placeholder="${t("citiesPh")}" value="${esc(n.cities)}"></label>
     </div>
     <label for="${id}-n">${t("note")}<textarea id="${id}-n" data-j="note" data-code="${code}" data-i="${i}" rows="2" placeholder="${t("notePh")}">${esc(n.note)}</textarea></label>
-    <div class="tphoto">${n.photo ? `<img class="timg" data-photo="${esc(n.photo)}" alt="${t("photoAlt")}"><button class="link" type="button" data-delphoto="${code}" data-i="${i}">${t("delPhoto")}</button>`
-      : `<label class="link plabel" for="photoFile" data-phototarget="${code}:${i}" role="button" tabindex="0">+ ${t("addPhoto")}</label>`}</div>
     <div class="jfoot"><span class="jsaved" role="status">${savedFlash===key ? "✓ " + t("tripSaved") : ""}</span>
       <button class="jsave" type="button" data-savetrip="${code}" data-i="${i}" ${saved ? "hidden" : ""}>${t("saveTrip")}</button>
       <button class="jdel" type="button" data-deltrip="${code}" data-i="${i}" ${saved ? "" : "hidden"}>${t("delTrip")}</button></div>
@@ -1007,7 +921,7 @@ function moreHTML(code, where){ return (marks[code]==="been" ? journalHTML(code,
 
 /* ---------- putovanja (više po državi) i prioriteti ---------- */
 const tripsOf = code => (notes[code] && Array.isArray(notes[code].trips)) ? notes[code].trips : [];
-const tripFilled = tr => !!(tr && (tr.year || tr.cities || tr.note || tr.photo));
+const tripFilled = tr => !!(tr && (tr.year || tr.cities || tr.note));
 function normNotes(raw){            // prihvata i stari oblik {year, cities, note}
   const out = {};
   if(!raw || typeof raw !== "object") return out;
@@ -1020,7 +934,6 @@ function normNotes(raw){            // prihvata i stari oblik {year, cities, not
       if(x.year) o.year = String(x.year).replace(/\D/g,"").slice(0,4);
       if(x.cities) o.cities = String(x.cities).slice(0,300);
       if(x.note) o.note = String(x.note).slice(0,5000);
-      if(typeof x.photo==="string" && /^[al]:[\w-]{6,80}$/.test(x.photo)) o.photo = x.photo;
       if(tripFilled(o)) trips.push(o);
     }
     if(trips.length) out[k] = {trips};
@@ -1043,7 +956,7 @@ function setTab(name){
   document.querySelectorAll(".tabs button").forEach(b=>{ const on = b.dataset.tab===name; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
   renderTab();
 }
-function renderTab(){ if(ui.tab==="journal"){ renderJournal(); hydratePhotos(); } else if(ui.tab==="plan") renderPlan(); if(ui.page==="quiz") renderQuiz(); }
+function renderTab(){ if(ui.tab==="journal") renderJournal(); else if(ui.tab==="plan") renderPlan(); if(ui.page==="quiz") renderQuiz(); }
 function gotoCountry(code){
   ui.q = ""; $("q").value = ""; ui.status = ""; ui.cont = ""; openInfo = code; picked = code;
   setPage("home"); setTab("list"); render();
@@ -1068,7 +981,7 @@ function renderJournal(){
   for(const y of years){
     const es = entries.filter(e=>(e.tr.year||"")===y), fresh = y ? Object.values(first).filter(v=>v===y).length : 0;
     html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span></div><ul class="tl">` +
-      es.map(({c, tr})=>`<li><button type="button" class="tli" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span>${tr.photo ? `<img class="tthumb" data-photo="${esc(tr.photo)}" alt="">` : ""}</button></li>`).join("") + `</ul></section>`;
+      es.map(({c, tr})=>`<li><button type="button" class="tli" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span></button></li>`).join("") + `</ul></section>`;
   }
   box.innerHTML = html;
 }
@@ -1546,7 +1459,7 @@ function gEvents(canvas){
     G.drag = null; canvas.classList.remove("drag"); G.spin = false;
     if(d.moved) return;
     const r = canvas.getBoundingClientRect(), code = gPick([e.clientX - r.left, e.clientY - r.top]);
-    picked = code && code !== picked ? code : null; renderMap(); hydratePhotos();
+    picked = code && code !== picked ? code : null; renderMap();
   });
   canvas.addEventListener("pointercancel", ()=>{ G.drag = null; canvas.classList.remove("drag"); });
   canvas.addEventListener("wheel", e=>{ e.preventDefault(); gZoom(e.deltaY < 0 ? 1.15 : 0.87); }, {passive:false});
@@ -1791,7 +1704,7 @@ function showTip(e){
       const el = document.elementFromPoint(e.clientX, e.clientY);
       const code = el && el.closest && el.closest("#map [data-code]") ? el.closest("#map [data-code]").dataset.code : null;
       picked = code && code!==picked ? code : null;
-      renderMap(); hydratePhotos();
+      renderMap();
     }
     start=null;
   };
@@ -1801,7 +1714,7 @@ function showTip(e){
   svg.addEventListener("wheel", e=>{ if(!vb) return; e.preventDefault(); zoom(e.deltaY<0?1.25:0.8); }, {passive:false});
 })();
 
-function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); hydratePhotos(); }
+function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); }
 
 /* ---------- events ---------- */
 $("q").addEventListener("input", e=>{
@@ -1830,7 +1743,7 @@ if(window.visualViewport) window.visualViewport.addEventListener("resize", ()=>{
 $("q").addEventListener("keydown", e=>{
   if(e.key!=="Enter") return;
   const hits = searchHits();
-  if(hits && hits.length){ openInfo = hits[0]; focusCountry(hits[0]); renderList(); hydratePhotos(); e.target.blur(); }
+  if(hits && hits.length){ openInfo = hits[0]; focusCountry(hits[0]); renderList(); e.target.blur(); }
 });
 document.addEventListener("input", e=>{
   const f = e.target.dataset && e.target.dataset.j; if(!f) return;
@@ -1876,16 +1789,11 @@ document.addEventListener("click", e=>{
     return;
   }
   if(b.dataset.info){
-    openInfo = openInfo===b.dataset.info ? null : b.dataset.info; renderList(); hydratePhotos(); return;
+    openInfo = openInfo===b.dataset.info ? null : b.dataset.info; renderList(); return;
   }
   if(b.dataset.tab){ setTab(b.dataset.tab); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
-  if(b.dataset.delphoto){
-    const tr = tripsOf(b.dataset.delphoto)[+b.dataset.i];
-    if(tr && tr.photo){ photoDel(tr.photo); delete tr.photo; changed(); render(); }
-    return;
-  }
   if(b.dataset.savetrip){
     const code = b.dataset.savetrip, tr = tripsOf(code)[+b.dataset.i];
     for(const k of [...editing]) if(k.startsWith(code+":")) editing.delete(k);
@@ -1900,12 +1808,12 @@ document.addEventListener("click", e=>{
   if(b.dataset.addtrip){
     const n = notes[b.dataset.addtrip] || (notes[b.dataset.addtrip] = {trips:[]});
     if(!n.trips.length) n.trips.push({});
-    n.trips.push({}); renderList(); renderMap(); hydratePhotos(); return;
+    n.trips.push({}); renderList(); renderMap(); return;
   }
   if(b.dataset.deltrip){
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = t("sure"); return; }
     const dc = b.dataset.deltrip, n = notes[dc];
-    if(n){ const gone = n.trips.splice(+b.dataset.i, 1)[0]; if(gone && gone.photo) photoDel(gone.photo); if(!n.trips.length) delete notes[dc]; }
+    if(n){ n.trips.splice(+b.dataset.i, 1); if(!n.trips.length) delete notes[dc]; }
     for(const k of [...editing]) if(k.startsWith(dc+":")) editing.delete(k);
     changed(); render(); return;
   }
@@ -1935,11 +1843,9 @@ document.addEventListener("click", e=>{
   } else if(b.id==="resetBtn"){
     $("resetBox").innerHTML=`<span class="confirm">${t("resetQ")} <button class="link" id="resetYes" type="button">${t("resetYes")}</button><button class="link" id="resetNo" type="button">${t("resetNo")}</button></span>`;
   } else if(b.id==="resetYes"){
-    for(const k in notes) for(const tr of tripsOf(k)) if(tr.photo) photoDel(tr.photo);
     marks={}; notes={}; prio={}; changed(); render(); restoreReset();
   } else if(b.id==="resetNo"){ restoreReset(); }
 });
-document.addEventListener("keydown", e=>{ if((e.key==="Enter" || e.key===" ") && e.target.classList && e.target.classList.contains("plabel")){ e.preventDefault(); e.target.click(); } });
 document.querySelector(".tabs").addEventListener("keydown", e=>{
   if(e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
   const order = TABS, i = order.indexOf(ui.tab);
@@ -2094,8 +2000,7 @@ const ONB_ART = [
    <rect x="40" y="22" width="58" height="18" rx="9" fill="var(--line)"/><rect x="102" y="22" width="58" height="18" rx="9" fill="var(--ink)"/><rect x="164" y="22" width="58" height="18" rx="9" fill="var(--line)"/><rect x="226" y="22" width="54" height="18" rx="9" fill="var(--line)"/>
    <text x="40" y="74" font-size="20" font-weight="800" fill="var(--ink)" font-family="system-ui">2024</text>
    <rect x="36" y="84" width="248" height="50" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="50" y="117" font-size="22">🇯🇵</text>
-   <rect x="86" y="98" width="80" height="9" rx="4" fill="var(--ink)" opacity=".8"/><rect x="86" y="113" width="110" height="7" rx="3.5" fill="var(--muted)" opacity=".5"/>
-   <rect x="232" y="92" width="40" height="34" rx="6" fill="var(--been-soft)" stroke="var(--been)"/><circle cx="244" cy="103" r="4" fill="var(--want)"/><path d="M236 122l10-11 7 7 5-5 10 9z" fill="var(--been)"/></svg>`,
+   <rect x="86" y="98" width="80" height="9" rx="4" fill="var(--ink)" opacity=".8"/><rect x="86" y="113" width="110" height="7" rx="3.5" fill="var(--muted)" opacity=".5"/></svg>`,
   // pečati
   `<svg viewBox="0 0 320 150" aria-hidden="true"><g transform="rotate(-8 100 75)"><circle cx="100" cy="75" r="38" fill="var(--been-soft)" stroke="var(--been)" stroke-width="2.5"/><circle cx="100" cy="75" r="30" fill="none" stroke="var(--been)" stroke-width="1" stroke-dasharray="3 3"/><text x="100" y="82" text-anchor="middle" font-size="20" font-weight="800" fill="var(--been)" font-family="system-ui">100</text></g>
    <g transform="rotate(6 200 70)"><circle cx="200" cy="70" r="32" fill="none" stroke="var(--want)" stroke-width="2.5" stroke-dasharray="4 4"/><path d="M200 52l5 10.5 11.5 1.3-8.6 7.8 2.4 11.4-10.3-5.8-10.3 5.8 2.4-11.4-8.6-7.8 11.5-1.3z" fill="var(--want)"/></g>
@@ -2219,7 +2124,6 @@ document.addEventListener("visibilitychange", ()=>{ if(document.hidden) quizStop
     $("maptools").hidden = false;
     return;
   }
-  claude.use("assets").then(a=>{ assetsCap = a; }).catch(()=>{});
   claude.use("downloads").then(d=>{ downloads = d; $("maptools").hidden = !d; }).catch(()=>{});
   (async()=>{
     const [db,user] = await Promise.all([claude.use("db"), claude.use("user")]);

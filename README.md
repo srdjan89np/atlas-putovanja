@@ -18,12 +18,12 @@ Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo p
 - **Lista 195 država** sa pretragom (srpski i engleski nazivi, ISO kod) i filterima *Sve / Obišao / Želim*.
 - **Mapa i globus**: države se boje prema oznaci, male države su tačke, prikaz se bira dugmetom *Mapa / Globus*. Kosovo je prikazano kao deo Srbije.
 - **Podaci o državi**: glavni grad, stanovništvo, površina, gustina, valuta, jezik, pozivni broj, strana vožnje i najbolje vreme za posetu.
-- **Dnevnik**: više putovanja po državi (godina, gradovi, beleška, jedna fotografija), vremenska linija po godinama, poznati gradovi kao tačke na mapi.
+- **Dnevnik**: više putovanja po državi (godina, gradovi, beleška), vremenska linija po godinama, poznati gradovi kao tačke na mapi.
 - **Plan**: prioritet na listi želja i predlozi država blizu onih koje si obišao.
 - **Kviz**: zastave i glavni gradovi, deset pitanja, 15 sekundi po pitanju. Poeni se računaju iz tačnosti i brzine (najviše 2.000).
 - **Dostignuća**: deset pečata i napredak po kontinentima, sa porukom kad se dostignuće otključa.
 - **Podeli mapu**: slika 1080×1350 sa mapom ili globusom i statistikom.
-- **Rezervna kopija**: izvoz i uvoz oznaka i beleški (JSON). Fotografije nisu deo rezervne kopije.
+- **Rezervna kopija**: izvoz i uvoz oznaka i beleški (JSON).
 - Tri stranice sa donjom navigacijom: **Početna** (mapa, države, dnevnik, plan), **Kviz** i **Dostignuća** (sa rezervnom kopijom).
 - Srpski i engleski jezik, svetla i tamna tema, uvodni ekrani.
 - Rezervisano mesto za AdMob baner 320×50 na dnu ekrana (`#admob-banner`).
@@ -35,12 +35,11 @@ Sve se čuva na uređaju:
 | Mesto | Sadržaj |
 | --- | --- |
 | `localStorage` `atlas-putovanja-v1` | oznake država |
-| `localStorage` `atlas-putovanja-v1-notes` | putovanja (`{"IT":{"trips":[{"year":"2019","cities":"Rim","note":"…","photo":"l:…"}]}}`) |
+| `localStorage` `atlas-putovanja-v1-notes` | putovanja (`{"IT":{"trips":[{"year":"2019","cities":"Rim","note":"…"}]}}`) |
 | `localStorage` `atlas-putovanja-v1-prio` | prioriteti liste želja |
 | `localStorage` `atlas-lang`, `atlas-view`, `atlas-onboarded`, `atlas-quiz-best` | podešavanja |
-| IndexedDB `atlas-photos` | fotografije putovanja, smanjene na najviše 1280 px |
 
-Kada se stranica otvori kao Claude artifact, oznake i beleške se dodatno čuvaju na Claude nalogu, a fotografije u skladištu artifacta.
+Kada se stranica otvori kao Claude artifact, oznake i beleške se dodatno čuvaju na Claude nalogu.
 
 ## Podaci o državama
 
