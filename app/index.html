@@ -242,6 +242,8 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .tl li + li{border-top:1px solid var(--line)}
 .tli,.pname{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:0;padding:10px 12px;cursor:pointer}
 .tli:focus-visible,.pname:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.jedit{padding:0 12px 10px}
+.tli[aria-expanded="true"]{background:var(--been-soft)}
 .tlt strong,.pname strong{display:block}
 .tlt small,.pname small{display:block;font-size:12.5px;color:var(--muted);overflow-wrap:break-word}
 small .newc{display:inline-block}
@@ -966,11 +968,12 @@ function gotoCountry(code){
 }
 
 /* ---------- dnevnik: vremenska linija ---------- */
+let openJ = null;                  // putovanje otvoreno za izmenu u Dnevniku ("kod:redni broj")
 function renderJournal(){
   const box = $("tab-journal"), entries = [], first = {};
   const been = COUNTRIES.filter(c=>marks[c.code]==="been");
   for(const c of been) for(const tr of tripsOf(c.code)) if(tripFilled(tr)){
-    entries.push({c, tr});
+    entries.push({c, tr, key: c.code + ":" + tripsOf(c.code).indexOf(tr)});
     if(tr.year && (!first[c.code] || tr.year < first[c.code])) first[c.code] = tr.year;
   }
   const missing = been.filter(c=>!tripsOf(c.code).some(tripFilled)).length;
@@ -981,7 +984,7 @@ function renderJournal(){
   for(const y of years){
     const es = entries.filter(e=>(e.tr.year||"")===y), fresh = y ? Object.values(first).filter(v=>v===y).length : 0;
     html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span></div><ul class="tl">` +
-      es.map(({c, tr})=>`<li><button type="button" class="tli" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span></button></li>`).join("") + `</ul></section>`;
+      es.map(({c, tr, key})=>`<li><button type="button" class="tli" data-jopen="${key}" aria-expanded="${openJ===key}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span></button>${openJ===key ? `<div class="more jedit">${journalHTML(c.code, "t")}</div>` : ""}</li>`).join("") + `</ul></section>`;
   }
   box.innerHTML = html;
 }
@@ -1793,6 +1796,7 @@ document.addEventListener("click", e=>{
   }
   if(b.dataset.tab){ setTab(b.dataset.tab); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
+  if(b.dataset.jopen){ openJ = openJ===b.dataset.jopen ? null : b.dataset.jopen; renderJournal(); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
   if(b.dataset.savetrip){
     const code = b.dataset.savetrip, tr = tripsOf(code)[+b.dataset.i];
@@ -1808,7 +1812,7 @@ document.addEventListener("click", e=>{
   if(b.dataset.addtrip){
     const n = notes[b.dataset.addtrip] || (notes[b.dataset.addtrip] = {trips:[]});
     if(!n.trips.length) n.trips.push({});
-    n.trips.push({}); renderList(); renderMap(); return;
+    n.trips.push({}); renderList(); renderMap(); if(ui.tab==="journal") renderJournal(); return;
   }
   if(b.dataset.deltrip){
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = t("sure"); return; }
