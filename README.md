@@ -20,10 +20,11 @@ Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo p
 - **Podaci o državi**: glavni grad, stanovništvo, površina, gustina, valuta, jezik, pozivni broj, strana vožnje i najbolje vreme za posetu.
 - **Dnevnik**: više putovanja po državi (godina, gradovi, beleška, jedna fotografija), vremenska linija po godinama, poznati gradovi kao tačke na mapi.
 - **Plan**: prioritet na listi želja i predlozi država blizu onih koje si obišao.
-- **Kviz**: zastave i glavni gradovi, deset pitanja.
+- **Kviz**: zastave i glavni gradovi, deset pitanja, 15 sekundi po pitanju. Poeni se računaju iz tačnosti i brzine (najviše 2.000).
 - **Dostignuća**: deset pečata i napredak po kontinentima, sa porukom kad se dostignuće otključa.
 - **Podeli mapu**: slika 1080×1350 sa mapom ili globusom i statistikom.
 - **Rezervna kopija**: izvoz i uvoz oznaka i beleški (JSON). Fotografije nisu deo rezervne kopije.
+- Tri stranice sa donjom navigacijom: **Početna** (mapa, države, dnevnik, plan), **Kviz** i **Dostignuća** (sa rezervnom kopijom).
 - Srpski i engleski jezik, svetla i tamna tema, uvodni ekrani.
 - Rezervisano mesto za AdMob baner 320×50 na dnu ekrana (`#admob-banner`).
 

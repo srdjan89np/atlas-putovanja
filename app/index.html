@@ -61,12 +61,12 @@ h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,7vw,44px);l
 .stat.been b{color:var(--been)} .stat.want b{color:var(--want)}
 .stat small{font-family:var(--f-display);font-size:18px;color:var(--muted);font-weight:500}
 
-.continents{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding:0 0 14px}
-.continents::-webkit-scrollbar{display:none}
-.continents .cont{flex:1 0 104px}
-.cont .row span{white-space:nowrap}
-.cont{display:grid;gap:5px;min-width:0;background:none;border:0;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
-.cont .row{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.continents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;padding:0 0 14px}
+.cont{display:grid;gap:5px;align-content:end;min-width:0;background:none;border:0;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.cont .row{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;font-size:13px;line-height:1.2}
+.cont .row span{min-width:0}
+.cont .row em{flex:none}
+@media (max-width:440px){.cont .row{flex-direction:column;align-items:flex-start;gap:1px}}
 .cont .row em{font-style:normal;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .bar{height:6px;border-radius:3px;background:var(--line);display:flex;overflow:hidden}
 .bar i{display:block;height:100%}
@@ -84,13 +84,15 @@ h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,7vw,44px);l
 .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .chip .n{font-family:var(--f-mono);font-size:11px;opacity:.7;margin-left:4px}
 
+/* lista drži visinu ekrana, da stranica ne skače kad pretraga ostavi samo par država */
+#listarea{min-height:100vh;min-height:100dvh}
 .count{font-size:13px;color:var(--muted);padding:12px 2px 6px}
 ul.list{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 li.c{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
 li.c:first-child{border-top:0}
 .flag{font-size:26px;line-height:1;width:34px;text-align:center}
 .name{min-width:0}
-.name strong{display:block;font-weight:700;overflow-wrap:anywhere}
+.name strong{display:block;font-weight:700;overflow-wrap:break-word}
 .name small{font-size:12px;color:var(--muted)}
 .name code{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--muted);margin-right:6px}
 li.c.is-been{background:linear-gradient(90deg,var(--been-soft),transparent 70%)}
@@ -103,6 +105,7 @@ li.c.is-want{background:linear-gradient(90deg,var(--want-soft),transparent 70%)}
 .btn.want[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:var(--surface)}
 .btn.been[aria-pressed="true"]{background:var(--been);border-color:var(--been);color:var(--surface)}
 @media (max-width:440px){.btn .lbl{display:none}.btn{padding:8px 10px}}
+@media (max-width:370px){li.c{gap:8px;padding:10px}.flag{width:28px;font-size:24px}.acts{gap:4px}li.c .btn{padding:7px 8px}.pick{gap:8px;padding:10px}}
 
 .ibtn{padding:7px 8px}
 .ibtn[aria-expanded="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
@@ -148,12 +151,13 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .lg.b{background:var(--been)} .lg.w{background:var(--want)}
 .legend .hint{margin-left:auto}
 @media (max-width:480px){.legend .hint{margin-left:0;width:100%}}
-.maptools{display:flex;justify-content:flex-end;gap:6px}
+.maptools{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
 .savebtn{font:inherit;font-size:13px;font-weight:700;padding:7px 12px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
 .savebtn svg{width:15px;height:15px}
 .savebtn:disabled{opacity:.6;cursor:default}
 .savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.savemsg{font-size:12.5px;color:var(--muted);align-self:center;margin-right:10px;min-width:0;text-align:right}
+.savemsg{order:2;flex:1 0 100%;font-size:12.5px;color:var(--muted);text-align:right}
+.savemsg:empty{display:none}
 
 .ach{display:grid;gap:10px;padding:0 0 8px}
 .ach h2{font-family:var(--f-display);font-weight:700;font-size:18px;margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
@@ -174,11 +178,12 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .jrow{display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px}
 .journal label{display:grid;gap:3px;font-size:12px;color:var(--muted);min-width:0}
 .journal input,.journal textarea{font:inherit;font-size:15px;width:100%;padding:7px 9px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);resize:vertical}
+.journal input.vh{width:1px;height:1px;padding:0;border:0}
 .journal input:focus,.journal textarea:focus{outline:2px solid var(--accent);outline-offset:0}
 .yr{font-family:var(--f-mono);font-size:11px;color:var(--been);margin-left:6px}
 .pick{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
 
-.backup{display:grid;gap:8px;margin-top:0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.backup{display:grid;gap:8px;margin-top:18px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .backup h3{font-family:var(--f-display);font-size:15px;font-weight:700;margin:0}
 .backup p{margin:0;font-size:13px;color:var(--muted)}
 .backup .row{display:flex;flex-wrap:wrap;gap:8px}
@@ -204,9 +209,9 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #viewsw{position:absolute;left:8px;top:8px;z-index:2}
 #map circle.city{fill:var(--ink);fill-opacity:1;stroke:var(--surface);pointer-events:none}
 
-.tabs{display:flex;overflow-x:auto;scrollbar-width:none;gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:16px}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:16px}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{flex:1 0 auto;white-space:nowrap;font:inherit;font-weight:700;font-size:14px;padding:9px 12px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tabs button{font:inherit;font-weight:700;font-size:14px;padding:9px 4px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
 .tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #tab-list .continents{border-top:0;padding-top:0}
@@ -245,7 +250,8 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .tli,.pname{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:0;padding:10px 12px;cursor:pointer}
 .tli:focus-visible,.pname:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .tlt strong,.pname strong{display:block}
-.tlt small,.pname small{display:block;font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.tlt small,.pname small{display:block;font-size:12.5px;color:var(--muted);overflow-wrap:break-word}
+small .newc{display:inline-block}
 .tlt .tln{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .newc{font-style:normal;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--been);border:1px solid var(--been);border-radius:999px;padding:1px 6px;margin-left:8px;vertical-align:1px;white-space:nowrap}
 small .newc{margin-left:0;margin-right:6px}
@@ -270,7 +276,19 @@ small .newc{margin-left:0;margin-right:6px}
 .qmode strong{font-family:var(--f-display);font-size:17px}
 .qmode small{color:var(--muted);font-size:12.5px}
 .qmode:focus-visible,.qopt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.qtop{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);padding:0 2px 8px}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--muted);padding:0 2px 8px}
+.qpts{font-family:var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.qclock{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.qtime{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.qtime i{display:block;height:100%;background:var(--been);border-radius:4px}
+.qtime i.low{background:var(--want)}
+#qsec{font-family:var(--f-mono);font-size:12.5px;min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+.qrules{margin-top:14px}
+.qof{color:var(--muted);font-size:14px}
+.qstats{display:flex;justify-content:center;gap:28px}
+.qstats b{display:block;font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums}
+.qstats span{font-size:12.5px;color:var(--muted)}
+.qfb b{color:var(--been)}
 .qcard{display:grid;gap:14px;padding:18px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
 .qprompt{margin:0;color:var(--muted);font-size:14px;text-align:center}
 .qflag{font-size:84px;line-height:1.1;text-align:center}
@@ -287,7 +305,7 @@ small .newc{margin-left:0;margin-right:6px}
 .qbig{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;color:var(--been);font-variant-numeric:tabular-nums}
 
 
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--ad-h) + 26px + env(safe-area-inset-bottom,0px));z-index:30;max-width:min(92vw,420px);
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--ad-h) + var(--nav-h) + 26px + env(safe-area-inset-bottom,0px));z-index:30;max-width:min(92vw,420px);
   display:flex;gap:10px;align-items:center;padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:700;box-shadow:0 10px 30px rgb(0 0 0 / .25)}
 .toast .seal{flex:none;width:26px;height:26px;border-radius:50%;background:var(--been);color:var(--surface);display:grid;place-items:center}
 .toast .seal svg{width:14px;height:14px}
@@ -295,8 +313,16 @@ small .newc{margin-left:0;margin-right:6px}
 @media (prefers-reduced-motion:no-preference){.toast{animation:toastIn .25s ease-out}@keyframes toastIn{from{transform:translate(-50%,10px);opacity:0}}}
 
 /* Reklama: AdMob baner 320×50 usidren na dnu ekrana */
-:root{--ad-h:50px}
-body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
+:root{--ad-h:50px;--nav-h:56px}
+body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset-bottom,0px))}
+/* Donja navigacija: tri stranice, stoji iznad trake za reklamu */
+.bnav{position:fixed;left:0;right:0;bottom:calc(var(--ad-h) + 13px + env(safe-area-inset-bottom,0px));z-index:20;height:var(--nav-h);display:flex;justify-content:center;background:var(--surface);border-top:1px solid var(--line);
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.bnav button{flex:1 1 0;max-width:180px;min-width:0;display:grid;justify-items:center;align-content:center;gap:2px;font:inherit;font-size:11.5px;font-weight:700;border:0;background:transparent;color:var(--muted);cursor:pointer;padding:0 4px}
+.bnav button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bnav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bnav button[aria-current="page"]{color:var(--accent)}
+.bnav button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:10px}
 .adbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;background:var(--surface);border-top:1px solid var(--line);
   padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .adslot{width:320px;max-width:100%;height:var(--ad-h);display:grid;place-items:center;border:1px dashed var(--line);border-radius:6px;color:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
@@ -333,6 +359,7 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
     </div>
   </header>
 
+  <div id="page-home">
   <section class="map" data-i18n-aria="worldMap" aria-label="Mapa sveta">
     <div class="mapbox" id="mapbox">
       <svg id="map" role="img" data-i18n-aria="mapAria" aria-label="Mapa sveta sa označenim državama"></svg>
@@ -359,9 +386,6 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
     <button type="button" role="tab" data-tab="list" aria-selected="true" aria-controls="tab-list" data-i18n="tabList">Države</button>
     <button type="button" role="tab" data-tab="journal" aria-selected="false" aria-controls="tab-journal" tabindex="-1" data-i18n="tabJournal">Dnevnik</button>
     <button type="button" role="tab" data-tab="plan" aria-selected="false" aria-controls="tab-plan" tabindex="-1" data-i18n="tabPlan">Plan</button>
-    <button type="button" role="tab" data-tab="quiz" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-i18n="tabQuiz">Kviz</button>
-    <button type="button" role="tab" data-tab="ach" aria-selected="false" aria-controls="tab-ach" tabindex="-1" data-i18n="ach">Dostignuća</button>
-    <button type="button" role="tab" data-tab="more" aria-selected="false" aria-controls="tab-more" tabindex="-1" data-i18n="tabMore">Više</button>
   </div>
 
   <div id="tab-list" role="tabpanel">
@@ -373,19 +397,20 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
     <div class="chips" id="status" role="group" data-i18n-aria="filterAria" aria-label="Filter po statusu"></div>
   </div>
 
+  <div id="listarea">
   <div class="count" id="count"></div>
   <ul class="list" id="list"></ul>
   </div>
+  </div>
   <div id="tab-journal" role="tabpanel" hidden></div>
   <div id="tab-plan" role="tabpanel" hidden></div>
-  <div id="tab-quiz" role="tabpanel" hidden></div>
-  <div id="tab-ach" role="tabpanel" hidden>
+  </div>
+  <div id="page-quiz" hidden><div id="tab-quiz"></div></div>
+  <div id="page-ach" hidden>
   <section class="ach" data-i18n-aria="ach" aria-label="Dostignuća">
     <h2><span data-i18n="ach">Dostignuća</span> <em id="achCount"></em></h2>
     <div class="badges" id="badges"></div>
   </section>
-  </div>
-  <div id="tab-more" role="tabpanel" hidden>
 
   <section class="backup" data-i18n-aria="bkTitle" aria-label="Rezervna kopija">
     <h3 data-i18n="bkTitle">Rezervna kopija</h3>
@@ -406,6 +431,11 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
   </footer>
   </div>
 </div>
+<nav class="bnav" data-i18n-aria="navAria" aria-label="Stranice">
+  <button type="button" data-page="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.500 12h17M12 3.500c3 3 3 14 0 17M12 3.500c-3 3-3 14 0 17"/></svg><span data-i18n="navHome">Početna</span></button>
+  <button type="button" data-page="quiz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.500"/><path d="M12 9v4.200l2.600 1.600M9.500 2.800h5M12 2.800v2.700"/></svg><span data-i18n="tabQuiz">Kviz</span></button>
+  <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.500 4h9v5a4.500 4.500 0 0 1-9 0zM7.500 5.500H4.500c0 3 1.300 4.500 3.300 4.800M16.500 5.500h3c0 3-1.300 4.500-3.300 4.800M12 13.500V17M8.500 20h7M9.500 17h5"/></svg><span data-i18n="ach">Dostignuća</span></button>
+</nav>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
@@ -453,6 +483,8 @@ const T = {
   bkBad:"Ova datoteka nije rezervna kopija Atlasa putovanja.", bkReadErr:"Datoteka ne može da se pročita.",
   bkFound:"U datoteci: obiđeno {b} · na listi želja {w} · beleške {n}.", bkHave:"Trenutno označenih država: {c}.",
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
+  navAria:"Stranice", navHome:"Početna", qPts:"poena", qRules:"Tačan odgovor nosi {b} poena, a brzina do još {x}. Posle {s} sekundi pitanje se računa kao netačno.",
+  qTimeout:"Vreme je isteklo.", qAnswer:"Tačan odgovor: {a}", qOf:"poena od mogućih {n}", qCorrect:"tačnih odgovora", qTimeUsed:"ukupno vreme", qNewBest:"Novi najbolji rezultat.",
   tabMore:"Više", achToast:"Otključano dostignuće", addPhoto:"Dodaj fotografiju", delPhoto:"Ukloni fotografiju", photoAlt:"Fotografija sa putovanja", photoWait:"Čuvam fotografiju…",
   photoFail:"Fotografija ne može da se sačuva.", photoGone:"Fotografija nije dostupna na ovom uređaju.",
   tabsAria:"Delovi aplikacije", tabList:"Države", tabJournal:"Dnevnik", tabPlan:"Plan", tabQuiz:"Kviz",
@@ -463,15 +495,15 @@ const T = {
   pTitle:"Lista želja po prioritetu", pEmpty:"Lista želja je prazna. Označi zvezdicom države koje želiš da posetiš.", prio:"Prioritet", pNext:"sledeće",
   sTitle:"Predlozi", sText:"Države koje još nisi obišao, a blizu su onih u kojima si bio.", sNear:"Blizu", sEmpty:"Predlozi se pojavljuju kad označiš bar jednu obiđenu državu.",
   sNoMap:"Predlozi su dostupni kad se učita mapa.", sNone:"Nema predloga: obišao si sve države u blizini.", onWishShort:"na listi želja", addWish:"Dodaj na listu želja",
-  qTitle:"Kviz", qIntro:"Deset pitanja. Izaberi vrstu kviza.", qFlags:"Zastave", qCaps:"Glavni gradovi", qMix:"Mešano", qFlag:"Čija je ovo zastava?", qFlagAria:"Zastava",
+  qTitle:"Kviz", qIntro:"Deset pitanja, 15 sekundi za svako. Izaberi vrstu kviza.", qFlags:"Zastave", qCaps:"Glavni gradovi", qMix:"Mešano", qFlag:"Čija je ovo zastava?", qFlagAria:"Zastava",
   qCap:"Koji je glavni grad ove države?", qCapRev:"Kojoj državi je ovo glavni grad?", qRight:"Tačno.", qWrong:"Netačno. Tačan odgovor: {a}", qNext:"Dalje", qFinish:"Rezultat",
-  qScore:"Tačnih odgovora: {s} od {n}", qBest:"Najbolji rezultat: {s} od {n}", qNoBest:"Još nije igrano", qAgain:"Igraj ponovo", qOther:"Druga vrsta kviza", qProg:"Pitanje {i} od {n}", qQuit:"Prekini",
+  qScore:"Tačnih odgovora: {s} od {n}", qBest:"Najbolji rezultat: {s} poena", qNoBest:"Još nije igrano", qAgain:"Igraj ponovo", qOther:"Druga vrsta kviza", qProg:"Pitanje {i} od {n}", qQuit:"Prekini",
   howTo:"Kako radi", adLabel:"Reklama · 320×50", adAria:"Reklama", skip:"Preskoči", back:"Nazad", next:"Dalje", start:"Počni",
   o1t:"Dobrodošao u Atlas putovanja", o1p:"Vodi evidenciju o svim državama koje si obišao i onima koje tek želiš da vidiš. Svih 195 država na jednom mestu.",
   o2t:"Označi države", o2p:"Zvezdica znači da želiš da posetiš državu, a kvačica da si već bio tamo. Ponovni dodir briše oznaku.",
   o3t:"Mapa i globus", o3p:"Dodirni državu na mapi da je označiš. Dugmetom Mapa / Globus biraš ravnu mapu ili globus koji se okreće. Dugme ⓘ otvara podatke o državi.",
-  o4t:"Dnevnik i plan", o4p:"U kartici Dnevnik su tvoja putovanja po godinama, sa gradovima, beleškama i fotografijom. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
-  o5t:"Dostignuća, kviz i deljenje", o5p:"Otključavaj pečate kako putuješ, proveri znanje u kvizu o zastavama i glavnim gradovima i podeli sliku svoje mape. Rezervna kopija je u kartici Više."},
+  o4t:"Dnevnik i plan", o4p:"Na početnoj strani, kartica Dnevnik čuva tvoja putovanja po godinama, sa gradovima, beleškama i fotografijom. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
+  o5t:"Dostignuća, kviz i deljenje", o5p:"Otključavaj pečate kako putuješ, proveri znanje u kvizu na vreme i podeli sliku svoje mape. Rezervna kopija je na stranici Dostignuća."},
  en:{eyebrow:"195 countries · ISO 3166", title:"Travel Atlas", visited:"visited", ofWorld:"of the world", onWish:"on the wish list",
   worldMap:"World map", mapAria:"World map with marked countries", loadingMap:"Loading map…", mapFail:"The map can't load right now. The list below still works.",
   zoomIn:"Zoom in", zoomOut:"Zoom out", zoomAll:"Whole map", been:"Visited", want:"Want to go", all:"All", hint:"Tap a country on the map to mark it", share:"Share map",
@@ -493,6 +525,8 @@ const T = {
   bkBad:"This file isn't a Travel Atlas backup.", bkReadErr:"The file can't be read.",
   bkFound:"In the file: visited {b} · wish list {w} · notes {n}.", bkHave:"Currently marked countries: {c}.",
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
+  navAria:"Pages", navHome:"Home", qPts:"pts", qRules:"A correct answer is worth {b} points, plus up to {x} for speed. After {s} seconds the question counts as wrong.",
+  qTimeout:"Time's up.", qAnswer:"Correct answer: {a}", qOf:"points out of {n}", qCorrect:"correct answers", qTimeUsed:"total time", qNewBest:"New best score.",
   tabMore:"More", achToast:"Achievement unlocked", addPhoto:"Add a photo", delPhoto:"Remove photo", photoAlt:"Trip photo", photoWait:"Saving photo…",
   photoFail:"The photo can't be saved.", photoGone:"The photo isn't available on this device.",
   tabsAria:"App sections", tabList:"Countries", tabJournal:"Journal", tabPlan:"Plan", tabQuiz:"Quiz",
@@ -503,15 +537,15 @@ const T = {
   pTitle:"Wish list by priority", pEmpty:"Your wish list is empty. Star the countries you want to visit.", prio:"Priority", pNext:"next",
   sTitle:"Suggestions", sText:"Countries you haven't visited that are close to ones you have.", sNear:"Near", sEmpty:"Suggestions appear once you mark at least one visited country.",
   sNoMap:"Suggestions are available once the map loads.", sNone:"No suggestions: you've visited every country nearby.", onWishShort:"on the wish list", addWish:"Add to wish list",
-  qTitle:"Quiz", qIntro:"Ten questions. Pick a quiz type.", qFlags:"Flags", qCaps:"Capitals", qMix:"Mixed", qFlag:"Whose flag is this?", qFlagAria:"Flag",
+  qTitle:"Quiz", qIntro:"Ten questions, 15 seconds each. Pick a quiz type.", qFlags:"Flags", qCaps:"Capitals", qMix:"Mixed", qFlag:"Whose flag is this?", qFlagAria:"Flag",
   qCap:"What is the capital of this country?", qCapRev:"Which country has this capital?", qRight:"Correct.", qWrong:"Not quite. Correct answer: {a}", qNext:"Next", qFinish:"See result",
-  qScore:"Correct answers: {s} of {n}", qBest:"Best score: {s} of {n}", qNoBest:"Not played yet", qAgain:"Play again", qOther:"Change quiz type", qProg:"Question {i} of {n}", qQuit:"Quit",
+  qScore:"Correct answers: {s} of {n}", qBest:"Best score: {s} points", qNoBest:"Not played yet", qAgain:"Play again", qOther:"Change quiz type", qProg:"Question {i} of {n}", qQuit:"Quit",
   howTo:"How it works", adLabel:"Ad · 320×50", adAria:"Advertisement", skip:"Skip", back:"Back", next:"Next", start:"Get started",
   o1t:"Welcome to Travel Atlas", o1p:"Keep track of every country you've visited and the ones you still want to see. All 195 countries in one place.",
   o2t:"Mark countries", o2p:"A star means you want to go, a tick means you've been there. Tap again to clear the mark.",
   o3t:"Map and globe", o3p:"Tap a country on the map to mark it. The Map / Globe switch changes between a flat map and a globe you can spin. The ⓘ button shows country facts.",
-  o4t:"Journal and plan", o4p:"The Journal tab lists your trips by year, with cities, notes and a photo. The Plan tab sorts your wish list by priority and suggests where to go next.",
-  o5t:"Achievements, quiz and sharing", o5p:"Unlock stamps as you travel, test yourself in the flags and capitals quiz, and share an image of your map. Backup lives in the More tab."}
+  o4t:"Journal and plan", o4p:"On the home page, the Journal tab keeps your trips by year, with cities, notes and a photo. The Plan tab sorts your wish list by priority and suggests where to go next.",
+  o5t:"Achievements, quiz and sharing", o5p:"Unlock stamps as you travel, race the clock in the flags and capitals quiz, and share an image of your map. Backup lives on the Achievements page."}
 };
 const CONT = {sr:{E:"Evropa",A:"Azija",F:"Afrika",N:"Severna Amerika",S:"Južna Amerika",O:"Okeanija"},
               en:{E:"Europe",A:"Asia",F:"Africa",N:"North America",S:"South America",O:"Oceania"}};
@@ -972,17 +1006,17 @@ function prioHTML(code){
 }
 
 /* ---------- kartice ---------- */
-const TABS = ["list","journal","plan","quiz","ach","more"];
+const TABS = ["list","journal","plan"];
 function setTab(name){
   ui.tab = name;
   for(const k of TABS){ $("tab-"+k).hidden = k!==name; }
   document.querySelectorAll(".tabs button").forEach(b=>{ const on = b.dataset.tab===name; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
   renderTab();
 }
-function renderTab(){ if(ui.tab==="journal"){ renderJournal(); hydratePhotos(); } else if(ui.tab==="plan") renderPlan(); else if(ui.tab==="quiz") renderQuiz(); }
+function renderTab(){ if(ui.tab==="journal"){ renderJournal(); hydratePhotos(); } else if(ui.tab==="plan") renderPlan(); if(ui.page==="quiz") renderQuiz(); }
 function gotoCountry(code){
   ui.q = ""; $("q").value = ""; ui.status = ""; ui.cont = ""; openInfo = code; picked = code;
-  setTab("list"); render();
+  setPage("home"); setTab("list"); render();
   if(view==="globe") flyTo(code); else focusCountry(code);
   const row = document.querySelector(`#list [data-info="${code}"]`);
   if(row) row.closest("li").scrollIntoView({block:"center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
@@ -1035,8 +1069,9 @@ function renderPlan(){
   box.innerHTML = html;
 }
 
-/* ---------- kviz ---------- */
-const quiz = {mode:null, qs:[], i:0, score:0, ans:null};
+/* ---------- kviz: 10 pitanja, 15 s po pitanju; poeni = tačnost + brzina ---------- */
+const Q_LIMIT = 15000, Q_BASE = 100, Q_BONUS = 100;
+const quiz = {mode:null, qs:[], i:0, score:0, points:0, ms:0, ans:null, left:Q_LIMIT, t0:0, tick:null, last:0};
 let flagsOK = null;
 function flagSupport(){            // na nekim računarima zastave se prikazuju kao slova, pa kviz sa zastavama nema smisla
   if(flagsOK !== null) return flagsOK;
@@ -1050,17 +1085,40 @@ function flagSupport(){            // na nekim računarima zastave se prikazuju 
   return flagsOK;
 }
 const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
-function quizBest(mode, score){
-  let b = {}; try{ b = JSON.parse(localStorage.getItem("atlas-quiz-best") || "{}") || {}; }catch(e){}
-  if(score != null && score > (b[mode]||0)){ b[mode] = score; try{ localStorage.setItem("atlas-quiz-best", JSON.stringify(b)); }catch(e){} }
+function quizBest(mode, pts){
+  let b = {}; try{ b = JSON.parse(localStorage.getItem("atlas-quiz-points") || "{}") || {}; }catch(e){}
+  if(pts != null && pts > (b[mode]||0)){ b[mode] = pts; try{ localStorage.setItem("atlas-quiz-points", JSON.stringify(b)); }catch(e){} }
   return b[mode] || 0;
+}
+const fmtTime = ms => { const s = Math.round(ms/1000); return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); };
+const quizLive = () => !!quiz.mode && quiz.i < quiz.qs.length && quiz.ans === null;
+function quizStop(){ if(quiz.tick){ clearInterval(quiz.tick); quiz.tick = null; if(quizLive()) quiz.left = Math.max(0, quiz.left - (performance.now() - quiz.t0)); } }
+function quizRun(){               // sat ide samo dok je pitanje na ekranu
+  if(quiz.tick || !quizLive() || ui.page !== "quiz") return;
+  quiz.t0 = performance.now();
+  const paint = () => {
+    const left = Math.max(0, quiz.left - (performance.now() - quiz.t0)), bar = $("qbar"), sec = $("qsec");
+    if(bar){ bar.style.width = (left/Q_LIMIT*100) + "%"; bar.classList.toggle("low", left < 5000); }
+    if(sec) sec.textContent = Math.ceil(left/1000) + " s";
+    if(left <= 0) quizAnswer("");
+  };
+  paint(); quiz.tick = setInterval(paint, 100);
+}
+function quizAnswer(code){
+  if(!quizLive()) return;
+  const left = quiz.tick ? Math.max(0, quiz.left - (performance.now() - quiz.t0)) : quiz.left;
+  clearInterval(quiz.tick); quiz.tick = null;
+  quiz.left = left; quiz.ms += Q_LIMIT - left; quiz.ans = code; quiz.last = 0;
+  if(code === quiz.qs[quiz.i].code){ quiz.score++; quiz.last = Q_BASE + Math.round(Q_BONUS * left / Q_LIMIT); quiz.points += quiz.last; }
+  renderQuiz();
 }
 function startQuiz(mode){
   const caps = n => Array.from({length:n}, (_, i) => i%2 ? "capRev" : "cap");
   // mešano: uvek 5 zastava i 5 glavnih gradova, izmešanim redom
   const types = shuffle(mode==="flags" ? Array(10).fill("flag") : mode==="caps" ? caps(10) : flagSupport() ? [...Array(5).fill("flag"), ...caps(5)] : caps(10));
   const pool = shuffle(COUNTRIES.filter(c=>INFO[c.code])).slice(0,10);
-  quiz.mode = mode; quiz.i = 0; quiz.score = 0; quiz.ans = null;
+  quizStop();
+  Object.assign(quiz, {mode, i:0, score:0, points:0, ms:0, ans:null, left:Q_LIMIT, last:0});
   quiz.qs = pool.map((c, i)=>{
     const type = types[i];
     const same = shuffle(COUNTRIES.filter(x=>x.cont===c.cont && x.code!==c.code && INFO[x.code] && INFO[x.code].cap!==INFO[c.code].cap)).slice(0,3);
@@ -1069,16 +1127,19 @@ function startQuiz(mode){
   renderQuiz();
 }
 function renderQuiz(){
-  const box = $("tab-quiz");
+  const box = $("tab-quiz"), max = 10*(Q_BASE+Q_BONUS);
   if(!quiz.mode){
     const modes = [["flags", t("qFlags")], ["caps", t("qCaps")], ["mix", t("qMix")]].filter(m=>m[0]!=="flags" || flagSupport());
     box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><p class="secp">${t("qIntro")}</p><div class="qmodes">` +
-      modes.map(([m,l])=>{ const b = quizBest(m); return `<button type="button" class="qmode" data-qmode="${m}"><strong>${l}</strong><small>${b ? fill(t("qBest"), {s:b, n:10}) : t("qNoBest")}</small></button>`; }).join("") + `</div>`;
+      modes.map(([m,l])=>{ const b = quizBest(m); return `<button type="button" class="qmode" data-qmode="${m}"><strong>${l}</strong><small>${b ? fill(t("qBest"), {s:nf.format(b)}) : t("qNoBest")}</small></button>`; }).join("") +
+      `</div><p class="secp qrules">${fill(t("qRules"), {b:Q_BASE, x:Q_BONUS, s:Q_LIMIT/1000})}</p>`;
     return;
   }
   if(quiz.i >= quiz.qs.length){
-    const best = quizBest(quiz.mode, quiz.score);
-    box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><div class="qcard qend"><div class="qbig">${quiz.score}/${quiz.qs.length}</div><p>${fill(t("qScore"), {s:quiz.score, n:quiz.qs.length})}</p><p class="secp">${fill(t("qBest"), {s:best, n:quiz.qs.length})}</p>
+    const before = quizBest(quiz.mode), best = quizBest(quiz.mode, quiz.points);
+    box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><div class="qcard qend"><div class="qbig">${nf.format(quiz.points)}</div><p class="qof">${fill(t("qOf"), {n:nf.format(max)})}</p>
+      <div class="qstats"><div><b>${quiz.score}/${quiz.qs.length}</b><span>${t("qCorrect")}</span></div><div><b>${fmtTime(quiz.ms)}</b><span>${t("qTimeUsed")}</span></div></div>
+      <p class="secp">${quiz.points > before && quiz.points > 0 ? t("qNewBest") : fill(t("qBest"), {s:nf.format(best)})}</p>
       <div class="qrow"><button type="button" class="onb-next" data-qmode="${quiz.mode}">${t("qAgain")}</button><button type="button" class="onb-back" data-qquit>${t("qOther")}</button></div></div>`;
     return;
   }
@@ -1086,11 +1147,24 @@ function renderQuiz(){
   const label = code => q.type==="cap" ? L(INFO[code],"cap") : BY_CODE[code].name;
   const prompt = q.type==="flag" ? t("qFlag") : q.type==="cap" ? t("qCap") : t("qCapRev");
   const subject = q.type==="flag" ? `<div class="qflag" aria-label="${t("qFlagAria")}">${c.flag}</div>` : `<div class="qsubj">${q.type==="cap" ? c.name : L(INFO[q.code],"cap")}</div>`;
-  box.innerHTML = `<div class="qtop"><span>${fill(t("qProg"), {i:quiz.i+1, n:quiz.qs.length})}</span><button type="button" class="link" data-qquit>${t("qQuit")}</button></div>
+  const fb = !done ? "" : quiz.ans===q.code ? `${t("qRight")} <b>+${quiz.last}</b>` : quiz.ans==="" ? t("qTimeout") + " " + fill(t("qAnswer"), {a: label(q.code)}) : fill(t("qWrong"), {a: label(q.code)});
+  box.innerHTML = `<div class="qtop"><span>${fill(t("qProg"), {i:quiz.i+1, n:quiz.qs.length})}</span><span class="qpts">${nf.format(quiz.points)} ${t("qPts")}</span><button type="button" class="link" data-qquit>${t("qQuit")}</button></div>
+    <div class="qclock"><div class="qtime" role="presentation"><i id="qbar" style="width:${quiz.left/Q_LIMIT*100}%"></i></div><span id="qsec">${Math.ceil(quiz.left/1000)} s</span></div>
     <div class="qcard"><p class="qprompt">${prompt}</p>${subject}
     <div class="qopts">${q.opts.map(o=>{ const right = o===q.code, chosen = quiz.ans===o; return `<button type="button" class="qopt${done && right ? " ok" : ""}${done && chosen && !right ? " bad" : ""}" data-qopt="${o}" ${done ? "disabled" : ""}>${done && right ? "✓ " : done && chosen ? "✕ " : ""}${label(o)}</button>`; }).join("")}</div>
-    ${done ? `<div class="qfb" role="status">${quiz.ans===q.code ? t("qRight") : fill(t("qWrong"), {a: label(q.code)})}</div><div class="qrow"><button type="button" class="onb-next" data-qnext>${quiz.i===quiz.qs.length-1 ? t("qFinish") : t("qNext")}</button></div>` : ""}</div>`;
+    ${done ? `<div class="qfb" role="status">${fb}</div><div class="qrow"><button type="button" class="onb-next" data-qnext>${quiz.i===quiz.qs.length-1 ? t("qFinish") : t("qNext")}</button></div>` : ""}</div>`;
   if(done){ const n = box.querySelector("[data-qnext]"); if(n) n.focus({preventScroll:true}); }
+  else quizRun();
+}
+
+/* ---------- stranice: Početna, Kviz, Dostignuća ---------- */
+function setPage(name){
+  ui.page = name;
+  for(const k of ["home","quiz","ach"]) $("page-"+k).hidden = k!==name;
+  document.querySelectorAll(".bnav button").forEach(b=>{ if(b.dataset.page===name) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+  if(name==="quiz") renderQuiz(); else quizStop();
+  if(name==="home") requestAnimationFrame(()=>{ if(view==="globe"){ if(G){ resizeGlobe(); gKick(); } } else if(vb) setVB(vb); });
+  window.scrollTo(0, 0);
 }
 
 const ACH = [
@@ -1149,7 +1223,7 @@ const ICON = {
 let marks = {};           // code -> "want" | "been"
 let notes = {};           // code -> {trips:[{year, cities, note}]}
 let prio = {};            // code -> 1..3 (lista želja)
-let ui = {cont:"", status:"", q:"", tab:"list"};
+let ui = {cont:"", status:"", q:"", tab:"list", page:"home"};
 const LS = "atlas-putovanja-v1";
 const $ = id => document.getElementById(id);
 
@@ -1703,14 +1777,19 @@ function render(){ renderStats(); renderAch(); renderChips(); renderList(); rend
 $("q").addEventListener("input", e=>{
   ui.q=e.target.value;
   const hits = searchHits();
-  if(hits && hits.length===1){ picked=hits[0]; focusCountry(picked); }
-  else if(!hits && VB0){ picked=null; setVB(VB0); }
+  // Pretraga samo približi mapu državi; kartica države se ne otvara, da se polje za pretragu ne pomera dok kucaš.
+  if(hits && hits.length===1) focusCountry(hits[0]);
+  else if(!hits && !picked && view!=="globe" && VB0) setVB(VB0);
+  const bar = document.querySelector(".filters"), top = parseFloat(getComputedStyle(bar).top) || 0;
+  const stuck = bar.getBoundingClientRect().top <= top + 1;
   renderList(); renderMap();
+  // Ako je pretraga zalepljena za vrh, lista ostaje odmah ispod nje i kad se skrati.
+  if(stuck) window.scrollTo(0, Math.ceil($("conts").getBoundingClientRect().bottom + window.scrollY - top) + 1);
 });
 $("q").addEventListener("keydown", e=>{
   if(e.key!=="Enter") return;
   const hits = searchHits();
-  if(hits && hits.length){ picked=hits[0]; focusCountry(picked); renderMap(); }
+  if(hits && hits.length){ openInfo = hits[0]; focusCountry(hits[0]); renderList(); hydratePhotos(); e.target.blur(); }
 });
 document.addEventListener("input", e=>{
   const f = e.target.dataset && e.target.dataset.j; if(!f) return;
@@ -1794,13 +1873,11 @@ document.addEventListener("click", e=>{
     if(prio[code]===v) delete prio[code]; else prio[code] = v;
     changed(); render(); return;
   }
+  if(b.dataset.page){ setPage(b.dataset.page); return; }
   if(b.dataset.qmode){ startQuiz(b.dataset.qmode); return; }
-  if(b.hasAttribute("data-qquit")){ quiz.mode = null; renderQuiz(); return; }
-  if(b.dataset.qopt){
-    if(quiz.ans===null){ quiz.ans = b.dataset.qopt; if(quiz.ans===quiz.qs[quiz.i].code) quiz.score++; renderQuiz(); }
-    return;
-  }
-  if(b.hasAttribute("data-qnext")){ quiz.i++; quiz.ans = null; renderQuiz(); return; }
+  if(b.hasAttribute("data-qquit")){ quizStop(); quiz.mode = null; renderQuiz(); return; }
+  if(b.dataset.qopt){ quizAnswer(b.dataset.qopt); return; }
+  if(b.hasAttribute("data-qnext")){ quiz.i++; quiz.ans = null; quiz.left = Q_LIMIT; renderQuiz(); return; }
   if(b.dataset.set){
     const code=b.dataset.code, v=b.dataset.set;
     if(marks[code]===v) delete marks[code]; else marks[code]=v;
@@ -2066,6 +2143,8 @@ $("bkAsk").addEventListener("click", e=>{
   for(const k in prio) if(marks[k]!=="want") delete prio[k];
   changed(); render(); bkMsg(t("bkDone"));
 });
+
+document.addEventListener("visibilitychange", ()=>{ if(document.hidden) quizStop(); else quizRun(); });
 
 (function init(){
   const local = lsGet(); if(local && typeof local==="object") marks=local;
