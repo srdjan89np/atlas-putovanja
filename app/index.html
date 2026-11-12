@@ -61,8 +61,10 @@ h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,7vw,44px);l
 .stat.been b{color:var(--been)} .stat.want b{color:var(--want)}
 .stat small{font-family:var(--f-display);font-size:18px;color:var(--muted);font-weight:500}
 
-.continents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 16px;padding:14px 0 18px;border-top:1px solid var(--line)}
-@media (max-width:520px){.continents{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.continents{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding:0 0 14px}
+.continents::-webkit-scrollbar{display:none}
+.continents .cont{flex:1 0 104px}
+.cont .row span{white-space:nowrap}
 .cont{display:grid;gap:5px;min-width:0;background:none;border:0;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
 .cont .row{display:flex;justify-content:space-between;gap:8px;font-size:13px}
 .cont .row em{font-style:normal;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -153,7 +155,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .savemsg{font-size:12.5px;color:var(--muted);align-self:center;margin-right:10px;min-width:0;text-align:right}
 
-.ach{display:grid;gap:10px;padding:4px 0 20px}
+.ach{display:grid;gap:10px;padding:0 0 8px}
 .ach h2{font-family:var(--f-display);font-weight:700;font-size:18px;margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .ach h2 em{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:500}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
@@ -176,7 +178,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .yr{font-family:var(--f-mono);font-size:11px;color:var(--been);margin-left:6px}
 .pick{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
 
-.backup{display:grid;gap:8px;margin-top:22px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.backup{display:grid;gap:8px;margin-top:0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .backup h3{font-family:var(--f-display);font-size:15px;font-weight:700;margin:0}
 .backup p{margin:0;font-size:13px;color:var(--muted)}
 .backup .row{display:flex;flex-wrap:wrap;gap:8px}
@@ -202,8 +204,9 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #viewsw{position:absolute;left:8px;top:8px;z-index:2}
 #map circle.city{fill:var(--ink);fill-opacity:1;stroke:var(--surface);pointer-events:none}
 
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:16px}
-.tabs button{font:inherit;font-weight:700;font-size:14px;padding:9px 4px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:16px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1 0 auto;white-space:nowrap;font:inherit;font-weight:700;font-size:14px;padding:9px 12px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
 .tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #tab-list .continents{border-top:0;padding-top:0}
@@ -230,6 +233,15 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .yhead span{font-size:12.5px;color:var(--muted)}
 .tl{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .tl li + li{border-top:1px solid var(--line)}
+.tli{grid-template-columns:auto minmax(0,1fr) auto !important}
+.tthumb{width:56px;height:56px;object-fit:cover;border-radius:8px;display:block}
+.tthumb:not([src]){visibility:hidden}
+.tphoto{display:grid;gap:6px;justify-items:start}
+.timg{width:100%;max-height:240px;object-fit:cover;border-radius:8px;display:block;background:var(--surface)}
+.timg:not([src]){min-height:80px}
+.plabel{font-weight:700;cursor:pointer}
+.plabel:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pgone{font-size:12.5px;color:var(--muted)}
 .tli,.pname{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:0;padding:10px 12px;cursor:pointer}
 .tli:focus-visible,.pname:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .tlt strong,.pname strong{display:block}
@@ -274,9 +286,13 @@ small .newc{margin-left:0;margin-right:6px}
 .qend p{margin:0}
 .qbig{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;color:var(--been);font-variant-numeric:tabular-nums}
 
-/* Web verzija (GitHub Pages) nema mesto za reklamu */
-html.web .adbar{display:none}
-html.web body{padding-bottom:env(safe-area-inset-bottom,0px)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--ad-h) + 26px + env(safe-area-inset-bottom,0px));z-index:30;max-width:min(92vw,420px);
+  display:flex;gap:10px;align-items:center;padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:700;box-shadow:0 10px 30px rgb(0 0 0 / .25)}
+.toast .seal{flex:none;width:26px;height:26px;border-radius:50%;background:var(--been);color:var(--surface);display:grid;place-items:center}
+.toast .seal svg{width:14px;height:14px}
+.toast.err{background:var(--want);color:var(--surface)}
+@media (prefers-reduced-motion:no-preference){.toast{animation:toastIn .25s ease-out}@keyframes toastIn{from{transform:translate(-50%,10px);opacity:0}}}
 
 /* Reklama: AdMob baner 320×50 usidren na dnu ekrana */
 :root{--ad-h:50px}
@@ -344,15 +360,13 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
     <button type="button" role="tab" data-tab="journal" aria-selected="false" aria-controls="tab-journal" tabindex="-1" data-i18n="tabJournal">Dnevnik</button>
     <button type="button" role="tab" data-tab="plan" aria-selected="false" aria-controls="tab-plan" tabindex="-1" data-i18n="tabPlan">Plan</button>
     <button type="button" role="tab" data-tab="quiz" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-i18n="tabQuiz">Kviz</button>
+    <button type="button" role="tab" data-tab="ach" aria-selected="false" aria-controls="tab-ach" tabindex="-1" data-i18n="ach">Dostignuća</button>
+    <button type="button" role="tab" data-tab="more" aria-selected="false" aria-controls="tab-more" tabindex="-1" data-i18n="tabMore">Više</button>
   </div>
 
   <div id="tab-list" role="tabpanel">
   <section class="continents" id="conts" data-i18n-aria="contsAria" aria-label="Napredak po kontinentima"></section>
 
-  <section class="ach" data-i18n-aria="ach" aria-label="Dostignuća">
-    <h2><span data-i18n="ach">Dostignuća</span> <em id="achCount"></em></h2>
-    <div class="badges" id="badges"></div>
-  </section>
 
   <div class="filters">
     <input class="search" id="q" type="search" data-i18n-ph="searchPh" placeholder="Pretraži državu ili kod (npr. JP)" autocomplete="off" data-i18n-aria="searchAria" aria-label="Pretraga država">
@@ -365,6 +379,13 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
   <div id="tab-journal" role="tabpanel" hidden></div>
   <div id="tab-plan" role="tabpanel" hidden></div>
   <div id="tab-quiz" role="tabpanel" hidden></div>
+  <div id="tab-ach" role="tabpanel" hidden>
+  <section class="ach" data-i18n-aria="ach" aria-label="Dostignuća">
+    <h2><span data-i18n="ach">Dostignuća</span> <em id="achCount"></em></h2>
+    <div class="badges" id="badges"></div>
+  </section>
+  </div>
+  <div id="tab-more" role="tabpanel" hidden>
 
   <section class="backup" data-i18n-aria="bkTitle" aria-label="Rezervna kopija">
     <h3 data-i18n="bkTitle">Rezervna kopija</h3>
@@ -383,7 +404,9 @@ body{padding-bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px))}
     <span id="resetBox"><button class="link" id="resetBtn" type="button">Obriši sve oznake</button></span>
     <button class="link" id="helpBtn" type="button" data-i18n="howTo">Kako radi</button>
   </footer>
+  </div>
 </div>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
   <div class="adslot" id="admob-banner" data-ad-unit="ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX" data-ad-size="BANNER_320x50" data-i18n="adLabel">Reklama · 320×50</div>
@@ -430,6 +453,8 @@ const T = {
   bkBad:"Ova datoteka nije rezervna kopija Atlasa putovanja.", bkReadErr:"Datoteka ne može da se pročita.",
   bkFound:"U datoteci: obiđeno {b} · na listi želja {w} · beleške {n}.", bkHave:"Trenutno označenih država: {c}.",
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
+  tabMore:"Više", achToast:"Otključano dostignuće", addPhoto:"Dodaj fotografiju", delPhoto:"Ukloni fotografiju", photoAlt:"Fotografija sa putovanja", photoWait:"Čuvam fotografiju…",
+  photoFail:"Fotografija ne može da se sačuva.", photoGone:"Fotografija nije dostupna na ovom uređaju.",
   tabsAria:"Delovi aplikacije", tabList:"Države", tabJournal:"Dnevnik", tabPlan:"Plan", tabQuiz:"Kviz",
   viewAria:"Prikaz mape", viewFlat:"Mapa", viewGlobe:"Globus", globeFail:"Globus trenutno ne može da se učita.", hintGlobe:"Okreni globus prstom, dodirni državu da je označiš",
   addTrip:"Dodaj putovanje", saveTrip:"Sačuvaj", tripSaved:"Sačuvano", delTrip:"Ukloni", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
@@ -444,8 +469,9 @@ const T = {
   howTo:"Kako radi", adLabel:"Reklama · 320×50", adAria:"Reklama", skip:"Preskoči", back:"Nazad", next:"Dalje", start:"Počni",
   o1t:"Dobrodošao u Atlas putovanja", o1p:"Vodi evidenciju o svim državama koje si obišao i onima koje tek želiš da vidiš. Svih 195 država na jednom mestu.",
   o2t:"Označi države", o2p:"Zvezdica znači da želiš da posetiš državu, a kvačica da si već bio tamo. Ponovni dodir briše oznaku.",
-  o3t:"Mapa i informacije", o3p:"Dodirni državu na mapi da je označiš. Dugme ⓘ otvara glavni grad, valutu i jezik, a za obiđene države i tvoje beleške sa putovanja.",
-  o4t:"Dostignuća i deljenje", o4p:"Otključavaj pečate kako putuješ, od prve države do Kluba 100. Kad poželiš, napravi sliku svoje mape i podeli je."},
+  o3t:"Mapa i globus", o3p:"Dodirni državu na mapi da je označiš. Dugmetom Mapa / Globus biraš ravnu mapu ili globus koji se okreće. Dugme ⓘ otvara podatke o državi.",
+  o4t:"Dnevnik i plan", o4p:"U kartici Dnevnik su tvoja putovanja po godinama, sa gradovima, beleškama i fotografijom. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
+  o5t:"Dostignuća, kviz i deljenje", o5p:"Otključavaj pečate kako putuješ, proveri znanje u kvizu o zastavama i glavnim gradovima i podeli sliku svoje mape. Rezervna kopija je u kartici Više."},
  en:{eyebrow:"195 countries · ISO 3166", title:"Travel Atlas", visited:"visited", ofWorld:"of the world", onWish:"on the wish list",
   worldMap:"World map", mapAria:"World map with marked countries", loadingMap:"Loading map…", mapFail:"The map can't load right now. The list below still works.",
   zoomIn:"Zoom in", zoomOut:"Zoom out", zoomAll:"Whole map", been:"Visited", want:"Want to go", all:"All", hint:"Tap a country on the map to mark it", share:"Share map",
@@ -467,6 +493,8 @@ const T = {
   bkBad:"This file isn't a Travel Atlas backup.", bkReadErr:"The file can't be read.",
   bkFound:"In the file: visited {b} · wish list {w} · notes {n}.", bkHave:"Currently marked countries: {c}.",
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
+  tabMore:"More", achToast:"Achievement unlocked", addPhoto:"Add a photo", delPhoto:"Remove photo", photoAlt:"Trip photo", photoWait:"Saving photo…",
+  photoFail:"The photo can't be saved.", photoGone:"The photo isn't available on this device.",
   tabsAria:"App sections", tabList:"Countries", tabJournal:"Journal", tabPlan:"Plan", tabQuiz:"Quiz",
   viewAria:"Map view", viewFlat:"Map", viewGlobe:"Globe", globeFail:"The globe can't load right now.", hintGlobe:"Drag to rotate, tap a country to mark it",
   addTrip:"Add a trip", saveTrip:"Save", tripSaved:"Saved", delTrip:"Remove", sure:"Remove for sure?", fBest:"Best time",
@@ -481,18 +509,17 @@ const T = {
   howTo:"How it works", adLabel:"Ad · 320×50", adAria:"Advertisement", skip:"Skip", back:"Back", next:"Next", start:"Get started",
   o1t:"Welcome to Travel Atlas", o1p:"Keep track of every country you've visited and the ones you still want to see. All 195 countries in one place.",
   o2t:"Mark countries", o2p:"A star means you want to go, a tick means you've been there. Tap again to clear the mark.",
-  o3t:"Map and country info", o3p:"Tap a country on the map to mark it. The ⓘ button shows the capital, currency and language, plus your trip notes for countries you've visited.",
-  o4t:"Achievements and sharing", o4p:"Unlock stamps as you travel, from your first country to Club 100. Whenever you like, create an image of your map and share it."}
+  o3t:"Map and globe", o3p:"Tap a country on the map to mark it. The Map / Globe switch changes between a flat map and a globe you can spin. The ⓘ button shows country facts.",
+  o4t:"Journal and plan", o4p:"The Journal tab lists your trips by year, with cities, notes and a photo. The Plan tab sorts your wish list by priority and suggests where to go next.",
+  o5t:"Achievements, quiz and sharing", o5p:"Unlock stamps as you travel, test yourself in the flags and capitals quiz, and share an image of your map. Backup lives in the More tab."}
 };
 const CONT = {sr:{E:"Evropa",A:"Azija",F:"Afrika",N:"Severna Amerika",S:"Južna Amerika",O:"Okeanija"},
               en:{E:"Europe",A:"Asia",F:"Africa",N:"North America",S:"South America",O:"Oceania"}};
-const CAP_EN = `AL:Tirana;AD:Andorra la Vella;AT:Vienna;BY:Minsk;BE:Brussels;BA:Sarajevo;BG:Sofia;HR:Zagreb;CY:Nicosia;CZ:Prague;DK:Copenhagen;EE:Tallinn;FI:Helsinki;FR:Paris;DE:Berlin;GR:Athens;HU:Budapest;IS:Reykjavík;IE:Dublin;IT:Rome;LV:Riga;LI:Vaduz;LT:Vilnius;LU:Luxembourg;MT:Valletta;MD:Chișinău;MC:Monaco;ME:Podgorica;NL:Amsterdam;MK:Skopje;NO:Oslo;PL:Warsaw;PT:Lisbon;RO:Bucharest;RU:Moscow;SM:San Marino;RS:Belgrade;SK:Bratislava;SI:Ljubljana;ES:Madrid;SE:Stockholm;CH:Bern;UA:Kyiv;GB:London;VA:Vatican City;AF:Kabul;AM:Yerevan;AZ:Baku;BH:Manama;BD:Dhaka;BT:Thimphu;BN:Bandar Seri Begawan;KH:Phnom Penh;CN:Beijing;GE:Tbilisi;IN:New Delhi;ID:Jakarta;IR:Tehran;IQ:Baghdad;IL:Jerusalem (disputed);JP:Tokyo;JO:Amman;KZ:Astana;KW:Kuwait City;KG:Bishkek;LA:Vientiane;LB:Beirut;MY:Kuala Lumpur;MV:Malé;MN:Ulaanbaatar;MM:Naypyidaw;NP:Kathmandu;KP:Pyongyang;OM:Muscat;PK:Islamabad;PS:Ramallah (administrative seat);PH:Manila;QA:Doha;SA:Riyadh;SG:Singapore;KR:Seoul;LK:Sri Jayawardenepura Kotte;SY:Damascus;TJ:Dushanbe;TH:Bangkok;TL:Dili;TR:Ankara;TM:Ashgabat;AE:Abu Dhabi;UZ:Tashkent;VN:Hanoi;YE:Sanaa;DZ:Algiers;AO:Luanda;BJ:Porto-Novo;BW:Gaborone;BF:Ouagadougou;BI:Gitega;CV:Praia;CM:Yaoundé;CF:Bangui;TD:N'Djamena;KM:Moroni;CG:Brazzaville;CD:Kinshasa;CI:Yamoussoukro;DJ:Djibouti;EG:Cairo;GQ:Malabo;ER:Asmara;SZ:Mbabane;ET:Addis Ababa;GA:Libreville;GM:Banjul;GH:Accra;GN:Conakry;GW:Bissau;KE:Nairobi;LS:Maseru;LR:Monrovia;LY:Tripoli;MG:Antananarivo;MW:Lilongwe;ML:Bamako;MR:Nouakchott;MU:Port Louis;MA:Rabat;MZ:Maputo;NA:Windhoek;NE:Niamey;NG:Abuja;RW:Kigali;ST:São Tomé;SN:Dakar;SC:Victoria;SL:Freetown;SO:Mogadishu;ZA:Pretoria;SS:Juba;SD:Khartoum;TZ:Dodoma;TG:Lomé;TN:Tunis;UG:Kampala;ZM:Lusaka;ZW:Harare;AG:St. John's;BS:Nassau;BB:Bridgetown;BZ:Belmopan;CA:Ottawa;CR:San José;CU:Havana;DM:Roseau;DO:Santo Domingo;SV:San Salvador;GD:St. George's;GT:Guatemala City;HT:Port-au-Prince;HN:Tegucigalpa;JM:Kingston;MX:Mexico City;NI:Managua;PA:Panama City;KN:Basseterre;LC:Castries;VC:Kingstown;TT:Port of Spain;US:Washington, D.C.;AR:Buenos Aires;BO:Sucre (constitutional), La Paz (seat of government);BR:Brasília;CL:Santiago;CO:Bogotá;EC:Quito;GY:Georgetown;PY:Asunción;PE:Lima;SR:Paramaribo;UY:Montevideo;VE:Caracas;AU:Canberra;FJ:Suva;KI:South Tarawa;MH:Majuro;FM:Palikir;NR:Yaren (unofficial);NZ:Wellington;PW:Ngerulmud;PG:Port Moresby;WS:Apia;SB:Honiara;TO:Nukuʻalofa;TV:Funafuti;VU:Port Vila`;
+const CAP_EN = `AL:Tirana;AD:Andorra la Vella;AT:Vienna;BY:Minsk;BE:Brussels;BA:Sarajevo;BG:Sofia;HR:Zagreb;CY:Nicosia;CZ:Prague;DK:Copenhagen;EE:Tallinn;FI:Helsinki;FR:Paris;DE:Berlin;GR:Athens;HU:Budapest;IS:Reykjavík;IE:Dublin;IT:Rome;LV:Riga;LI:Vaduz;LT:Vilnius;LU:Luxembourg;MT:Valletta;MD:Chișinău;MC:Monaco;ME:Podgorica;NL:Amsterdam;MK:Skopje;NO:Oslo;PL:Warsaw;PT:Lisbon;RO:Bucharest;RU:Moscow;SM:San Marino;RS:Belgrade;SK:Bratislava;SI:Ljubljana;ES:Madrid;SE:Stockholm;CH:Bern;UA:Kyiv;GB:London;VA:Vatican City;AF:Kabul;AM:Yerevan;AZ:Baku;BH:Manama;BD:Dhaka;BT:Thimphu;BN:Bandar Seri Begawan;KH:Phnom Penh;CN:Beijing;GE:Tbilisi;IN:New Delhi;ID:Jakarta;IR:Tehran;IQ:Baghdad;IL:Jerusalem (disputed);JP:Tokyo;JO:Amman;KZ:Astana;KW:Kuwait City;KG:Bishkek;LA:Vientiane;LB:Beirut;MY:Kuala Lumpur;MV:Malé;MN:Ulaanbaatar;MM:Naypyidaw;NP:Kathmandu;KP:Pyongyang;OM:Muscat;PK:Islamabad;PS:Ramallah (administrative seat);PH:Manila;QA:Doha;SA:Riyadh;SG:Singapore;KR:Seoul;LK:Sri Jayawardenepura Kotte (official), Colombo;SY:Damascus;TJ:Dushanbe;TH:Bangkok;TL:Dili;TR:Ankara;TM:Ashgabat;AE:Abu Dhabi;UZ:Tashkent;VN:Hanoi;YE:Sanaa;DZ:Algiers;AO:Luanda;BJ:Porto-Novo;BW:Gaborone;BF:Ouagadougou;BI:Gitega;CV:Praia;CM:Yaoundé;CF:Bangui;TD:N'Djamena;KM:Moroni;CG:Brazzaville;CD:Kinshasa;CI:Yamoussoukro;DJ:Djibouti;EG:Cairo;GQ:Ciudad de la Paz;ER:Asmara;SZ:Mbabane (administrative), Lobamba (royal);ET:Addis Ababa;GA:Libreville;GM:Banjul;GH:Accra;GN:Conakry;GW:Bissau;KE:Nairobi;LS:Maseru;LR:Monrovia;LY:Tripoli;MG:Antananarivo;MW:Lilongwe;ML:Bamako;MR:Nouakchott;MU:Port Louis;MA:Rabat;MZ:Maputo;NA:Windhoek;NE:Niamey;NG:Abuja;RW:Kigali;ST:São Tomé;SN:Dakar;SC:Victoria;SL:Freetown;SO:Mogadishu;ZA:Pretoria;SS:Juba;SD:Khartoum;TZ:Dodoma;TG:Lomé;TN:Tunis;UG:Kampala;ZM:Lusaka;ZW:Harare;AG:St. John's;BS:Nassau;BB:Bridgetown;BZ:Belmopan;CA:Ottawa;CR:San José;CU:Havana;DM:Roseau;DO:Santo Domingo;SV:San Salvador;GD:St. George's;GT:Guatemala City;HT:Port-au-Prince;HN:Tegucigalpa;JM:Kingston;MX:Mexico City;NI:Managua;PA:Panama City;KN:Basseterre;LC:Castries;VC:Kingstown;TT:Port of Spain;US:Washington, D.C.;AR:Buenos Aires;BO:Sucre (constitutional), La Paz (seat of government);BR:Brasília;CL:Santiago;CO:Bogotá;EC:Quito;GY:Georgetown;PY:Asunción;PE:Lima;SR:Paramaribo;UY:Montevideo;VE:Caracas;AU:Canberra;FJ:Suva;KI:South Tarawa;MH:Majuro;FM:Palikir;NR:Yaren (unofficial);NZ:Wellington;PW:Ngerulmud;PG:Port Moresby;WS:Apia;SB:Honiara;TO:Nukuʻalofa;TV:Funafuti;VU:Port Vila`;
 const LANG_EN = {"12 službenih jezika":"12 official languages",ajmara:"Aymara",albanski:"Albanian",amharski:"Amharic",arapski:"Arabic",azerbejdžanski:"Azerbaijani","bambara i drugi nacionalni jezici":"Bambara and other national languages",beloruski:"Belarusian",bengalski:"Bengali",berberski:"Berber",bislama:"Bislama",bosanski:"Bosnian",bugarski:"Bulgarian",burmanski:"Burmese",crnogorski:"Montenegrin",cvana:"Tswana",danski:"Danish",dari:"Dari",divehi:"Dhivehi",djula:"Dioula",dzongka:"Dzongkha",engleski:"English",estonski:"Estonian",fidžijski:"Fijian",filipinski:"Filipino",finski:"Finnish",francuski:"French",fula:"Fula",gruzijski:"Georgian",grčki:"Greek",gvarani:"Guaraní","haićanski kreolski":"Haitian Creole",hausa:"Hausa",hebrejski:"Hebrew",hindi:"Hindi",hindustani:"Hindustani","hiri motu":"Hiri Motu",holandski:"Dutch",hrvatski:"Croatian",indonežanski:"Indonesian",irski:"Irish",islandski:"Icelandic",italijanski:"Italian",japanski:"Japanese",jermenski:"Armenian",katalonski:"Catalan",kazaški:"Kazakh",kečua:"Quechua","kineski (mandarinski)":"Chinese (Mandarin)",kinjaruanda:"Kinyarwanda",kirgiski:"Kyrgyz",kiribatski:"Gilbertese",kirundi:"Kirundi",kmerski:"Khmer",komorski:"Comorian",korejski:"Korean",kurdski:"Kurdish",laoški:"Lao",latinski:"Latin",letonski:"Latvian",litvanski:"Lithuanian",luksemburški:"Luxembourgish",makedonski:"Macedonian",malajski:"Malay",malgaški:"Malagasy",malteški:"Maltese",mandarinski:"Mandarin",maorski:"Māori",maršalski:"Marshallese",mađarski:"Hungarian",mongolski:"Mongolian",mosi:"Mooré",nauruski:"Nauruan","ndebele i drugi":"Ndebele and others",nemački:"German",nepalski:"Nepali",norveški:"Norwegian",palauanski:"Palauan",paštu:"Pashto",persijski:"Persian",poljski:"Polish",portugalski:"Portuguese",retoromanski:"Romansh",rumunski:"Romanian",ruski:"Russian",samoanski:"Samoan",sango:"Sango","sejšelski kreolski":"Seychellois Creole",sesoto:"Sesotho",sinhalski:"Sinhala",slovački:"Slovak",slovenački:"Slovene",somalijski:"Somali",srpski:"Serbian",svahili:"Swahili",svazi:"Swazi",tadžički:"Tajik",tajlandski:"Thai",tamilski:"Tamil",tetum:"Tetum",tigrinja:"Tigrinya","tok pisin":"Tok Pisin",tonganski:"Tongan",turkmenski:"Turkmen",turski:"Turkish",tuvaluanski:"Tuvaluan",ukrajinski:"Ukrainian",urdu:"Urdu",uzbečki:"Uzbek",vijetnamski:"Vietnamese",češki:"Czech",čičeva:"Chichewa",šona:"Shona",španski:"Spanish","španski i 36 domorodačkih jezika":"Spanish and 36 Indigenous languages",švedski:"Swedish"};
 const NAME_EN_FIX = {CD:"DR Congo",CG:"Republic of the Congo",MM:"Myanmar",PS:"Palestine",CI:"Côte d'Ivoire",VA:"Vatican City",FM:"Micronesia",KN:"Saint Kitts and Nevis",LC:"Saint Lucia",VC:"Saint Vincent and the Grenadines",US:"United States",GB:"United Kingdom",MK:"North Macedonia",CZ:"Czechia",TL:"Timor-Leste",SZ:"Eswatini",CV:"Cape Verde"};
 const CUR_EN_FIX = {ZWG:"Zimbabwe Gold", SLE:"Sierra Leonean Leone", STN:"São Tomé and Príncipe Dobra", MRU:"Mauritanian Ouguiya", VES:"Venezuelan Bolívar"};
 
-const IS_WEB = /(^|\.)github\.io$/i.test(location.hostname);
-if(IS_WEB) document.documentElement.classList.add("web");
 let lang = "sr";
 try{ const l = localStorage.getItem("atlas-lang"); if(l==="en"||l==="sr") lang = l; }catch(e){}
 const t = k => (T[lang] && T[lang][k]) ?? T.sr[k] ?? k;
@@ -608,202 +635,203 @@ for(const line of CITY_RAW.split("\n")){
   }
 }
 
-/* kod|glavni grad|stanovnika (mil., zaokružena procena)|površina km²|valuta|službeni jezik|pozivni broj|vožnja (D desna, L leva) */
-const INFO_RAW = `AL|Tirana|2.8|28748|albanski lek (ALL)|albanski|+355|D
-AD|Andora la Velja|0.08|468|evro (EUR)|katalonski|+376|D
-AT|Beč|9.1|83879|evro (EUR)|nemački|+43|D
-BY|Minsk|9.2|207600|beloruska rublja (BYN)|beloruski, ruski|+375|D
-BE|Brisel|11.8|30528|evro (EUR)|holandski, francuski, nemački|+32|D
-BA|Sarajevo|3.2|51197|konvertibilna marka (BAM)|bosanski, srpski, hrvatski|+387|D
+/* Provereno 2026-11: glavni gradovi, površine, valute i pozivni brojevi prema skupu mledoze/countries; stanovništvo: Svetska banka (datasets/population), 2025.
+   kod|glavni grad|stanovnika (mil.)|površina km²|valuta|službeni jezik|pozivni broj|vožnja (D desna, L leva) */
+const INFO_RAW = `AL|Tirana|2.3|28748|albanski lek (ALL)|albanski|+355|D
+AD|Andora la Velja|0.083|468|evro (EUR)|katalonski|+376|D
+AT|Beč|9.2|83879|evro (EUR)|nemački|+43|D
+BY|Minsk|9.1|207600|beloruska rublja (BYN)|beloruski, ruski|+375|D
+BE|Brisel|11.9|30528|evro (EUR)|holandski, francuski, nemački|+32|D
+BA|Sarajevo|3.1|51197|konvertibilna marka (BAM)|bosanski, srpski, hrvatski|+387|D
 BG|Sofija|6.4|110994|evro (EUR)|bugarski|+359|D
 HR|Zagreb|3.9|56594|evro (EUR)|hrvatski|+385|D
-CY|Nikozija|1.3|9251|evro (EUR)|grčki, turski|+357|L
+CY|Nikozija|1.4|9251|evro (EUR)|grčki, turski|+357|L
 CZ|Prag|10.9|78871|češka kruna (CZK)|češki|+420|D
 DK|Kopenhagen|6.0|42933|danska kruna (DKK)|danski|+45|D
 EE|Talin|1.4|45339|evro (EUR)|estonski|+372|D
 FI|Helsinki|5.6|338455|evro (EUR)|finski, švedski|+358|D
-FR|Pariz|68.4|551695|evro (EUR)|francuski|+33|D
+FR|Pariz|68.7|551695|evro (EUR)|francuski|+33|D
 DE|Berlin|83.5|357588|evro (EUR)|nemački|+49|D
 GR|Atina|10.4|131957|evro (EUR)|grčki|+30|D
-HU|Budimpešta|9.6|93028|forinta (HUF)|mađarski|+36|D
-IS|Rejkjavik|0.39|103000|islandska kruna (ISK)|islandski|+354|D
-IE|Dablin|5.3|70273|evro (EUR)|irski, engleski|+353|L
-IT|Rim|59.0|302073|evro (EUR)|italijanski|+39|D
-LV|Riga|1.9|64589|evro (EUR)|letonski|+371|D
-LI|Vaduz|0.04|160|švajcarski franak (CHF)|nemački|+423|D
+HU|Budimpešta|9.5|93028|forinta (HUF)|mađarski|+36|D
+IS|Rejkjavik|0.392|103000|islandska kruna (ISK)|islandski|+354|D
+IE|Dablin|5.5|70273|evro (EUR)|irski, engleski|+353|L
+IT|Rim|58.9|302073|evro (EUR)|italijanski|+39|D
+LV|Riga|1.8|64589|evro (EUR)|letonski|+371|D
+LI|Vaduz|0.041|160|švajcarski franak (CHF)|nemački|+423|D
 LT|Vilnjus|2.9|65300|evro (EUR)|litvanski|+370|D
-LU|Luksemburg|0.67|2586|evro (EUR)|luksemburški, francuski, nemački|+352|D
-MT|Valeta|0.56|316|evro (EUR)|malteški, engleski|+356|L
+LU|Luksemburg|0.687|2586|evro (EUR)|luksemburški, francuski, nemački|+352|D
+MT|Valeta|0.58|316|evro (EUR)|malteški, engleski|+356|L
 MD|Kišinjev|2.4|33846|moldavski lej (MDL)|rumunski|+373|D
-MC|Monako|0.04|2.02|evro (EUR)|francuski|+377|D
-ME|Podgorica|0.62|13812|evro (EUR)|crnogorski|+382|D
-NL|Amsterdam|18.0|41850|evro (EUR)|holandski|+31|D
+MC|Monako|0.038|2.02|evro (EUR)|francuski|+377|D
+ME|Podgorica|0.623|13812|evro (EUR)|crnogorski|+382|D
+NL|Amsterdam|18.1|41850|evro (EUR)|holandski|+31|D
 MK|Skoplje|1.8|25713|makedonski denar (MKD)|makedonski, albanski|+389|D
 NO|Oslo|5.6|385207|norveška kruna (NOK)|norveški|+47|D
-PL|Varšava|36.6|312696|zlot (PLN)|poljski|+48|D
-PT|Lisabon|10.6|92212|evro (EUR)|portugalski|+351|D
+PL|Varšava|36.4|312696|zlot (PLN)|poljski|+48|D
+PT|Lisabon|10.8|92212|evro (EUR)|portugalski|+351|D
 RO|Bukurešt|19.0|238397|rumunski lej (RON)|rumunski|+40|D
-RU|Moskva|146|17098246|ruska rublja (RUB)|ruski|+7|D
+RU|Moskva|144|17098246|ruska rublja (RUB)|ruski|+7|D
 SM|San Marino|0.034|61|evro (EUR)|italijanski|+378|D
-RS|Beograd|6.6|88499|srpski dinar (RSD)|srpski|+381|D
+RS|Beograd|6.5|88499|srpski dinar (RSD)|srpski|+381|D
 SK|Bratislava|5.4|49035|evro (EUR)|slovački|+421|D
 SI|Ljubljana|2.1|20271|evro (EUR)|slovenački|+386|D
-ES|Madrid|48.6|505990|evro (EUR)|španski|+34|D
+ES|Madrid|49.4|505990|evro (EUR)|španski|+34|D
 SE|Stokholm|10.6|450295|švedska kruna (SEK)|švedski|+46|D
-CH|Bern|9.0|41285|švajcarski franak (CHF)|nemački, francuski, italijanski, retoromanski|+41|D
-UA|Kijev|37|603550|hrivnja (UAH)|ukrajinski|+380|D
-GB|London|68.3|243610|funta sterlinga (GBP)|engleski|+44|L
+CH|Bern|9.1|41285|švajcarski franak (CHF)|nemački, francuski, italijanski, retoromanski|+41|D
+UA|Kijev|39.0|603550|hrivnja (UAH)|ukrajinski|+380|D
+GB|London|69.5|243610|funta sterlinga (GBP)|engleski|+44|L
 VA|Vatikan|0.0008|0.49|evro (EUR)|latinski, italijanski|+379|D
-AF|Kabul|42|652230|avgani (AFN)|paštu, dari|+93|D
-AM|Jerevan|3.0|29743|dram (AMD)|jermenski|+374|D
+AF|Kabul|43.8|652230|avgani (AFN)|paštu, dari|+93|D
+AM|Jerevan|3.1|29743|dram (AMD)|jermenski|+374|D
 AZ|Baku|10.2|86600|azerbejdžanski manat (AZN)|azerbejdžanski|+994|D
 BH|Manama|1.6|780|bahreinski dinar (BHD)|arapski|+973|D
-BD|Daka|173|148460|taka (BDT)|bengalski|+880|L
-BT|Timpu|0.79|38394|ngultrum (BTN)|dzongka|+975|L
-BN|Bandar Seri Begavan|0.46|5765|brunejski dolar (BND)|malajski|+673|L
-KH|Pnom Pen|17.6|181035|rijel (KHR)|kmerski|+855|D
-CN|Peking|1409|9596961|juan (CNY)|kineski (mandarinski)|+86|D
-GE|Tbilisi|3.7|69700|lari (GEL)|gruzijski|+995|D
-IN|Nju Delhi|1450|3287263|indijska rupija (INR)|hindi, engleski|+91|L
-ID|Džakarta|283|1904569|indonežanska rupija (IDR)|indonežanski|+62|L
-IR|Teheran|91|1648195|iranski rijal (IRR)|persijski|+98|D
-IQ|Bagdad|46|438317|irački dinar (IQD)|arapski, kurdski|+964|D
-IL|Jerusalim (sporno)|9.9|22072|novi šekel (ILS)|hebrejski|+972|D
-JP|Tokio|124|377975|jen (JPY)|japanski|+81|L
+BD|Daka|176|148460|taka (BDT)|bengalski|+880|L
+BT|Timpu|0.797|38394|ngultrum (BTN)|dzongka|+975|L
+BN|Bandar Seri Begavan|0.466|5765|brunejski dolar (BND)|malajski|+673|L
+KH|Pnom Pen|17.8|181035|rijel (KHR)|kmerski|+855|D
+CN|Peking|1407|9596961|juan (CNY)|kineski (mandarinski)|+86|D
+GE|Tbilisi|3.9|69700|lari (GEL)|gruzijski|+995|D
+IN|Nju Delhi|1464|3287263|indijska rupija (INR)|hindi, engleski|+91|L
+ID|Džakarta|286|1904569|indonežanska rupija (IDR)|indonežanski|+62|L
+IR|Teheran|92.4|1648195|iranski rijal (IRR)|persijski|+98|D
+IQ|Bagdad|47.0|438317|irački dinar (IQD)|arapski, kurdski|+964|D
+IL|Jerusalim (sporno)|10.1|22072|novi šekel (ILS)|hebrejski|+972|D
+JP|Tokio|123|377975|jen (JPY)|japanski|+81|L
 JO|Aman|11.5|89342|jordanski dinar (JOD)|arapski|+962|D
-KZ|Astana|20.3|2724900|tenge (KZT)|kazaški, ruski|+7|D
+KZ|Astana|20.8|2724900|tenge (KZT)|kazaški, ruski|+7|D
 KW|Kuvajt|4.9|17818|kuvajtski dinar (KWD)|arapski|+965|D
-KG|Biškek|7.2|199951|som (KGS)|kirgiski, ruski|+996|D
-LA|Vijentijan|7.8|236800|kip (LAK)|laoški|+856|D
+KG|Biškek|7.3|199951|som (KGS)|kirgiski, ruski|+996|D
+LA|Vijentijan|7.9|236800|kip (LAK)|laoški|+856|D
 LB|Bejrut|5.8|10452|libanska funta (LBP)|arapski|+961|D
-MY|Kuala Lumpur|35.6|330803|ringit (MYR)|malajski|+60|L
+MY|Kuala Lumpur|36.0|330803|ringit (MYR)|malajski|+60|L
 MV|Male|0.53|300|rufija (MVR)|divehi|+960|L
-MN|Ulan Bator|3.5|1564116|tugrik (MNT)|mongolski|+976|D
-MM|Nejpjido|54.5|676578|kjat (MMK)|burmanski|+95|D
-NP|Katmandu|29.7|147516|nepalska rupija (NPR)|nepalski|+977|L
-KP|Pjongjang|26.5|120538|severnokorejski von (KPW)|korejski|+850|D
-OM|Maskat|5.3|309500|omanski rijal (OMR)|arapski|+968|D
-PK|Islamabad|251|881913|pakistanska rupija (PKR)|urdu, engleski|+92|L
+MN|Ulan Bator|3.6|1564116|tugrik (MNT)|mongolski|+976|D
+MM|Nejpjido|54.9|676578|kjat (MMK)|burmanski|+95|D
+NP|Katmandu|29.6|147516|nepalska rupija (NPR)|nepalski|+977|L
+KP|Pjongjang|26.6|120538|severnokorejski von (KPW)|korejski|+850|D
+OM|Maskat|5.5|309500|omanski rijal (OMR)|arapski|+968|D
+PK|Islamabad|255|881913|pakistanska rupija (PKR)|urdu, engleski|+92|L
 PS|Ramala (sedište uprave)|5.4|6020|novi šekel (ILS)|arapski|+970|D
-PH|Manila|116|300000|filipinski pezo (PHP)|filipinski, engleski|+63|D
+PH|Manila|117|300000|filipinski pezo (PHP)|filipinski, engleski|+63|D
 QA|Doha|3.0|11586|katarski rijal (QAR)|arapski|+974|D
-SA|Rijad|35|2149690|saudijski rijal (SAR)|arapski|+966|D
-SG|Singapur|6.0|734|singapurski dolar (SGD)|engleski, malajski, mandarinski, tamilski|+65|L
+SA|Rijad|37.0|2149690|saudijski rijal (SAR)|arapski|+966|D
+SG|Singapur|6.1|734|singapurski dolar (SGD)|engleski, malajski, mandarinski, tamilski|+65|L
 KR|Seul|51.7|100210|južnokorejski von (KRW)|korejski|+82|D
-LK|Šri Džajavardenepura Kote|21.9|65610|šrilančanska rupija (LKR)|sinhalski, tamilski|+94|L
-SY|Damask|24|185180|sirijska funta (SYP)|arapski|+963|D
-TJ|Dušanbe|10.6|143100|somoni (TJS)|tadžički|+992|D
-TH|Bangkok|71.7|513120|bat (THB)|tajlandski|+66|L
+LK|Šri Džajavardenepura Kote (zvanični), Kolombo|21.8|65610|šrilančanska rupija (LKR)|sinhalski, tamilski|+94|L
+SY|Damask|25.6|185180|sirijska funta (SYP)|arapski|+963|D
+TJ|Dušanbe|10.8|143100|somoni (TJS)|tadžički|+992|D
+TH|Bangkok|71.6|513120|bat (THB)|tajlandski|+66|L
 TL|Dili|1.4|14874|američki dolar (USD)|tetum, portugalski|+670|L
-TR|Ankara|85.5|783562|turska lira (TRY)|turski|+90|D
-TM|Ašhabad|7.5|488100|turkmenski manat (TMT)|turkmenski|+993|D
-AE|Abu Dabi|11|83600|dirham (AED)|arapski|+971|D
-UZ|Taškent|36.4|448978|uzbečki som (UZS)|uzbečki|+998|D
-VN|Hanoj|101|331212|dong (VND)|vijetnamski|+84|D
-YE|Sana|40.6|527968|jemenski rijal (YER)|arapski|+967|D
-DZ|Alžir|46.8|2381741|alžirski dinar (DZD)|arapski, berberski|+213|D
-AO|Luanda|37.9|1246700|kvanza (AOA)|portugalski|+244|D
-BJ|Porto Novo|14.5|114763|CFA franak (XOF)|francuski|+229|D
-BW|Gaborone|2.5|581730|pula (BWP)|engleski, cvana|+267|L
-BF|Uagadugu|23.5|274200|CFA franak (XOF)|mosi, djula, fula|+226|D
-BI|Gitega|14|27834|burundski franak (BIF)|kirundi, francuski, engleski|+257|D
-CV|Praja|0.53|4033|zelenortski eskudo (CVE)|portugalski|+238|D
-CM|Jaunde|29|475442|CFA franak (XAF)|francuski, engleski|+237|D
-CF|Bangi|5.3|622984|CFA franak (XAF)|francuski, sango|+236|D
-TD|Ndžamena|20|1284000|CFA franak (XAF)|francuski, arapski|+235|D
-KM|Moroni|0.87|1862|komorski franak (KMF)|komorski, arapski, francuski|+269|D
-CG|Brazavil|6.3|342000|CFA franak (XAF)|francuski|+242|D
-CD|Kinšasa|109|2344858|kongoanski franak (CDF)|francuski|+243|D
-CI|Jamusukro|31.9|322463|CFA franak (XOF)|francuski|+225|D
+TR|Ankara|85.9|783562|turska lira (TRY)|turski|+90|D
+TM|Ašhabad|7.6|488100|turkmenski manat (TMT)|turkmenski|+993|D
+AE|Abu Dabi|11.5|83600|dirham (AED)|arapski|+971|D
+UZ|Taškent|37.1|448978|uzbečki som (UZS)|uzbečki|+998|D
+VN|Hanoj|102|331212|dong (VND)|vijetnamski|+84|D
+YE|Sana|41.8|527968|jemenski rijal (YER)|arapski|+967|D
+DZ|Alžir|47.4|2381741|alžirski dinar (DZD)|arapski, berberski|+213|D
+AO|Luanda|39.0|1246700|kvanza (AOA)|portugalski|+244|D
+BJ|Porto Novo|14.8|114763|CFA franak (XOF)|francuski|+229|D
+BW|Gaborone|2.6|581730|pula (BWP)|engleski, cvana|+267|L
+BF|Uagadugu|24.1|274200|CFA franak (XOF)|mosi, djula, fula|+226|D
+BI|Gitega|14.4|27834|burundski franak (BIF)|kirundi, francuski, engleski|+257|D
+CV|Praja|0.527|4033|zelenortski eskudo (CVE)|portugalski|+238|D
+CM|Jaunde|29.9|475442|CFA franak (XAF)|francuski, engleski|+237|D
+CF|Bangi|5.5|622984|CFA franak (XAF)|francuski, sango|+236|D
+TD|Ndžamena|21.0|1284000|CFA franak (XAF)|francuski, arapski|+235|D
+KM|Moroni|0.883|1862|komorski franak (KMF)|komorski, arapski, francuski|+269|D
+CG|Brazavil|6.5|342000|CFA franak (XAF)|francuski|+242|D
+CD|Kinšasa|113|2344858|kongoanski franak (CDF)|francuski|+243|D
+CI|Jamusukro|32.7|322463|CFA franak (XOF)|francuski|+225|D
 DJ|Džibuti|1.2|23200|džibutski franak (DJF)|francuski, arapski|+253|D
-EG|Kairo|116|1001450|egipatska funta (EGP)|arapski|+20|D
-GQ|Malabo|1.9|28051|CFA franak (XAF)|španski, francuski, portugalski|+240|D
-ER|Asmara|3.5|117600|nakfa (ERN)|tigrinja, arapski, engleski|+291|D
-SZ|Mbabane|1.2|17364|lilangeni (SZL)|svazi, engleski|+268|L
-ET|Adis Abeba|132|1104300|bir (ETB)|amharski|+251|D
-GA|Librevil|2.5|267668|CFA franak (XAF)|francuski|+241|D
+EG|Kairo|118|1001450|egipatska funta (EGP)|arapski|+20|D
+GQ|Sijudad de la Paz|1.9|28051|CFA franak (XAF)|španski, francuski, portugalski|+240|D
+ER|Asmara|3.6|117600|nakfa (ERN)|tigrinja, arapski, engleski|+291|D
+SZ|Mbabane (upravni), Lobamba (kraljevski)|1.3|17364|lilangeni (SZL)|svazi, engleski|+268|L
+ET|Adis Abeba|135|1104300|bir (ETB)|amharski|+251|D
+GA|Librevil|2.6|267668|CFA franak (XAF)|francuski|+241|D
 GM|Banžul|2.8|11295|dalasi (GMD)|engleski|+220|D
-GH|Akra|34.4|238533|sedi (GHS)|engleski|+233|D
-GN|Konakri|14.8|245857|gvinejski franak (GNF)|francuski|+224|D
+GH|Akra|35.1|238533|sedi (GHS)|engleski|+233|D
+GN|Konakri|15.1|245857|gvinejski franak (GNF)|francuski|+224|D
 GW|Bisao|2.2|36125|CFA franak (XOF)|portugalski|+245|D
-KE|Najrobi|56.4|580367|kenijski šiling (KES)|svahili, engleski|+254|L
-LS|Maseru|2.3|30355|loti (LSL)|sesoto, engleski|+266|L
-LR|Monrovija|5.6|111369|liberijski dolar (LRD)|engleski|+231|D
-LY|Tripoli|7.4|1759540|libijski dinar (LYD)|arapski|+218|D
-MG|Antananarivo|31.9|587041|arijari (MGA)|malgaški, francuski|+261|D
-MW|Lilongve|21.7|118484|malavijska kvača (MWK)|engleski, čičeva|+265|L
-ML|Bamako|24.5|1240192|CFA franak (XOF)|bambara i drugi nacionalni jezici|+223|D
-MR|Nuakšot|5.2|1030700|ugija (MRU)|arapski|+222|D
-MU|Port Luj|1.3|2040|mauricijska rupija (MUR)|engleski, francuski|+230|L
-MA|Rabat|38.1|446550|marokanski dirham (MAD)|arapski, berberski|+212|D
-MZ|Maputo|34.6|801590|metikal (MZN)|portugalski|+258|L
-NA|Vindhuk|3.0|825615|namibijski dolar (NAD)|engleski|+264|L
-NE|Nijamej|27|1267000|CFA franak (XOF)|hausa, francuski|+227|D
-NG|Abudža|232|923768|naira (NGN)|engleski|+234|D
-RW|Kigali|14.3|26338|ruandski franak (RWF)|kinjaruanda, francuski, engleski, svahili|+250|D
-ST|Sao Tome|0.23|964|dobra (STN)|portugalski|+239|D
-SN|Dakar|18.5|196722|CFA franak (XOF)|francuski|+221|D
-SC|Viktorija|0.13|459|sejšelska rupija (SCR)|sejšelski kreolski, engleski, francuski|+248|L
-SL|Fritaun|8.6|71740|leone (SLE)|engleski|+232|D
-SO|Mogadiš|19|637657|somalijski šiling (SOS)|somalijski, arapski|+252|D
-ZA|Pretorija|64|1221037|rand (ZAR)|12 službenih jezika|+27|L
-SS|Džuba|11.9|619745|južnosudanska funta (SSP)|engleski|+211|D
-SD|Kartum|50|1886068|sudanska funta (SDG)|arapski, engleski|+249|D
-TZ|Dodoma|68.6|945087|tanzanijski šiling (TZS)|svahili, engleski|+255|L
-TG|Lome|9.5|56785|CFA franak (XOF)|francuski|+228|D
+KE|Najrobi|57.5|580367|kenijski šiling (KES)|svahili, engleski|+254|L
+LS|Maseru|2.4|30355|loti (LSL)|sesoto, engleski|+266|L
+LR|Monrovija|5.7|111369|liberijski dolar (LRD)|engleski|+231|D
+LY|Tripoli|7.5|1759540|libijski dinar (LYD)|arapski|+218|D
+MG|Antananarivo|32.7|587041|arijari (MGA)|malgaški, francuski|+261|D
+MW|Lilongve|22.2|118484|malavijska kvača (MWK)|engleski, čičeva|+265|L
+ML|Bamako|25.2|1240192|CFA franak (XOF)|bambara i drugi nacionalni jezici|+223|D
+MR|Nuakšot|5.3|1030700|ugija (MRU)|arapski|+222|D
+MU|Port Luj|1.2|2040|mauricijska rupija (MUR)|engleski, francuski|+230|L
+MA|Rabat|38.4|446550|marokanski dirham (MAD)|arapski, berberski|+212|D
+MZ|Maputo|35.6|801590|metikal (MZN)|portugalski|+258|L
+NA|Vindhuk|3.1|825615|namibijski dolar (NAD)|engleski|+264|L
+NE|Nijamej|27.9|1267000|CFA franak (XOF)|hausa, francuski|+227|D
+NG|Abudža|238|923768|naira (NGN)|engleski|+234|D
+RW|Kigali|14.6|26338|ruandski franak (RWF)|kinjaruanda, francuski, engleski, svahili|+250|D
+ST|Sao Tome|0.24|964|dobra (STN)|portugalski|+239|D
+SN|Dakar|18.9|196722|CFA franak (XOF)|francuski|+221|D
+SC|Viktorija|0.123|459|sejšelska rupija (SCR)|sejšelski kreolski, engleski, francuski|+248|L
+SL|Fritaun|8.8|71740|leone (SLE)|engleski|+232|D
+SO|Mogadiš|19.7|637657|somalijski šiling (SOS)|somalijski, arapski|+252|D
+ZA|Pretorija|64.7|1221037|rand (ZAR)|12 službenih jezika|+27|L
+SS|Džuba|12.2|619745|južnosudanska funta (SSP)|engleski|+211|D
+SD|Kartum|51.7|1886068|sudanska funta (SDG)|arapski, engleski|+249|D
+TZ|Dodoma|70.5|945087|tanzanijski šiling (TZS)|svahili, engleski|+255|L
+TG|Lome|8.6|56785|CFA franak (XOF)|francuski|+228|D
 TN|Tunis|12.3|163610|tuniski dinar (TND)|arapski|+216|D
-UG|Kampala|50|241550|ugandski šiling (UGX)|engleski, svahili|+256|L
-ZM|Lusaka|21.3|752612|zambijska kvača (ZMW)|engleski|+260|L
-ZW|Harare|16.6|390757|zimbabveski zlatni (ZWG)|engleski, šona, ndebele i drugi|+263|L
-AG|Sent Džons|0.094|442|istočnokaripski dolar (XCD)|engleski|+1|L
-BS|Nasau|0.40|13943|bahamski dolar (BSD)|engleski|+1|L
-BB|Bridžtaun|0.28|430|barbadoski dolar (BBD)|engleski|+1|L
-BZ|Belmopan|0.42|22966|beliški dolar (BZD)|engleski|+501|D
-CA|Otava|41.3|9984670|kanadski dolar (CAD)|engleski, francuski|+1|D
-CR|San Hoze|5.1|51100|kolon (CRC)|španski|+506|D
+UG|Kampala|51.4|241550|ugandski šiling (UGX)|engleski, svahili|+256|L
+ZM|Lusaka|21.9|752612|zambijska kvača (ZMW)|engleski|+260|L
+ZW|Harare|17.0|390757|zimbabveski zlatni (ZWG)|engleski, šona, ndebele i drugi|+263|L
+AG|Sent Džons|0.094|442|istočnokaripski dolar (XCD)|engleski|+1 268|L
+BS|Nasau|0.403|13943|bahamski dolar (BSD)|engleski|+1 242|L
+BB|Bridžtaun|0.283|430|barbadoski dolar (BBD)|engleski|+1 246|L
+BZ|Belmopan|0.423|22966|beliški dolar (BZD)|engleski|+501|D
+CA|Otava|41.7|9984670|kanadski dolar (CAD)|engleski, francuski|+1|D
+CR|San Hoze|5.2|51100|kolon (CRC)|španski|+506|D
 CU|Havana|10.9|109884|kubanski pezo (CUP)|španski|+53|D
-DM|Roso|0.067|751|istočnokaripski dolar (XCD)|engleski|+1|L
-DO|Santo Domingo|11.4|48671|dominikanski pezo (DOP)|španski|+1|D
-SV|San Salvador|6.3|21041|američki dolar (USD)|španski|+503|D
-GD|Sent Džordžiz|0.12|344|istočnokaripski dolar (XCD)|engleski|+1|L
-GT|Gvatemala|18.4|108889|kecal (GTQ)|španski|+502|D
-HT|Port o Prens|11.8|27750|gurd (HTG)|francuski, haićanski kreolski|+509|D
-HN|Tegusigalpa|10.8|112492|lempira (HNL)|španski|+504|D
-JM|Kingston|2.8|10991|jamajčanski dolar (JMD)|engleski|+1|L
-MX|Meksiko Siti|131|1964375|meksički pezo (MXN)|španski|+52|D
+DM|Roso|0.066|751|istočnokaripski dolar (XCD)|engleski|+1 767|L
+DO|Santo Domingo|11.5|48671|dominikanski pezo (DOP)|španski|+1 809|D
+SV|San Salvador|6.4|21041|američki dolar (USD)|španski|+503|D
+GD|Sent Džordžiz|0.117|344|istočnokaripski dolar (XCD)|engleski|+1 473|L
+GT|Gvatemala|18.7|108889|kecal (GTQ)|španski|+502|D
+HT|Port o Prens|11.9|27750|gurd (HTG)|francuski, haićanski kreolski|+509|D
+HN|Tegusigalpa|11.0|112492|lempira (HNL)|španski|+504|D
+JM|Kingston|2.8|10991|jamajčanski dolar (JMD)|engleski|+1 876|L
+MX|Meksiko Siti|132|1964375|meksički pezo (MXN)|španski|+52|D
 NI|Managva|7.0|130373|kordoba (NIO)|španski|+505|D
-PA|Panama|4.5|75417|balboa (PAB), američki dolar (USD)|španski|+507|D
-KN|Baster|0.047|261|istočnokaripski dolar (XCD)|engleski|+1|L
-LC|Kastri|0.18|616|istočnokaripski dolar (XCD)|engleski|+1|L
-VC|Kingstaun|0.10|389|istočnokaripski dolar (XCD)|engleski|+1|L
-TT|Port of Spejn|1.5|5128|dolar Trinidada i Tobaga (TTD)|engleski|+1|L
-US|Vašington|340|9833520|američki dolar (USD)|engleski|+1|D
-AR|Buenos Ajres|45.7|2780400|argentinski pezo (ARS)|španski|+54|D
-BO|Sukre (ustavni), La Paz (sedište vlade)|12.4|1098581|boliviano (BOB)|španski i 36 domorodačkih jezika|+591|D
-BR|Brazilija|212|8515767|real (BRL)|portugalski|+55|D
-CL|Santjago|19.8|756102|čileanski pezo (CLP)|španski|+56|D
-CO|Bogota|53|1141748|kolumbijski pezo (COP)|španski|+57|D
-EC|Kito|18.1|283561|američki dolar (USD)|španski|+593|D
-GY|Džordžtaun|0.83|214969|gvajanski dolar (GYD)|engleski|+592|L
-PY|Asunsion|6.9|406752|gvarani (PYG)|španski, gvarani|+595|D
-PE|Lima|34.2|1285216|sol (PEN)|španski, kečua, ajmara|+51|D
-SR|Paramaribo|0.63|163820|surinamski dolar (SRD)|holandski|+597|L
+PA|Panama|4.6|75417|balboa (PAB), američki dolar (USD)|španski|+507|D
+KN|Baster|0.047|261|istočnokaripski dolar (XCD)|engleski|+1 869|L
+LC|Kastri|0.18|616|istočnokaripski dolar (XCD)|engleski|+1 758|L
+VC|Kingstaun|0.1|389|istočnokaripski dolar (XCD)|engleski|+1 784|L
+TT|Port of Spejn|1.4|5128|dolar Trinidada i Tobaga (TTD)|engleski|+1 868|L
+US|Vašington|342|9833520|američki dolar (USD)|engleski|+1|D
+AR|Buenos Ajres|45.9|2780400|argentinski pezo (ARS)|španski|+54|D
+BO|Sukre (ustavni), La Paz (sedište vlade)|12.6|1098581|boliviano (BOB)|španski i 36 domorodačkih jezika|+591|D
+BR|Brazilija|213|8515767|real (BRL)|portugalski|+55|D
+CL|Santjago|19.9|756102|čileanski pezo (CLP)|španski|+56|D
+CO|Bogota|53.4|1141748|kolumbijski pezo (COP)|španski|+57|D
+EC|Kito|18.3|283561|američki dolar (USD)|španski|+593|D
+GY|Džordžtaun|0.836|214969|gvajanski dolar (GYD)|engleski|+592|L
+PY|Asunsion|7.0|406752|gvarani (PYG)|španski, gvarani|+595|D
+PE|Lima|34.6|1285216|sol (PEN)|španski, kečua, ajmara|+51|D
+SR|Paramaribo|0.64|163820|surinamski dolar (SRD)|holandski|+597|L
 UY|Montevideo|3.4|176215|urugvajski pezo (UYU)|španski|+598|D
-VE|Karakas|28.4|916445|bolivar (VES)|španski|+58|D
-AU|Kanbera|27.2|7692024|australijski dolar (AUD)|engleski|+61|L
-FJ|Suva|0.93|18274|fidžijski dolar (FJD)|engleski, fidžijski, hindustani|+679|L
-KI|Južna Tarava|0.13|811|australijski dolar (AUD)|engleski, kiribatski|+686|L
-MH|Madžuro|0.04|181|američki dolar (USD)|maršalski, engleski|+692|D
-FM|Palikir|0.11|702|američki dolar (USD)|engleski|+691|D
+VE|Karakas|28.5|916445|bolivar (VES)|španski|+58|D
+AU|Kanbera|27.6|7692024|australijski dolar (AUD)|engleski|+61|L
+FJ|Suva|0.933|18274|fidžijski dolar (FJD)|engleski, fidžijski, hindustani|+679|L
+KI|Južna Tarava|0.136|811|australijski dolar (AUD)|engleski, kiribatski|+686|L
+MH|Madžuro|0.036|181|američki dolar (USD)|maršalski, engleski|+692|D
+FM|Palikir|0.114|702|američki dolar (USD)|engleski|+691|D
 NR|Jaren (nezvanično)|0.012|21|australijski dolar (AUD)|nauruski, engleski|+674|L
 NZ|Velington|5.3|268021|novozelandski dolar (NZD)|engleski, maorski|+64|L
 PW|Ngerulmud|0.018|459|američki dolar (USD)|palauanski, engleski|+680|D
-PG|Port Morzbi|10.3|462840|kina (PGK)|engleski, tok pisin, hiri motu|+675|L
-WS|Apija|0.22|2842|tala (WST)|samoanski, engleski|+685|L
-SB|Honijara|0.82|28896|solomonski dolar (SBD)|engleski|+677|L
-TO|Nukualofa|0.10|747|paanga (TOP)|tonganski, engleski|+676|L
-TV|Funafuti|0.01|26|australijski dolar (AUD)|tuvaluanski, engleski|+688|L
-VU|Port Vila|0.33|12189|vatu (VUV)|bislama, engleski, francuski|+678|D`;
+PG|Port Morzbi|10.8|462840|kina (PGK)|engleski, tok pisin, hiri motu|+675|L
+WS|Apija|0.219|2842|tala (WST)|samoanski, engleski|+685|L
+SB|Honijara|0.839|28896|solomonski dolar (SBD)|engleski|+677|L
+TO|Nukualofa|0.104|747|paanga (TOP)|tonganski, engleski|+676|L
+TV|Funafuti|0.0095|26|australijski dolar (AUD)|tuvaluanski, engleski|+688|L
+VU|Port Vila|0.335|12189|vatu (VUV)|bislama, engleski, francuski|+678|D`;
 const INFO = {};
 const capEn = Object.fromEntries(CAP_EN.split(";").map(x=>{ const i = x.indexOf(":"); return [x.slice(0,i), x.slice(i+1)]; }));
 let curEn = null; try{ curEn = new Intl.DisplayNames(["en"], {type:"currency"}); }catch(e){}
@@ -844,6 +872,55 @@ function infoHTML(code){
 let openInfo = null;
 
 let savedFlash = null, savedTimer = null;
+/* Fotografije: u Claude verziji idu u skladište artifacta (vide se na svim uređajima), inače u IndexedDB ovog uređaja */
+let assetsCap = null; const photoCache = new Map();
+function idb(){
+  if(!idb.p) idb.p = new Promise((ok, bad)=>{ const r = indexedDB.open("atlas-photos", 1); r.onupgradeneeded = ()=>r.result.createObjectStore("p"); r.onsuccess = ()=>ok(r.result); r.onerror = ()=>bad(r.error); });
+  return idb.p;
+}
+const idbDo = (mode, fn) => idb().then(db => new Promise((ok, bad)=>{ const tx = db.transaction("p", mode), rq = fn(tx.objectStore("p")); tx.oncomplete = ()=>ok(rq.result); tx.onerror = tx.onabort = ()=>bad(tx.error); }));
+async function shrinkPhoto(file){
+  let src; try{ src = await createImageBitmap(file); }catch(e){
+    src = await new Promise((ok, bad)=>{ const i = new Image(), u = URL.createObjectURL(file); i.onload = ()=>{ URL.revokeObjectURL(u); ok(i); }; i.onerror = ()=>{ URL.revokeObjectURL(u); bad(new Error("image")); }; i.src = u; });
+  }
+  const k = Math.min(1, 1280 / Math.max(src.width, src.height)), c = document.createElement("canvas");
+  c.width = Math.max(1, Math.round(src.width*k)); c.height = Math.max(1, Math.round(src.height*k));
+  c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
+  return new Promise((ok, bad)=>c.toBlob(b => b ? ok(b) : bad(new Error("encode")), "image/jpeg", 0.82));
+}
+async function photoPut(file){
+  const blob = await shrinkPhoto(file);
+  if(assetsCap){ const r = await assetsCap.upload(blob); photoCache.set("a:"+r.id, r.url); return "a:"+r.id; }
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,10);
+  await idbDo("readwrite", st => st.put(blob, id));
+  photoCache.set("l:"+id, URL.createObjectURL(blob)); return "l:"+id;
+}
+function photoDel(ref){
+  if(!ref) return; photoCache.delete(ref);
+  if(ref[0]==="a"){ if(assetsCap) assetsCap.delete(ref.slice(2)).catch(()=>{}); }
+  else idbDo("readwrite", st => st.delete(ref.slice(2))).catch(()=>{});
+}
+function hydratePhotos(){
+  document.querySelectorAll("img[data-photo]:not([src])").forEach(img=>{
+    const ref = img.dataset.photo, gone = ()=>{ const s2 = document.createElement("span"); s2.className = "pgone"; s2.textContent = t("photoGone"); img.replaceWith(s2); };
+    img.onerror = gone;
+    if(photoCache.has(ref)) img.src = photoCache.get(ref);
+    else if(ref[0]==="a") img.src = "/_blob/" + ref.slice(2);
+    else idbDo("readonly", st => st.get(ref.slice(2))).then(b=>{ if(!b) return gone(); const u = URL.createObjectURL(b); photoCache.set(ref, u); document.querySelectorAll(`img[data-photo="${ref}"]:not([src])`).forEach(i=>{ i.src = u; }); }).catch(gone);
+  });
+}
+document.addEventListener("change", async e=>{
+  const inp = e.target; if(!inp.dataset || !inp.dataset.photoin) return;
+  const f = inp.files && inp.files[0]; if(!f) return;
+  const code = inp.dataset.photoin, i = +inp.dataset.i || 0, lab = inp.parentNode.querySelector(".plabel");
+  if(lab) lab.textContent = t("photoWait");
+  try{
+    const ref = await photoPut(f);
+    const n = notes[code] || (notes[code] = {trips:[]}); while(n.trips.length <= i) n.trips.push({});
+    if(n.trips[i].photo) photoDel(n.trips[i].photo);
+    n.trips[i].photo = ref; changed(); render();
+  }catch(err){ if(lab) lab.textContent = "+ " + t("addPhoto"); inp.value = ""; toast(t("photoFail"), true); }
+});
 const editing = new Set();          // putovanja koja se menjaju, a još nisu sačuvana ("kod:redni broj")
 function journalHTML(code, where){
   const trips = tripsOf(code), list = trips.length ? trips : [{}];
@@ -855,6 +932,8 @@ function journalHTML(code, where){
       <label for="${id}-c">${t("cities")}<input id="${id}-c" data-j="cities" data-code="${code}" data-i="${i}" placeholder="${t("citiesPh")}" value="${esc(n.cities)}"></label>
     </div>
     <label for="${id}-n">${t("note")}<textarea id="${id}-n" data-j="note" data-code="${code}" data-i="${i}" rows="2" placeholder="${t("notePh")}">${esc(n.note)}</textarea></label>
+    <div class="tphoto">${n.photo ? `<img class="timg" data-photo="${esc(n.photo)}" alt="${t("photoAlt")}"><button class="link" type="button" data-delphoto="${code}" data-i="${i}">${t("delPhoto")}</button>`
+      : `<label class="link plabel" for="${id}-p" role="button" tabindex="0">+ ${t("addPhoto")}</label><input type="file" accept="image/*" id="${id}-p" class="vh" data-photoin="${code}" data-i="${i}">`}</div>
     <div class="jfoot"><span class="jsaved" role="status">${savedFlash===key ? "✓ " + t("tripSaved") : ""}</span>
       <button class="jsave" type="button" data-savetrip="${code}" data-i="${i}" ${saved ? "hidden" : ""}>${t("saveTrip")}</button>
       <button class="jdel" type="button" data-deltrip="${code}" data-i="${i}" ${saved ? "" : "hidden"}>${t("delTrip")}</button></div>
@@ -864,7 +943,7 @@ function moreHTML(code, where){ return (marks[code]==="been" ? journalHTML(code,
 
 /* ---------- putovanja (više po državi) i prioriteti ---------- */
 const tripsOf = code => (notes[code] && Array.isArray(notes[code].trips)) ? notes[code].trips : [];
-const tripFilled = tr => !!(tr && (tr.year || tr.cities || tr.note));
+const tripFilled = tr => !!(tr && (tr.year || tr.cities || tr.note || tr.photo));
 function normNotes(raw){            // prihvata i stari oblik {year, cities, note}
   const out = {};
   if(!raw || typeof raw !== "object") return out;
@@ -877,6 +956,7 @@ function normNotes(raw){            // prihvata i stari oblik {year, cities, not
       if(x.year) o.year = String(x.year).replace(/\D/g,"").slice(0,4);
       if(x.cities) o.cities = String(x.cities).slice(0,300);
       if(x.note) o.note = String(x.note).slice(0,5000);
+      if(typeof x.photo==="string" && /^[al]:[\w-]{6,80}$/.test(x.photo)) o.photo = x.photo;
       if(tripFilled(o)) trips.push(o);
     }
     if(trips.length) out[k] = {trips};
@@ -892,13 +972,14 @@ function prioHTML(code){
 }
 
 /* ---------- kartice ---------- */
+const TABS = ["list","journal","plan","quiz","ach","more"];
 function setTab(name){
   ui.tab = name;
-  for(const k of ["list","journal","plan","quiz"]){ $("tab-"+k).hidden = k!==name; }
+  for(const k of TABS){ $("tab-"+k).hidden = k!==name; }
   document.querySelectorAll(".tabs button").forEach(b=>{ const on = b.dataset.tab===name; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
   renderTab();
 }
-function renderTab(){ if(ui.tab==="journal") renderJournal(); else if(ui.tab==="plan") renderPlan(); else if(ui.tab==="quiz") renderQuiz(); }
+function renderTab(){ if(ui.tab==="journal"){ renderJournal(); hydratePhotos(); } else if(ui.tab==="plan") renderPlan(); else if(ui.tab==="quiz") renderQuiz(); }
 function gotoCountry(code){
   ui.q = ""; $("q").value = ""; ui.status = ""; ui.cont = ""; openInfo = code; picked = code;
   setTab("list"); render();
@@ -923,7 +1004,7 @@ function renderJournal(){
   for(const y of years){
     const es = entries.filter(e=>(e.tr.year||"")===y), fresh = y ? Object.values(first).filter(v=>v===y).length : 0;
     html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span></div><ul class="tl">` +
-      es.map(({c, tr})=>`<li><button type="button" class="tli" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span></button></li>`).join("") + `</ul></section>`;
+      es.map(({c, tr})=>`<li><button type="button" class="tli" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span>${tr.photo ? `<img class="tthumb" data-photo="${esc(tr.photo)}" alt="">` : ""}</button></li>`).join("") + `</ul></section>`;
   }
   box.innerHTML = html;
 }
@@ -1041,8 +1122,17 @@ function achState(){
     return {a, have, need, done: have >= need};
   });
 }
+let toastTimer = null, achKnown = null, announce = false;
+function toast(text, err){
+  const el = $("toast"); el.classList.toggle("err", !!err);
+  el.innerHTML = (err ? "" : `<span class="seal">${ICON.been}</span>`) + `<span>${esc(text)}</span>`;
+  el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ el.hidden = true; }, err ? 5000 : 3800);
+}
 function renderAch(){
   const st = achState(); let on = 0;
+  const now = new Set(st.filter(x=>x.done).map(x=>x.a.t));
+  if(announce && achKnown){ const fresh = st.filter(x=>x.done && !achKnown.has(x.a.t)); if(fresh.length) toast(t("achToast") + ": " + fresh.map(x=>lang==="en" ? x.a.te : x.a.t).join(", ")); }
+  achKnown = now; announce = false;
   $("badges").innerHTML = st.map(({a, have, need, done})=>{
     if(done) on++;
     return `<div class="badge ${done?"on":""}"><span class="seal">${done ? ICON.been : `<i>${Math.min(have,need)}</i><i>${need}</i>`}</span><b>${lang==="en" ? a.te : a.t}</b><small>${a.full && a.dd ? a.dd : (lang==="en" ? a.de : a.d)}</small></div>`;
@@ -1252,44 +1342,47 @@ function resizeGlobe(){
   G.R0 = Math.min(G.W, G.H)/2 - 8; G.proj.translate([G.W/2, G.H/2]).scale(G.R0*G.zoom);
   drawGlobe();
 }
-function gFill(code){ const m = marks[code]; return m==="been" ? G.col.been : m==="want" ? G.col.want : (G.hs && G.hs.has(code) ? G.col.accent : G.col.land); }
+function gFill(code, hs){ const m = marks[code]; return m==="been" ? G.col.been : m==="want" ? G.col.want : (hs && hs.has(code) ? G.col.accent : G.col.land); }
 function drawGlobe(){
   if(!G || !G.W || view!=="globe") return;
-  const {ctx, proj, path, col, hs} = G;
-  proj.rotate(G.rot);
-  ctx.clearRect(0,0,G.W,G.H);
+  G.proj.rotate(G.rot);
+  paintGlobe(G.ctx, G.proj, G.path, G.W, G.H, G.hs, picked, 1);
+}
+function paintGlobe(ctx, proj, path, W, H, hs, sel, k){     // k: uvećanje tačaka i linija (slika za deljenje)
+  const col = G.col, rot = proj.rotate();
+  ctx.clearRect(0,0,W,H);
   const [cx, cy] = proj.translate(), r = proj.scale();
   const g = ctx.createRadialGradient(cx - r*0.35, cy - r*0.35, r*0.1, cx, cy, r);
   g.addColorStop(0, col.ocean); g.addColorStop(1, col["ocean-deep"]);
   ctx.beginPath(); path({type:"Sphere"}); ctx.fillStyle = g; ctx.fill();
-  ctx.beginPath(); path(G.grat); ctx.strokeStyle = col.surface; ctx.globalAlpha = .18; ctx.lineWidth = .6; ctx.stroke(); ctx.globalAlpha = 1;
+  ctx.beginPath(); path(G.grat); ctx.strokeStyle = col.surface; ctx.globalAlpha = .18; ctx.lineWidth = .6*k; ctx.stroke(); ctx.globalAlpha = 1;
   for(const f of G.features){
     ctx.beginPath(); path(f.geometry);
     ctx.globalAlpha = !f.code ? .6 : (hs && !hs.has(f.code) ? .35 : 1);
-    ctx.fillStyle = f.code ? gFill(f.code) : col.land; ctx.fill();
-    ctx.strokeStyle = col.ocean; ctx.lineWidth = .7; ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.fillStyle = f.code ? gFill(f.code, hs) : col.land; ctx.fill();
+    ctx.strokeStyle = col.ocean; ctx.lineWidth = .7*k; ctx.stroke(); ctx.globalAlpha = 1;
   }
-  if(G.byCode.RS){ ctx.globalAlpha = hs && !hs.has("RS") ? .35 : 1; ctx.beginPath(); path(G.byCode.RS.geometry); ctx.fillStyle = gFill("RS"); ctx.fill(); ctx.globalAlpha = 1; }
-  const center = [-G.rot[0], -G.rot[1]], vis = ll => d3.geoDistance(ll, center) < Math.PI/2 - .02;
+  if(G.byCode.RS){ ctx.globalAlpha = hs && !hs.has("RS") ? .35 : 1; ctx.beginPath(); path(G.byCode.RS.geometry); ctx.fillStyle = gFill("RS", hs); ctx.fill(); ctx.globalAlpha = 1; }
+  const center = [-rot[0], -rot[1]], vis = ll => d3.geoDistance(ll, center) < Math.PI/2 - .02;
   for(const code in SMALL){
     const f = G.byCode[code]; if(f && !f.small) continue;
     const ll = [SMALL[code][1], SMALL[code][0]]; if(!vis(ll)) continue;
     const [px, py] = proj(ll);
     ctx.globalAlpha = hs && !hs.has(code) ? .35 : 1;
-    ctx.beginPath(); ctx.arc(px, py, 3.6, 0, 2*Math.PI);
-    ctx.fillStyle = marks[code] || (hs && hs.has(code)) ? gFill(code) : col.muted; ctx.fill();
+    ctx.beginPath(); ctx.arc(px, py, 3.6*k, 0, 2*Math.PI);
+    ctx.fillStyle = marks[code] || (hs && hs.has(code)) ? gFill(code, hs) : col.muted; ctx.fill();
     ctx.strokeStyle = col.surface; ctx.lineWidth = 1; ctx.stroke(); ctx.globalAlpha = 1;
   }
   for(const c of cityList){
     const ll = [c.lon, c.lat]; if(!vis(ll)) continue;
     const [px, py] = proj(ll);
-    ctx.beginPath(); ctx.arc(px, py, 2.4, 0, 2*Math.PI); ctx.fillStyle = col.ink; ctx.fill(); ctx.strokeStyle = col.surface; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.arc(px, py, 2.4*k, 0, 2*Math.PI); ctx.fillStyle = col.ink; ctx.fill(); ctx.strokeStyle = col.surface; ctx.lineWidth = 1; ctx.stroke();
   }
-  if(picked){
-    const f = G.byCode[picked];
+  if(sel){
+    const f = G.byCode[sel];
     ctx.lineWidth = 2; ctx.strokeStyle = col.ink;
     if(f && !f.small){ ctx.beginPath(); path(f.geometry); ctx.stroke(); }
-    else if(SMALL[picked]){ const ll = [SMALL[picked][1], SMALL[picked][0]]; if(vis(ll)){ const [px,py] = proj(ll); ctx.beginPath(); ctx.arc(px,py,6,0,2*Math.PI); ctx.stroke(); } }
+    else if(SMALL[sel]){ const ll = [SMALL[sel][1], SMALL[sel][0]]; if(vis(ll)){ const [px,py] = proj(ll); ctx.beginPath(); ctx.arc(px,py,6,0,2*Math.PI); ctx.stroke(); } }
   }
   ctx.beginPath(); path({type:"Sphere"}); ctx.strokeStyle = col.line; ctx.lineWidth = 1; ctx.stroke();
 }
@@ -1349,7 +1442,7 @@ function gEvents(canvas){
     G.drag = null; canvas.classList.remove("drag"); G.spin = false;
     if(d.moved) return;
     const r = canvas.getBoundingClientRect(), code = gPick([e.clientX - r.left, e.clientY - r.top]);
-    picked = code && code !== picked ? code : null; renderMap();
+    picked = code && code !== picked ? code : null; renderMap(); hydratePhotos();
   });
   canvas.addEventListener("pointercancel", ()=>{ G.drag = null; canvas.classList.remove("drag"); });
   canvas.addEventListener("wheel", e=>{ e.preventDefault(); gZoom(e.deltaY < 0 ? 1.15 : 0.87); }, {passive:false});
@@ -1594,7 +1687,7 @@ function showTip(e){
       const el = document.elementFromPoint(e.clientX, e.clientY);
       const code = el && el.closest && el.closest("#map [data-code]") ? el.closest("#map [data-code]").dataset.code : null;
       picked = code && code!==picked ? code : null;
-      renderMap();
+      renderMap(); hydratePhotos();
     }
     start=null;
   };
@@ -1604,7 +1697,7 @@ function showTip(e){
   svg.addEventListener("wheel", e=>{ if(!vb) return; e.preventDefault(); zoom(e.deltaY<0?1.25:0.8); }, {passive:false});
 })();
 
-function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); }
+function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); hydratePhotos(); }
 
 /* ---------- events ---------- */
 $("q").addEventListener("input", e=>{
@@ -1663,11 +1756,16 @@ document.addEventListener("click", e=>{
     return;
   }
   if(b.dataset.info){
-    openInfo = openInfo===b.dataset.info ? null : b.dataset.info; renderList(); return;
+    openInfo = openInfo===b.dataset.info ? null : b.dataset.info; renderList(); hydratePhotos(); return;
   }
   if(b.dataset.tab){ setTab(b.dataset.tab); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
+  if(b.dataset.delphoto){
+    const tr = tripsOf(b.dataset.delphoto)[+b.dataset.i];
+    if(tr && tr.photo){ photoDel(tr.photo); delete tr.photo; changed(); render(); }
+    return;
+  }
   if(b.dataset.savetrip){
     const code = b.dataset.savetrip, tr = tripsOf(code)[+b.dataset.i];
     for(const k of [...editing]) if(k.startsWith(code+":")) editing.delete(k);
@@ -1682,12 +1780,12 @@ document.addEventListener("click", e=>{
   if(b.dataset.addtrip){
     const n = notes[b.dataset.addtrip] || (notes[b.dataset.addtrip] = {trips:[]});
     if(!n.trips.length) n.trips.push({});
-    n.trips.push({}); renderList(); renderMap(); return;
+    n.trips.push({}); renderList(); renderMap(); hydratePhotos(); return;
   }
   if(b.dataset.deltrip){
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = t("sure"); return; }
     const dc = b.dataset.deltrip, n = notes[dc];
-    if(n){ n.trips.splice(+b.dataset.i, 1); if(!n.trips.length) delete notes[dc]; }
+    if(n){ const gone = n.trips.splice(+b.dataset.i, 1)[0]; if(gone && gone.photo) photoDel(gone.photo); if(!n.trips.length) delete notes[dc]; }
     for(const k of [...editing]) if(k.startsWith(dc+":")) editing.delete(k);
     changed(); render(); return;
   }
@@ -1707,6 +1805,7 @@ document.addEventListener("click", e=>{
     const code=b.dataset.code, v=b.dataset.set;
     if(marks[code]===v) delete marks[code]; else marks[code]=v;
     if(marks[code]!=="want") delete prio[code];
+    announce = true;
     changed(); render();
   } else if(b.dataset.cont){
     ui.cont = ui.cont===b.dataset.cont ? "" : b.dataset.cont; render();
@@ -1717,39 +1816,49 @@ document.addEventListener("click", e=>{
   } else if(b.id==="resetBtn"){
     $("resetBox").innerHTML=`<span class="confirm">${t("resetQ")} <button class="link" id="resetYes" type="button">${t("resetYes")}</button><button class="link" id="resetNo" type="button">${t("resetNo")}</button></span>`;
   } else if(b.id==="resetYes"){
+    for(const k in notes) for(const tr of tripsOf(k)) if(tr.photo) photoDel(tr.photo);
     marks={}; notes={}; prio={}; changed(); render(); restoreReset();
   } else if(b.id==="resetNo"){ restoreReset(); }
 });
+document.addEventListener("keydown", e=>{ if((e.key==="Enter" || e.key===" ") && e.target.classList && e.target.classList.contains("plabel")){ e.preventDefault(); e.target.click(); } });
 document.querySelector(".tabs").addEventListener("keydown", e=>{
   if(e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
-  const order = ["list","journal","plan","quiz"], i = order.indexOf(ui.tab);
+  const order = TABS, i = order.indexOf(ui.tab);
   const next = order[(i + (e.key==="ArrowRight" ? 1 : order.length-1)) % order.length];
-  setTab(next); document.querySelector(`.tabs [data-tab="${next}"]`).focus(); e.preventDefault();
+  setTab(next); const nb = document.querySelector(`.tabs [data-tab="${next}"]`); nb.focus(); nb.scrollIntoView({block:"nearest", inline:"nearest"}); e.preventDefault();
 });
 function restoreReset(){ $("resetBox").innerHTML=`<button class="link" id="resetBtn" type="button">${t("reset")}</button>`; }
 
 /* ---------- map image ---------- */
 let downloads = null;
 async function exportMap(){
-  const svg = $("map"); if(!VB0 || !downloads) return;
+  const svg = $("map"), globeMode = view==="globe" && !!G && !!window.d3;
+  if(!VB0 || !downloads) return;
   const btn = $("saveImg"), msg = $("savemsg");
   btn.disabled = true; msg.textContent = t("making");
   try{
     const cs = getComputedStyle(document.documentElement), tk = n => cs.getPropertyValue(n).trim();
     const col = {bg:tk("--bg"), surface:tk("--surface"), line:tk("--line"), ink:tk("--ink"), muted:tk("--muted"), been:tk("--been"), want:tk("--want")};
     // uspravna slika 1080×1350 (format za objave na mrežama)
-    const CW = 1080, CH = 1350, PAD = 56, W = CW - PAD*2, sc = W / VB0.w, MH = Math.round(VB0.h*sc);
+    const CW = 1080, CH = 1350, PAD = 56, W = CW - PAD*2, sc = W / VB0.w, MH = globeMode ? 600 : Math.round(VB0.h*sc);
     const sw = (0.9/sc).toFixed(3), r = (6/sc).toFixed(3);
-    let body = "";
-    for(const el of svg.children){
-      const code = el.dataset.code, m = code ? marks[code] : null;
-      const fill = m==="been" ? col.been : m==="want" ? col.want : (el.tagName==="circle" ? col.muted : col.line);
-      if(el.tagName==="path") body += `<path d="${el.getAttribute("d")}" fill="${fill}" ${el.classList.contains("x")?'fill-opacity=".6"':""} ${el.classList.contains("cover")?'stroke="none"':`stroke="${col.surface}" stroke-width="${sw}"`}/>`;
-      else if(el.tagName==="circle" && !el.classList.contains("city")) body += `<circle cx="${el.getAttribute("cx")}" cy="${el.getAttribute("cy")}" r="${r}" fill="${fill}" stroke="${col.surface}" stroke-width="${sw}"/>`;
+    let img, url = null;
+    if(globeMode){            // globus u položaju u kome ga trenutno gledaš
+      const S = MH*2; img = document.createElement("canvas"); img.width = img.height = S;
+      const gx = img.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(G.rot).translate([S/2, S/2]).scale(S/2 - 6);
+      paintGlobe(gx, pr, d3.geoPath(pr, gx), S, S, null, null, S / Math.max(300, G.W));
+    } else {
+      let body = "";
+      for(const el of svg.children){
+        const code = el.dataset.code, m = code ? marks[code] : null;
+        const fill = m==="been" ? col.been : m==="want" ? col.want : (el.tagName==="circle" ? col.muted : col.line);
+        if(el.tagName==="path") body += `<path d="${el.getAttribute("d")}" fill="${fill}" ${el.classList.contains("x")?'fill-opacity=".6"':""} ${el.classList.contains("cover")?'stroke="none"':`stroke="${col.surface}" stroke-width="${sw}"`}/>`;
+        else if(el.tagName==="circle" && !el.classList.contains("city")) body += `<circle cx="${el.getAttribute("cx")}" cy="${el.getAttribute("cy")}" r="${r}" fill="${fill}" stroke="${col.surface}" stroke-width="${sw}"/>`;
+      }
+      const src = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${MH}" viewBox="${VB0.x} ${VB0.y} ${VB0.w} ${VB0.h}">${body}</svg>`;
+      url = URL.createObjectURL(new Blob([src], {type:"image/svg+xml"}));
+      img = await new Promise((ok, bad)=>{ const i = new Image(); i.onload = ()=>ok(i); i.onerror = bad; i.src = url; });
     }
-    const src = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${MH}" viewBox="${VB0.x} ${VB0.y} ${VB0.w} ${VB0.h}">${body}</svg>`;
-    const url = URL.createObjectURL(new Blob([src], {type:"image/svg+xml"}));
-    const img = await new Promise((ok, bad)=>{ const i = new Image(); i.onload = ()=>ok(i); i.onerror = bad; i.src = url; });
     const cv = document.createElement("canvas"); cv.width = CW; cv.height = CH;
     const g = cv.getContext("2d");
     const F = (w, px, fam) => `${w} ${px}px ${fam==="d" ? '"Bricolage Grotesque"' : fam==="m" ? '"JetBrains Mono"' : '"Atkinson Hyperlegible"'}, system-ui, sans-serif`;
@@ -1771,8 +1880,8 @@ async function exportMap(){
     });
     // mapa
     const MY = 350;
-    g.fillStyle = col.surface; g.beginPath(); g.roundRect(PAD-16, MY-16, W+32, MH+32, 22); g.fill();
-    g.drawImage(img, PAD, MY, W, MH); URL.revokeObjectURL(url);
+    if(globeMode) g.drawImage(img, (CW - MH)/2, MY, MH, MH);
+    else { g.fillStyle = col.surface; g.beginPath(); g.roundRect(PAD-16, MY-16, W+32, MH+32, 22); g.fill(); g.drawImage(img, PAD, MY, W, MH); URL.revokeObjectURL(url); }
     // kontinenti
     let y = MY + MH + 80;
     g.fillStyle = col.ink; g.font = F(700, 30, "d"); g.fillText(t("byCont"), PAD, y);
@@ -1851,6 +1960,13 @@ const ONB_ART = [
    <path d="M60 50l30-10 25 12-6 22-28 6-18-12z" fill="var(--been)"/><path d="M125 45l35-6 20 16-10 20-30-4z" fill="var(--line)"/><path d="M190 52l40-8 30 18-12 26-40-2-14-16z" fill="var(--want)"/>
    <path d="M95 88l30 4 6 24-26 6-16-14z" fill="var(--line)"/><path d="M200 98l24 2 4 18-22 2z" fill="var(--been)"/><circle cx="168" cy="96" r="4" fill="var(--muted)"/>
    <circle cx="150" cy="58" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M162 70l14 14" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/></svg>`,
+  // kartice: dnevnik i plan
+  `<svg viewBox="0 0 320 150" aria-hidden="true"><rect x="36" y="18" width="248" height="26" rx="13" fill="var(--surface)" stroke="var(--line)"/>
+   <rect x="40" y="22" width="58" height="18" rx="9" fill="var(--line)"/><rect x="102" y="22" width="58" height="18" rx="9" fill="var(--ink)"/><rect x="164" y="22" width="58" height="18" rx="9" fill="var(--line)"/><rect x="226" y="22" width="54" height="18" rx="9" fill="var(--line)"/>
+   <text x="40" y="74" font-size="20" font-weight="800" fill="var(--ink)" font-family="system-ui">2024</text>
+   <rect x="36" y="84" width="248" height="50" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="50" y="117" font-size="22">🇯🇵</text>
+   <rect x="86" y="98" width="80" height="9" rx="4" fill="var(--ink)" opacity=".8"/><rect x="86" y="113" width="110" height="7" rx="3.5" fill="var(--muted)" opacity=".5"/>
+   <rect x="232" y="92" width="40" height="34" rx="6" fill="var(--been-soft)" stroke="var(--been)"/><circle cx="244" cy="103" r="4" fill="var(--want)"/><path d="M236 122l10-11 7 7 5-5 10 9z" fill="var(--been)"/></svg>`,
   // pečati
   `<svg viewBox="0 0 320 150" aria-hidden="true"><g transform="rotate(-8 100 75)"><circle cx="100" cy="75" r="38" fill="var(--been-soft)" stroke="var(--been)" stroke-width="2.5"/><circle cx="100" cy="75" r="30" fill="none" stroke="var(--been)" stroke-width="1" stroke-dasharray="3 3"/><text x="100" y="82" text-anchor="middle" font-size="20" font-weight="800" fill="var(--been)" font-family="system-ui">100</text></g>
    <g transform="rotate(6 200 70)"><circle cx="200" cy="70" r="32" fill="none" stroke="var(--want)" stroke-width="2.5" stroke-dasharray="4 4"/><path d="M200 52l5 10.5 11.5 1.3-8.6 7.8 2.4 11.4-10.3-5.8-10.3 5.8 2.4-11.4-8.6-7.8 11.5-1.3z" fill="var(--want)"/></g>
@@ -1972,6 +2088,7 @@ $("bkAsk").addEventListener("click", e=>{
     $("maptools").hidden = false;
     return;
   }
+  claude.use("assets").then(a=>{ assetsCap = a; }).catch(()=>{});
   claude.use("downloads").then(d=>{ downloads = d; $("maptools").hidden = !d; }).catch(()=>{});
   (async()=>{
     const [db,user] = await Promise.all([claude.use("db"), claude.use("user")]);
