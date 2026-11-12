@@ -155,6 +155,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .maptools{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
 .savebtn{font:inherit;font-size:13px;font-weight:700;padding:7px 12px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
 .savebtn svg{width:15px;height:15px}
+.sharelbl{align-self:center;font-size:13px;color:var(--muted)}
 .savebtn:disabled{opacity:.6;cursor:default}
 .savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .savemsg{order:2;flex:1 0 100%;font-size:12.5px;color:var(--muted);text-align:right}
@@ -380,7 +381,7 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
       <span class="hint" id="maphint" data-i18n="hint">Dodirni državu na mapi da je označiš</span>
     </div>
     <div class="pick" id="pick" hidden></div>
-    <div class="maptools" id="maptools" hidden><span class="savemsg" id="savemsg"></span><button class="savebtn" id="saveImg" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg><span data-i18n="share">Podeli mapu</span></button></div>
+    <div class="maptools" id="maptools" hidden><span class="savemsg" id="savemsg"></span><span class="sharelbl" data-i18n="shareLbl">Podeli:</span><button class="savebtn" type="button" data-share="flat" data-i18n-aria="shareFlatAria" aria-label="Podeli ravnu mapu"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg><span data-i18n="viewFlat">Mapa</span></button><button class="savebtn" type="button" data-share="globe" data-i18n-aria="shareGlobeAria" aria-label="Podeli globus"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg><span data-i18n="viewGlobe">Globus</span></button></div>
   </section>
 
 
@@ -487,6 +488,7 @@ const T = {
   bkBad:"Ova datoteka nije rezervna kopija Atlasa putovanja.", bkReadErr:"Datoteka ne može da se pročita.",
   bkFound:"U datoteci: obiđeno {b} · na listi želja {w} · beleške {n}.", bkHave:"Trenutno označenih država: {c}.",
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
+  shareLbl:"Podeli:", shareFlatAria:"Podeli ravnu mapu", shareGlobeAria:"Podeli globus",
   navAria:"Stranice", navHome:"Početna", qPts:"poena", qRules:"Tačan odgovor nosi {b} poena, a brzina do još {x}. Posle {s} sekundi pitanje se računa kao netačno.",
   qTimeout:"Vreme je isteklo.", qAnswer:"Tačan odgovor: {a}", qOf:"poena od mogućih {n}", qCorrect:"tačnih odgovora", qTimeUsed:"ukupno vreme", qNewBest:"Novi najbolji rezultat.",
   tabMore:"Više", achToast:"Otključano dostignuće", addPhoto:"Dodaj fotografiju", delPhoto:"Ukloni fotografiju", photoAlt:"Fotografija sa putovanja", photoWait:"Čuvam fotografiju…",
@@ -529,6 +531,7 @@ const T = {
   bkBad:"This file isn't a Travel Atlas backup.", bkReadErr:"The file can't be read.",
   bkFound:"In the file: visited {b} · wish list {w} · notes {n}.", bkHave:"Currently marked countries: {c}.",
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
+  shareLbl:"Share:", shareFlatAria:"Share the flat map", shareGlobeAria:"Share the globe",
   navAria:"Pages", navHome:"Home", qPts:"pts", qRules:"A correct answer is worth {b} points, plus up to {x} for speed. After {s} seconds the question counts as wrong.",
   qTimeout:"Time's up.", qAnswer:"Correct answer: {a}", qOf:"points out of {n}", qCorrect:"correct answers", qTimeUsed:"total time", qNewBest:"New best score.",
   tabMore:"More", achToast:"Achievement unlocked", addPhoto:"Add a photo", delPhoto:"Remove photo", photoAlt:"Trip photo", photoWait:"Saving photo…",
@@ -1888,6 +1891,7 @@ document.addEventListener("click", e=>{
     if(prio[code]===v) delete prio[code]; else prio[code] = v;
     changed(); render(); return;
   }
+  if(b.dataset.share){ exportMap(b.dataset.share); return; }
   if(b.dataset.page){ setPage(b.dataset.page); return; }
   if(b.dataset.qmode){ startQuiz(b.dataset.qmode); return; }
   if(b.hasAttribute("data-qquit")){ quizStop(); quiz.mode = null; renderQuiz(); return; }
@@ -1923,12 +1927,23 @@ function restoreReset(){ $("resetBox").innerHTML=`<button class="link" id="reset
 
 /* ---------- map image ---------- */
 let downloads = null;
-async function exportMap(){
-  const svg = $("map"), globeMode = view==="globe" && !!G && !!window.d3;
+// Položaj globusa za sliku: onako kako ga gledaš, a ako globus nije otvoren, okrenut ka državama koje si obišao.
+function shareRot(){
+  if(view==="globe") return G.rot.slice();
+  let x = 0, y = 0, z = 0, n = 0; const rd = Math.PI/180;
+  for(const code in marks){ if(marks[code]!=="been") continue;
+    const f = G.byCode[code], ll = f && !f.small ? d3.geoCentroid(f.geometry) : SMALL[code] ? [SMALL[code][1], SMALL[code][0]] : null; if(!ll) continue;
+    x += Math.cos(ll[1]*rd)*Math.cos(ll[0]*rd); y += Math.cos(ll[1]*rd)*Math.sin(ll[0]*rd); z += Math.sin(ll[1]*rd); n++; }
+  if(!n || Math.hypot(x,y,z) < 1e-6) return [-20,-38,0];
+  return [-Math.atan2(y,x)/rd, -Math.max(-60, Math.min(60, Math.atan2(z, Math.hypot(x,y))/rd)), 0];
+}
+async function exportMap(kind){
+  const svg = $("map"), globeMode = kind==="globe";
   if(!VB0 || !downloads) return;
-  const btn = $("saveImg"), msg = $("savemsg");
-  btn.disabled = true; msg.textContent = t("making");
+  const btns = [...document.querySelectorAll("[data-share]")], msg = $("savemsg");
+  btns.forEach(b=>{ b.disabled = true; }); msg.textContent = t("making");
   try{
+    if(globeMode){ await loadD3(); if(!G) buildGlobe(); gColors(); }
     const cs = getComputedStyle(document.documentElement), tk = n => cs.getPropertyValue(n).trim();
     const col = {bg:tk("--bg"), surface:tk("--surface"), line:tk("--line"), ink:tk("--ink"), muted:tk("--muted"), been:tk("--been"), want:tk("--want")};
     // uspravna slika 1080×1350 (format za objave na mrežama)
@@ -1937,7 +1952,7 @@ async function exportMap(){
     let img, url = null;
     if(globeMode){            // globus u položaju u kome ga trenutno gledaš
       const S = MH*2; img = document.createElement("canvas"); img.width = img.height = S;
-      const gx = img.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(G.rot).translate([S/2, S/2]).scale(S/2 - 6);
+      const gx = img.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(shareRot()).translate([S/2, S/2]).scale(S/2 - 6);
       paintGlobe(gx, pr, d3.geoPath(pr, gx), S, S, null, null, S / Math.max(300, G.W));
     } else {
       let body = "";
@@ -2010,9 +2025,8 @@ async function exportMap(){
     const c = e && (e.code || (e.name==="AbortError" ? "declined" : ""));
     msg.textContent = c==="declined" ? "" : c==="rate_limited" ? t("wait") : t("cantSave");
     if(c==="unavailable" || c==="not_granted" || c==="capability_disabled" || c==="capability_removed") $("maptools").hidden = true;
-  }finally{ btn.disabled = false; }
+  }finally{ btns.forEach(b=>{ b.disabled = false; }); }
 }
-$("saveImg").addEventListener("click", exportMap);
 
 /* ---------- persistence ---------- */
 let docRef=null, saving=false, dirty=false, timer=null;
