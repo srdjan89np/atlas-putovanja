@@ -318,6 +318,11 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
 .bnav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bnav button[aria-current="page"]{color:var(--accent)}
 .bnav button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:10px}
+/* Android aplikacija: pravi AdMob baner crta sistem preko dna ekrana; --ad-h je njegova visina (0 dok se ne učita) */
+html.native .adbar{display:none}
+html.native body{padding-bottom:calc(var(--ad-h) + var(--nav-h))}
+html.native .bnav{bottom:var(--ad-h)}
+html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
 .adbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;background:var(--surface);border-top:1px solid var(--line);
   padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .adslot{width:320px;max-width:100%;height:var(--ad-h);display:grid;place-items:center;border:1px dashed var(--line);border-radius:6px;color:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
@@ -425,6 +430,7 @@ body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 13px + env(safe-area-inset
     <span id="sync"><span class="dot"></span>Učitavanje…</span>
     <span id="resetBox"><button class="link" id="resetBtn" type="button">Obriši sve oznake</button></span>
     <button class="link" id="helpBtn" type="button" data-i18n="howTo">Kako radi</button>
+    <button class="link" id="adPrivacyBtn" type="button" data-i18n="adPrivacy" hidden>Privatnost oglasa</button>
   </footer>
   </div>
 </div>
@@ -481,6 +487,7 @@ const T = {
   bkFound:"U datoteci: obiđeno {b} · na listi želja {w} · beleške {n}.", bkHave:"Trenutno označenih država: {c}.",
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
   shareLbl:"Podeli:", shareFlatAria:"Podeli ravnu mapu", shareGlobeAria:"Podeli globus",
+  adPrivacy:"Privatnost oglasa", shareSent:"Slika je spremna za deljenje.",
   navAria:"Stranice", navHome:"Početna", qPts:"poena", qRules:"Tačan odgovor nosi {b} poena, a brzina do još {x}. Posle {s} sekundi pitanje se računa kao netačno.",
   qTimeout:"Vreme je isteklo.", qAnswer:"Tačan odgovor: {a}", qOf:"poena od mogućih {n}", qCorrect:"tačnih odgovora", qTimeUsed:"ukupno vreme", qNewBest:"Novi najbolji rezultat.",
   tabMore:"Više", achToast:"Otključano dostignuće",
@@ -523,6 +530,7 @@ const T = {
   bkFound:"In the file: visited {b} · wish list {w} · notes {n}.", bkHave:"Currently marked countries: {c}.",
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
   shareLbl:"Share:", shareFlatAria:"Share the flat map", shareGlobeAria:"Share the globe",
+  adPrivacy:"Ad privacy", shareSent:"The image is ready to share.",
   navAria:"Pages", navHome:"Home", qPts:"pts", qRules:"A correct answer is worth {b} points, plus up to {x} for speed. After {s} seconds the question counts as wrong.",
   qTimeout:"Time's up.", qAnswer:"Correct answer: {a}", qOf:"points out of {n}", qCorrect:"correct answers", qTimeUsed:"total time", qNewBest:"New best score.",
   tabMore:"More", achToast:"Achievement unlocked",
@@ -1953,7 +1961,7 @@ async function exportMap(kind){
     }
     const blob = await new Promise(ok => cv.toBlob(ok, "image/png"));
     await downloads.save({filename:t("file"), data:blob});
-    msg.textContent = t("saved");
+    msg.textContent = window.__nativeShareImage ? t("shareSent") : t("saved");
   }catch(e){
     const c = e && (e.code || (e.name==="AbortError" ? "declined" : ""));
     msg.textContent = c==="declined" ? "" : c==="rate_limited" ? t("wait") : t("cantSave");
@@ -2107,6 +2115,19 @@ $("bkAsk").addEventListener("click", e=>{
 
 document.addEventListener("visibilitychange", ()=>{ if(document.hidden) quizStop(); else quizRun(); });
 
+// Android: dugme Nazad zatvara uvod, pa vraća na Početnu i karticu Države; tek onda izlazi iz aplikacije.
+window.__atlasBack = function(){
+  if(!$("onb").hidden){ closeOnb(); return true; }
+  if(document.activeElement === $("q")){ $("q").blur(); return true; }
+  if(ui.page !== "home"){ setPage("home"); return true; }
+  if(ui.tab !== "list"){ setTab("list"); return true; }
+  return false;
+};
+// Android (EU): AdMob traži da korisnik može da promeni saglasnost za oglase.
+function adPrivacyReady(){ if(window.__adPrivacy) $("adPrivacyBtn").hidden = false; }
+window.addEventListener("adprivacy", adPrivacyReady); adPrivacyReady();
+$("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.__adPrivacy(); });
+
 (function init(){
   const local = lsGet(); if(local && typeof local==="object") marks=local;
   notes = normNotes(lsGet(LS+"-notes")); prio = normPrio(lsGet(LS+"-prio"));
@@ -2119,6 +2140,12 @@ document.addEventListener("visibilitychange", ()=>{ if(document.hidden) quizStop
   if(!window.claude || !window.claude.use){
     // samostalna verzija (GitHub Pages, mobilna aplikacija): deljenje preko sistema ili preuzimanje
     downloads = {save: async ({filename, data})=>{
+      // Android aplikacija: datoteka ide u keš aplikacije, pa se otvara sistemski meni „Deli“
+      if(window.__nativeShareImage && /^image\//.test(data.type)){
+        const b64 = await new Promise((ok, bad)=>{ const r = new FileReader(); r.onload = ()=>ok(String(r.result).split(",")[1]); r.onerror = ()=>bad(r.error); r.readAsDataURL(data); });
+        await window.__nativeShareImage(filename, b64, t("title")); return {status:"saved"};
+      }
+      if(window.__nativeExport && !/^image\//.test(data.type)){ await window.__nativeExport(filename, await data.text()); return {status:"saved"}; }
       const file = new File([data], filename, {type: data.type || "application/octet-stream"});
       if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], title:t("title")}); return {status:"saved"}; }
       const a = document.createElement("a"); a.href = URL.createObjectURL(data); a.download = filename;

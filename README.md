@@ -9,6 +9,9 @@ Aplikacija za praćenje putovanja: 195 država sveta koje označavaš kao **obi�
 | Folder | Sadržaj |
 | --- | --- |
 | `app/` | Aplikacija: jedna datoteka `index.html`, bez build koraka. Ovo je izvor za mobilnu aplikaciju. |
+| `scripts/`, `package.json`, `capacitor.config.json` | Pakovanje za Android (Capacitor): `scripts/build.js` pravi `www/` sa mapom i d3 u paketu, most ka AdMob-u, sistemskom „Deli“ i dugmetu Nazad. |
+| `assets/` | Ikonica i splash ekran (izvor za `capacitor-assets`). |
+| `.github/workflows/android.yml` | GitHub pravi APK pri svakoj izmeni aplikacije. |
 | `docs/` | Promo stranica koju objavljuje GitHub Pages (*Settings → Pages → `main` / `docs`*). |
 
 Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo promo stranica.
@@ -58,6 +61,14 @@ Nisu provereni prema izvoru: službeni jezici, strana vožnje, najbolje vreme za
 
 Za mobilnu aplikaciju ove datoteke treba upakovati lokalno, da aplikacija radi bez interneta.
 
-## Mobilna aplikacija i AdMob
+## Android aplikacija (APK)
 
-AdMob radi samo u nativnoj aplikaciji. Sledeći korak je pakovanje `app/index.html` pomoću [Capacitor](https://capacitorjs.com/)-a i prikaz banera na mestu `#admob-banner` (dodatak `@capacitor-community/admob`, pozicija `BOTTOM_CENTER`).
+APK pravi GitHub, ništa se ne instalira na računar.
+
+- **Gde je APK:** [Releases](https://github.com/srdjan89np/atlas-putovanja/releases/latest) → `atlas-putovanja.apk`.
+- **Kada se pravi:** posle svake izmene u `app/`, `scripts/`, `assets/` ili ručno: *Actions → Android APK → Run workflow*.
+- **Potpis:** bez tajnih podataka pravi se debug APK, pa nova verzija traži deinstalaciju stare. Za stalni potpis (i `.aab` za Google Play) upiši u *Settings → Secrets and variables → Actions*: `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
+- **Oglasi:** baner je na dnu ekrana. Bez `ADMOB_APP_ID` i `ADMOB_BANNER_ID` u Secrets prikazuju se Google-ovi probni oglasi.
+- **Paket:** `rs.atlasputovanja.app`. Mapa i globus rade bez interneta; fontovi se učitavaju sa interneta, a bez njega se koriste sistemski.
+
+Lokalno: `npm install`, `npm run android:init` (jednom), `npm run android:sync`, `npm run android:open`.

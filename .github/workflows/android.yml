@@ -1,0 +1,129 @@
+# Pravi APK za Android na GitHub-u — ništa ne treba instalirati na računar.
+#
+# Pokreće se kad pošalješ izmene (push) ili ručno: Actions → "Android APK" → Run workflow.
+# Gotov APK: Releases (desno na stranici repozitorijuma) → najnovije izdanje → atlas-putovanja.apk.
+# Za Google Play: atlas-putovanja.aab iz istog izdanja (pravi se samo kad su upisana 4 tajna podatka za potpis).
+#
+# Potpis: ako su u Settings → Secrets and variables → Actions upisana 4 tajna podatka
+# (ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD),
+# APK se potpisuje uvek istim ključem, pa se nova verzija instalira preko stare i podaci ostaju.
+# Bez njih se pravi debug APK — svaka nova verzija tada traži deinstalaciju stare.
+#
+# Oglasi: ADMOB_APP_ID i ADMOB_BANNER_ID (takođe u Secrets). Bez njih idu Google-ovi probni oglasi.
+
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - "app/**"
+      - "scripts/**"
+      - "assets/**"
+      - "package.json"
+      - "capacitor.config.json"
+      - ".github/workflows/android.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    env:
+      VERSION_NAME: 1.0.${{ github.run_number }}
+      VERSION_CODE: ${{ github.run_number }}
+      HAS_KEY: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: npm install
+        run: npm install --no-audit --no-fund
+
+      - name: Web deo (www/, radi bez interneta)
+        env:
+          ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
+        run: npm run build:android
+
+      - name: Android projekat, ikonice i splash
+        env:
+          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+        run: |
+          npx cap add android
+          npx capacitor-assets generate --android
+          # AdMob ID aplikacije upisuje scripts/admob-manifest.js (hook capacitor:copy:after)
+          npx cap sync android
+
+      - name: Verzija ${{ env.VERSION_NAME }}
+        run: |
+          sed -i -E "s/versionCode [0-9]+/versionCode ${VERSION_CODE}/; s/versionName \"[^\"]*\"/versionName \"${VERSION_NAME}\"/" android/app/build.gradle
+          grep -E "versionCode|versionName" android/app/build.gradle
+
+      - name: Potpisani APK
+        if: env.HAS_KEY == 'true'
+        env:
+          KS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          echo "$KS" | base64 -d > "$RUNNER_TEMP/atlas.jks"
+          "$BT/zipalign" -p -f 4 app/build/outputs/apk/release/app-release-unsigned.apk "$RUNNER_TEMP/aligned.apk"
+          "$BT/apksigner" sign --ks "$RUNNER_TEMP/atlas.jks" --ks-pass env:KS_PASS --ks-key-alias "$KEY_ALIAS" --key-pass env:KEY_PASS \
+            --out "$GITHUB_WORKSPACE/atlas-putovanja.apk" "$RUNNER_TEMP/aligned.apk"
+          "$BT/apksigner" verify "$GITHUB_WORKSPACE/atlas-putovanja.apk"
+          # Paket za Google Play (AAB), potpisan istim ključem (upload key)
+          ./gradlew bundleRelease --no-daemon
+          jarsigner -keystore "$RUNNER_TEMP/atlas.jks" -storepass "$KS_PASS" -keypass "$KEY_PASS" \
+            -sigalg SHA256withRSA -digestalg SHA-256 \
+            -signedjar "$GITHUB_WORKSPACE/atlas-putovanja.aab" app/build/outputs/bundle/release/app-release.aab "$KEY_ALIAS"
+          rm -f "$RUNNER_TEMP/atlas.jks"
+
+      - name: Debug APK (nema ključa u Secrets)
+        if: env.HAS_KEY != 'true'
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/atlas-putovanja.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-putovanja-${{ env.VERSION_NAME }}
+          path: |
+            atlas-putovanja.apk
+            atlas-putovanja.aab
+          if-no-files-found: warn
+
+      - name: Izdanje na GitHub-u (Releases)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION_NAME }}
+          name: Atlas putovanja ${{ env.VERSION_NAME }}
+          body: |
+            APK za Android. Na telefonu otvori ovu stranicu, preuzmi **atlas-putovanja.apk** i instaliraj
+            (prvi put Android traži dozvolu „Instaliraj nepoznate aplikacije" za pregledač).
+            ${{ env.HAS_KEY != 'true' && 'Ovo je debug verzija — pre instalacije nove verzije obriši staru.' || '' }}
+          files: |
+            atlas-putovanja.apk
+            atlas-putovanja.aab
+          fail_on_unmatched_files: false
+          make_latest: true
