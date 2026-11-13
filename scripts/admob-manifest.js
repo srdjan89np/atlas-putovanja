@@ -8,7 +8,9 @@ const path = require("path");
 const file = path.join(__dirname, "..", "android", "app", "src", "main", "AndroidManifest.xml");
 if (!fs.existsSync(file)) process.exit(0);
 
-const id = process.env.ADMOB_APP_ID || "ca-app-pub-3940256099942544~3347511713";
+let cfg = {};
+try { cfg = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "admob.config.json"), "utf8")); } catch (e) {}
+const id = process.env.ADMOB_APP_ID || cfg.appId || "ca-app-pub-3940256099942544~3347511713";
 let xml = fs.readFileSync(file, "utf8");
 const tag = `<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="${id}"/>`;
 const re = /<meta-data\s+android:name="com\.google\.android\.gms\.ads\.APPLICATION_ID"[^>]*\/>/;

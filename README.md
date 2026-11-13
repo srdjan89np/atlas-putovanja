@@ -68,7 +68,7 @@ APK pravi GitHub, ništa se ne instalira na računar.
 - **Gde je APK:** [Releases](https://github.com/srdjan89np/atlas-putovanja/releases/latest) → `atlas-putovanja.apk`.
 - **Kada se pravi:** posle svake izmene u `app/`, `scripts/`, `assets/` ili ručno: *Actions → Android APK → Run workflow*.
 - **Potpis:** bez tajnih podataka pravi se debug APK, pa nova verzija traži deinstalaciju stare. Za stalni potpis (i `.aab` za Google Play) upiši u *Settings → Secrets and variables → Actions*: `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
-- **Oglasi:** baner je na dnu ekrana. Bez `ADMOB_APP_ID` i `ADMOB_BANNER_ID` u Secrets prikazuju se Google-ovi probni oglasi.
+- **Oglasi:** baner je na dnu ekrana. AdMob ID aplikacije i banera su u `admob.config.json` (Secrets `ADMOB_APP_ID` i `ADMOB_BANNER_ID` imaju prednost ako postoje). Za probne oglase: `ADMOB_TEST=1`.
 - **Paket:** `rs.atlasputovanja.app`. Mapa i globus rade bez interneta; fontovi se učitavaju sa interneta, a bez njega se koriste sistemski.
 
 Lokalno: `npm install`, `npm run android:init` (jednom), `npm run android:sync`, `npm run android:open`.

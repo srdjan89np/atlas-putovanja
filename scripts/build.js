@@ -28,8 +28,13 @@ function inline(rel, required) {
   return `<script>\n${fs.readFileSync(f, "utf8").replace(/<\/script/gi, "<\\/script")}\n</script>\n`;
 }
 
-const BANNER = process.env.ADMOB_BANNER_ID || "ca-app-pub-3940256099942544/6300978111";
-const TESTING = !process.env.ADMOB_BANNER_ID;
+// Redosled: ADMOB_TEST=1 (probni oglasi) > ADMOB_BANNER_ID iz okruzenja > admob.config.json > Google probni ID.
+let ADCFG = {};
+try { ADCFG = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "admob.config.json"), "utf8")); } catch (e) {}
+const TEST_BANNER = "ca-app-pub-3940256099942544/6300978111";
+const REAL_BANNER = process.env.ADMOB_BANNER_ID || ADCFG.bannerId || "";
+const TESTING = process.env.ADMOB_TEST === "1" || !REAL_BANNER;
+const BANNER = TESTING ? TEST_BANNER : REAL_BANNER;
 
 const bridge = `<script>
 (function () {

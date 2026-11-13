@@ -23,6 +23,7 @@ on:
       - "assets/**"
       - "package.json"
       - "capacitor.config.json"
+      - "admob.config.json"
       - ".github/workflows/android.yml"
 
 permissions:
