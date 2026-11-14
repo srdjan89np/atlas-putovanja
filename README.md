@@ -3,6 +3,7 @@
 Aplikacija za praćenje putovanja: 195 država sveta koje označavaš kao **obiđene** (✓) ili kao one koje **želiš da posetiš** (★).
 
 **Promo stranica:** https://srdjan89np.github.io/atlas-putovanja/
+**Politika privatnosti:** https://srdjan89np.github.io/atlas-putovanja/privatnost.html
 
 ## Šta je u repozitorijumu
 
@@ -22,11 +23,11 @@ Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo p
 - **Mapa i globus**: države se boje prema oznaci, male države su tačke, prikaz se bira dugmetom *Mapa / Globus*. Kosovo je prikazano kao deo Srbije.
 - **Podaci o državi**: glavni grad, stanovništvo, površina, gustina, valuta, jezik, pozivni broj, strana vožnje i najbolje vreme za posetu.
 - **Dnevnik**: više putovanja po državi (godina, gradovi, beleška), vremenska linija po godinama, poznati gradovi kao tačke na mapi.
-- **Plan**: prioritet na listi želja i predlozi država blizu onih koje si obišao.
-- **Kviz**: zastave i glavni gradovi, deset pitanja, 15 sekundi po pitanju. Poeni se računaju iz tačnosti i brzine (najviše 2.000).
+- **Plan**: *Ovog meseca* (države kojima je tekući mesec najbolje vreme za posetu), prioritet na listi želja i predlozi država blizu onih koje si obišao. Obiđena država može ponovo na listu želja.
+- **Kviz**: zastave, glavni gradovi i oblik države (obris sa mape), deset pitanja, 15 sekundi po pitanju. Poeni se računaju iz tačnosti i brzine (najviše 2.000).
 - **Dostignuća**: dvanaest pečata (deset za putovanja, dva za kviz: *Bez greške* i *Munjevit*, 1.600+ poena) i napredak po kontinentima, sa porukom kad se dostignuće otključa.
 - **Podeli mapu**: slika 1080×1350 sa mapom ili globusom i statistikom.
-- **Rezervna kopija**: izvoz i uvoz oznaka i beleški (JSON).
+- **Rezervna kopija**: izvoz i uvoz oznaka, beleški i rezultata kviza (JSON).
 - Tri stranice sa donjom navigacijom: **Početna** (mapa, države, dnevnik, plan), **Kviz** i **Dostignuća** (sa rezervnom kopijom).
 - Srpski i engleski jezik, svetla i tamna tema, uvodni ekrani.
 - Rezervisano mesto za AdMob baner 320×50 na dnu ekrana (`#admob-banner`).
