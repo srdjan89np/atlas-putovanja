@@ -98,6 +98,7 @@ li.c:first-child{border-top:0}
 .name code{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--muted);margin-right:6px}
 li.c.is-been{background:linear-gradient(90deg,var(--been-soft),transparent 70%)}
 li.c.is-want{background:linear-gradient(90deg,var(--want-soft),transparent 70%)}
+li.c.is-both{background:linear-gradient(90deg,var(--been-soft),var(--want-soft) 45%,transparent 75%)}
 .acts{display:flex;gap:6px}
 .btn{font:inherit;font-size:13px;font-weight:700;padding:7px 10px;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;display:inline-flex;gap:5px;align-items:center}
 .btn svg{width:14px;height:14px}
@@ -284,6 +285,7 @@ small .newc{margin-left:0;margin-right:6px}
 .qstats b{display:block;font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums}
 .qstats span{font-size:12.5px;color:var(--muted)}
 .qfb b{color:var(--been)}
+.qrow button,.qfb{scroll-margin-bottom:calc(var(--ad-h) + var(--nav-h) + 24px + env(safe-area-inset-bottom,0px))}
 .qcard{display:grid;gap:14px;padding:18px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
 .qprompt{margin:0;color:var(--muted);font-size:14px;text-align:center}
 .qflag{font-size:84px;line-height:1.1;text-align:center}
@@ -927,7 +929,7 @@ function journalHTML(code, where){
       <button class="jdel" type="button" data-deltrip="${code}" data-i="${i}" ${saved ? "" : "hidden"}>${t("delTrip")}</button></div>
   </div>`; }).join("")}<div class="jfoot"><button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button></div></div>`;
 }
-function moreHTML(code, where){ return (marks[code]==="been" ? journalHTML(code, where) : marks[code]==="want" ? prioHTML(code) : "") + infoHTML(code); }
+function moreHTML(code, where){ return (isBeen(code) ? journalHTML(code, where) : "") + (isWant(code) ? prioHTML(code) : "") + infoHTML(code); }
 
 /* ---------- putovanja (više po državi) i prioriteti ---------- */
 const tripsOf = code => (notes[code] && Array.isArray(notes[code].trips)) ? notes[code].trips : [];
@@ -950,7 +952,7 @@ function normNotes(raw){            // prihvata i stari oblik {year, cities, not
   }
   return out;
 }
-const cleanNotes = () => normNotes(notes);
+const cleanNotes = () => normNotes(savedNotes);
 function normPrio(raw){ const out = {}; if(raw && typeof raw==="object") for(const [k,v] of Object.entries(raw)) if(BY_CODE[k] && [1,2,3].includes(+v)) out[k] = +v; return out; }
 const yearsOf = code => [...new Set(tripsOf(code).map(x=>x.year).filter(Boolean))].sort();
 function prioHTML(code){
@@ -961,6 +963,7 @@ function prioHTML(code){
 /* ---------- kartice ---------- */
 const TABS = ["list","journal","plan"];
 function setTab(name){
+  if(name!==ui.tab) discardDrafts();
   ui.tab = name;
   for(const k of TABS){ $("tab-"+k).hidden = k!==name; }
   document.querySelectorAll(".tabs button").forEach(b=>{ const on = b.dataset.tab===name; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
@@ -979,7 +982,7 @@ function gotoCountry(code){
 let openJ = null;                  // putovanje otvoreno za izmenu u Dnevniku ("kod:redni broj")
 function renderJournal(){
   const box = $("tab-journal"), entries = [], first = {};
-  const been = COUNTRIES.filter(c=>marks[c.code]==="been");
+  const been = COUNTRIES.filter(c=>isBeen(c.code));
   for(const c of been) for(const tr of tripsOf(c.code)) if(tripFilled(tr)){
     entries.push({c, tr, key: c.code + ":" + tripsOf(c.code).indexOf(tr)});
     if(tr.year && (!first[c.code] || tr.year < first[c.code])) first[c.code] = tr.year;
@@ -1000,7 +1003,7 @@ function renderJournal(){
 /* ---------- plan: prioriteti i predlozi ---------- */
 function renderPlan(){
   const box = $("tab-plan");
-  const wish = COUNTRIES.filter(c=>marks[c.code]==="want").sort((a,b)=>(prio[b.code]||0)-(prio[a.code]||0));
+  const wish = COUNTRIES.filter(c=>isWant(c.code)).sort((a,b)=>(prio[b.code]||0)-(prio[a.code]||0));
   let html = `<h2 class="sech">${t("pTitle")}</h2>`;
   if(!wish.length) html += `<p class="emptyp">${t("pEmpty")}</p>`;
   else{
@@ -1009,16 +1012,16 @@ function renderPlan(){
       <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${c.code===top ? `<em class="newc">${t("pNext")}</em>` : ""}${t("fBest")}: ${bestTxt(c.code)}</small></span></button>${prioHTML(c.code)}</li>`).join("") + `</ul>`;
   }
   html += `<h2 class="sech">${t("sTitle")}</h2><p class="secp">${t("sText")}</p>`;
-  const visited = new Set(COUNTRIES.filter(c=>marks[c.code]==="been").map(c=>c.code));
+  const visited = new Set(COUNTRIES.filter(c=>isBeen(c.code)).map(c=>c.code));
   const adj = computeAdj();
   if(!adj) html += `<p class="emptyp">${t("sNoMap")}</p>`;
   else if(!visited.size) html += `<p class="emptyp">${t("sEmpty")}</p>`;
   else{
-    const sug = COUNTRIES.filter(c=>!visited.has(c.code) && adj[c.code]).map(c=>{ const near = [...adj[c.code]].filter(x=>visited.has(x)); return {c, near, score: near.length + (marks[c.code]==="want" ? .5 : 0)}; })
+    const sug = COUNTRIES.filter(c=>!visited.has(c.code) && adj[c.code]).map(c=>{ const near = [...adj[c.code]].filter(x=>visited.has(x)); return {c, near, score: near.length + (isWant(c.code) ? .5 : 0)}; })
       .filter(x=>x.near.length).sort((a,b)=>b.score-a.score).slice(0,6);
     html += sug.length ? `<ul class="list plist">` + sug.map(({c, near})=>`<li class="prow">
       <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${t("sNear")}: ${near.slice(0,4).map(x=>BY_CODE[x].name).join(", ")}${near.length>4 ? "…" : ""}</small><small>${t("fBest")}: ${bestTxt(c.code)}</small></span></button>
-      ${marks[c.code]==="want" ? `<span class="onwish">${t("onWishShort")}</span>` : `<button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="false" aria-label="${t("addWish")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button>`}</li>`).join("") + `</ul>` : `<p class="emptyp">${t("sNone")}</p>`;
+      ${isWant(c.code) ? `<span class="onwish">${t("onWishShort")}</span>` : `<button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="false" aria-label="${t("addWish")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button>`}</li>`).join("") + `</ul>` : `<p class="emptyp">${t("sNone")}</p>`;
   }
   box.innerHTML = html;
 }
@@ -1107,12 +1110,19 @@ function renderQuiz(){
     <div class="qcard"><p class="qprompt">${prompt}</p>${subject}
     <div class="qopts">${q.opts.map(o=>{ const right = o===q.code, chosen = quiz.ans===o; return `<button type="button" class="qopt${done && right ? " ok" : ""}${done && chosen && !right ? " bad" : ""}" data-qopt="${o}" ${done ? "disabled" : ""}>${done && right ? "✓ " : done && chosen ? "✕ " : ""}${label(o)}</button>`; }).join("")}</div>
     ${done ? `<div class="qfb" role="status">${fb}</div><div class="qrow"><button type="button" class="onb-next" data-qnext>${quiz.i===quiz.qs.length-1 ? t("qFinish") : t("qNext")}</button></div>` : ""}</div>`;
-  if(done){ const n = box.querySelector("[data-qnext]"); if(n) n.focus({preventScroll:true}); }
-  else quizRun();
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+  if(done){ const n = box.querySelector("[data-qnext]"); if(n){ n.focus({preventScroll:true}); n.scrollIntoView({block:"nearest", behavior:reduce}); } }
+  else {
+    // novo pitanje: vrh kviza ide na vrh ekrana, da pitanje, odgovori i dugme Dalje stanu iznad donje trake
+    const top = box.getBoundingClientRect().top;
+    if(top > 12 || top < -4) window.scrollTo({top: Math.max(0, scrollY + top - 8), behavior:reduce});
+    quizRun();
+  }
 }
 
 /* ---------- stranice: Početna, Kviz, Dostignuća ---------- */
 function setPage(name){
+  if(name!==ui.page) discardDrafts();
   ui.page = name;
   for(const k of ["home","quiz","ach"]) $("page-"+k).hidden = k!==name;
   document.querySelectorAll(".bnav button").forEach(b=>{ if(b.dataset.page===name) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
@@ -1134,18 +1144,18 @@ const ACH = [
   {t:"Ostrvljanin", d:"5 ostrvskih država", te:"Islander", de:"5 island nations", set:"IS IE GB MT CY JP PH ID SG LK MV BH NZ FJ KI MH FM NR PW WS SB TO TV VU PG TL MG MU SC KM CV ST AG BS BB CU DM DO GD HT JM KN LC VC TT", n:5},
 ];
 function achState(){
-  const been = COUNTRIES.filter(c=>marks[c.code]==="been");
+  const been = COUNTRIES.filter(c=>isBeen(c.code));
   return ACH.map(a=>{
     let have, need;
     if(a.conts){ have = new Set(been.map(c=>c.cont)).size; need = 6; }
     else if(a.full){ // napredak po kontinentu kome si najbliži
       let best = null;
-      for(const k in C){ const all = COUNTRIES.filter(c=>c.cont===k), h = all.filter(c=>marks[c.code]==="been").length;
+      for(const k in C){ const all = COUNTRIES.filter(c=>c.cont===k), h = all.filter(c=>isBeen(c.code)).length;
         if(!best || h/all.length > best.h/best.n) best = {h, n:all.length, k}; }
       have = best.h; need = best.n;
       if(have && have < need) a.dd = `${t("closest")}: ${C[best.k]}`; else if(have >= need) a.dd = lang==="en" ? `${C[best.k]} ${t("whole")}` : `${C[best.k]} ${t("whole")}`; else a.dd = "";
     }
-    else if(a.set){ const set = Array.isArray(a.set) ? a.set : a.set.split(" "); have = set.filter(k=>marks[k]==="been").length; need = a.n || set.length; }
+    else if(a.set){ const set = Array.isArray(a.set) ? a.set : a.set.split(" "); have = set.filter(k=>isBeen(k)).length; need = a.n || set.length; }
     else { have = been.length; need = a.n; }
     return {a, have, need, done: have >= need};
   });
@@ -1174,8 +1184,15 @@ const ICON = {
   been:'<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M3 8.5l3.2 3L13 4.5"/></svg>'
 };
 
-let marks = {};           // code -> "want" | "been"
-let notes = {};           // code -> {trips:[{year, cities, note}]}
+let marks = {};           // code -> "want" | "been" | "both" (obišao i ponovo na listi želja)
+const isBeen = code => marks[code]==="been" || marks[code]==="both";
+const isWant = code => marks[code]==="want" || marks[code]==="both";
+let notes = {};           // code -> {trips:[{year, cities, note}]}  (radna kopija, sa nesačuvanim izmenama)
+let savedNotes = {};      // samo sačuvana putovanja; jedino se ovo pamti
+const cloneNotes = o => JSON.parse(JSON.stringify(o || {}));
+function setNotes(n){ savedNotes = normNotes(n); notes = cloneNotes(savedNotes); editing.clear(); }
+// Nesačuvana i prazna putovanja se odbacuju kad se zatvori panel, promeni država ili kartica.
+function discardDrafts(){ notes = cloneNotes(savedNotes); editing.clear(); }
 let prio = {};            // code -> 1..3 (lista želja)
 let ui = {cont:"", status:"", q:"", tab:"list", page:"home"};
 const LS = "atlas-putovanja-v1";
@@ -1191,8 +1208,8 @@ function renderStats(){
   for(const k in C) per[k]={t:0,b:0,w:0};
   for(const c of COUNTRIES){
     per[c.cont].t++;
-    const m = marks[c.code];
-    if(m==="been"){b++;per[c.cont].b++;} else if(m==="want"){w++;per[c.cont].w++;}
+    if(isWant(c.code)) w++;
+    if(isBeen(c.code)){b++;per[c.cont].b++;} else if(isWant(c.code)) per[c.cont].w++;
   }
   $("sBeen").textContent=b; $("sWant").textContent=w;
   $("sPct").textContent=pctTxt(b)+"%";
@@ -1207,7 +1224,7 @@ function renderStats(){
 
 function renderChips(){
   const n = {"":COUNTRIES.length, been:0, want:0, none:0};
-  for(const c of COUNTRIES){ const m=marks[c.code]; if(m) n[m]++; else n.none++; }
+  for(const c of COUNTRIES){ if(isBeen(c.code)) n.been++; if(isWant(c.code)) n.want++; if(!marks[c.code]) n.none++; }
   const opts=[["",t("all")],["been",t("been")],["want",t("want")]];
   $("status").innerHTML = opts.map(([v,l])=>`<button class="chip" type="button" data-status="${v}" aria-pressed="${ui.status===v}">${l}<span class="n">${n[v]}</span></button>`).join("")
     + (ui.cont ? `<button class="chip" type="button" data-clearcont aria-pressed="true">${C[ui.cont]} ✕</button>` : "");
@@ -1218,7 +1235,7 @@ function renderList(){
   const rows = COUNTRIES.filter(c=>{
     if(ui.cont && c.cont!==ui.cont) return false;
     const m = marks[c.code];
-    if(ui.status==="none" ? m : (ui.status && m!==ui.status)) return false;
+    if(ui.status==="none" ? m : ui.status==="been" ? !isBeen(c.code) : ui.status==="want" ? !isWant(c.code) : false) return false;
     return !q || c.key.includes(q);
   });
   $("count").textContent = lang==="en" ? (rows.length===1 ? "1 country" : rows.length + " countries") : rows.length===1 ? "1 država" : rows.length + (rows.length%10>=2&&rows.length%10<=4&&(rows.length%100<10||rows.length%100>=20) ? " države" : " država");
@@ -1231,11 +1248,11 @@ function renderList(){
     const open = openInfo===c.code, cap = INFO[c.code] ? L(INFO[c.code],"cap") : "";
     return `<li class="c ${m?"is-"+m:""}">
       <span class="flag" aria-hidden="true">${c.flag}</span>
-      <div class="name"><strong>${c.name}</strong><small><code>${c.code}</code>${C[c.cont]} · ${cap}${m==="been" && yearsOf(c.code).length ? `<span class="yr">${esc(yearsOf(c.code).join(", "))}</span>` : ""}</small></div>
+      <div class="name"><strong>${c.name}</strong><small><code>${c.code}</code>${C[c.cont]} · ${cap}${isBeen(c.code) && yearsOf(c.code).length ? `<span class="yr">${esc(yearsOf(c.code).join(", "))}</span>` : ""}</small></div>
       <div class="acts">
         <button class="btn ibtn" type="button" data-info="${c.code}" aria-expanded="${open}" aria-label="${t("moreInfo")}: ${c.name}" title="${t("moreInfo")}">${ICON.info}</button>
-        <button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="${m==="want"}" aria-label="${t("wantVisit")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button>
-        <button class="btn been" type="button" data-code="${c.code}" data-set="been" aria-pressed="${m==="been"}" aria-label="${t("visitedL")}: ${c.name}">${ICON.been}<span class="lbl">${t("been")}</span></button>
+        <button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="${isWant(c.code)}" aria-label="${t("wantVisit")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button>
+        <button class="btn been" type="button" data-code="${c.code}" data-set="been" aria-pressed="${isBeen(c.code)}" aria-label="${t("visitedL")}: ${c.name}">${ICON.been}<span class="lbl">${t("been")}</span></button>
       </div>${open ? `<div class="more">${moreHTML(c.code,"l")}</div>` : ""}</li>`;
   }).join("");
 }
@@ -1250,7 +1267,7 @@ let mapData = null, mapProj = null, cityList = [], citySig = null;
 function tripCities(){
   const out = [];
   for(const code in notes){
-    if(marks[code] !== "been") continue;
+    if(!isBeen(code)) continue;
     for(const tr of tripsOf(code)) for(const part of String(tr.cities || "").split(/[,;]/)){
       const k = fold(part.trim()); if(!k) continue;
       const c = (CITY[k] || []).find(x => x.cc === code);
@@ -1370,7 +1387,7 @@ function resizeGlobe(){
   G.R0 = Math.min(G.W, G.H)/2 - 8; G.proj.translate([G.W/2, G.H/2]).scale(G.R0*G.zoom);
   drawGlobe();
 }
-function gFill(code, hs){ const m = marks[code]; return m==="been" ? G.col.been : m==="want" ? G.col.want : (hs && hs.has(code) ? G.col.accent : G.col.land); }
+function gFill(code, hs){ return isBeen(code) ? G.col.been : isWant(code) ? G.col.want : (hs && hs.has(code) ? G.col.accent : G.col.land); }
 function drawGlobe(){
   if(!G || !G.W || view!=="globe") return;
   G.proj.rotate(G.rot);
@@ -1470,7 +1487,7 @@ function gEvents(canvas){
     G.drag = null; canvas.classList.remove("drag"); G.spin = false;
     if(d.moved) return;
     const r = canvas.getBoundingClientRect(), code = gPick([e.clientX - r.left, e.clientY - r.top]);
-    picked = code && code !== picked ? code : null; renderMap();
+    picked = code && code !== picked ? code : null; discardDrafts(); renderMap(); renderList();
   });
   canvas.addEventListener("pointercancel", ()=>{ G.drag = null; canvas.classList.remove("drag"); });
   canvas.addEventListener("wheel", e=>{ e.preventDefault(); gZoom(e.deltaY < 0 ? 1.15 : 0.87); }, {passive:false});
@@ -1538,9 +1555,8 @@ function renderMap(){
   const hits = searchHits(), hs = hits ? new Set(hits) : null;
   $("map").classList.toggle("searching", !!hs);
   document.querySelectorAll("#map [data-code]").forEach(p=>{
-    const m = marks[p.dataset.code];
-    p.classList.toggle("been", m==="been");
-    p.classList.toggle("want", m==="want");
+    p.classList.toggle("been", isBeen(p.dataset.code));
+    p.classList.toggle("want", isWant(p.dataset.code) && !isBeen(p.dataset.code));
     p.classList.toggle("sel", p.dataset.code===picked);
     p.classList.toggle("hit", !!hs && hs.has(p.dataset.code));
   });
@@ -1554,8 +1570,8 @@ function renderMap(){
   box.innerHTML = `<span class="flag" aria-hidden="true">${c.flag}</span>
     <div class="name"><strong>${c.name}</strong><small><code>${c.code}</code>${C[c.cont]}</small></div>
     <div class="acts">
-      <button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="${m==="want"}">${ICON.want}<span class="lbl">${t("want")}</span></button>
-      <button class="btn been" type="button" data-code="${c.code}" data-set="been" aria-pressed="${m==="been"}">${ICON.been}<span class="lbl">${t("been")}</span></button>
+      <button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="${isWant(c.code)}">${ICON.want}<span class="lbl">${t("want")}</span></button>
+      <button class="btn been" type="button" data-code="${c.code}" data-set="been" aria-pressed="${isBeen(c.code)}">${ICON.been}<span class="lbl">${t("been")}</span></button>
     </div><div class="more">${moreHTML(c.code,"p")}</div>`;
 }
 
@@ -1714,7 +1730,7 @@ function showTip(e){
     if(!moved){
       const el = document.elementFromPoint(e.clientX, e.clientY);
       const code = el && el.closest && el.closest("#map [data-code]") ? el.closest("#map [data-code]").dataset.code : null;
-      picked = code && code!==picked ? code : null;
+      picked = code && code!==picked ? code : null; discardDrafts();
       renderMap();
     }
     start=null;
@@ -1771,7 +1787,6 @@ document.addEventListener("input", e=>{
     el.querySelector(".jsave").hidden = false; const d = el.querySelector(".jdel"); d.hidden = true; delete d.dataset.sure; d.textContent = t("delTrip");
     el.querySelector(".jsaved").textContent = "";
   });
-  changed();
 });
 function applyLang(){
   document.documentElement.lang = lang==="en" ? "en" : "sr-Latn";
@@ -1800,16 +1815,17 @@ document.addEventListener("click", e=>{
     return;
   }
   if(b.dataset.info){
-    openInfo = openInfo===b.dataset.info ? null : b.dataset.info; renderList(); return;
+    openInfo = openInfo===b.dataset.info ? null : b.dataset.info; discardDrafts(); renderList(); renderMap(); return;
   }
   if(b.dataset.tab){ setTab(b.dataset.tab); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
-  if(b.dataset.jopen){ openJ = openJ===b.dataset.jopen ? null : b.dataset.jopen; renderJournal(); return; }
+  if(b.dataset.jopen){ openJ = openJ===b.dataset.jopen ? null : b.dataset.jopen; discardDrafts(); renderJournal(); renderMap(); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
   if(b.dataset.savetrip){
     const code = b.dataset.savetrip, tr = tripsOf(code)[+b.dataset.i];
     for(const k of [...editing]) if(k.startsWith(code+":")) editing.delete(k);
     if(notes[code]){ notes[code].trips = notes[code].trips.filter(tripFilled); if(!notes[code].trips.length) delete notes[code]; }
+    if(notes[code]) savedNotes[code] = cloneNotes(notes[code]); else delete savedNotes[code];
     const at = tr ? tripsOf(code).indexOf(tr) : -1;
     lsSet();
     if(docRef){ dirty = true; clearTimeout(timer); flush(); }
@@ -1818,14 +1834,23 @@ document.addEventListener("click", e=>{
     return;
   }
   if(b.dataset.addtrip){
-    const n = notes[b.dataset.addtrip] || (notes[b.dataset.addtrip] = {trips:[]});
+    const code = b.dataset.addtrip, n = notes[code] || (notes[code] = {trips:[]});
     if(!n.trips.length) n.trips.push({});
-    n.trips.push({}); renderList(); renderMap(); if(ui.tab==="journal") renderJournal(); return;
+    let at = n.trips.findIndex(x=>!tripFilled(x));          // već postoji prazno: ne pravi novo
+    if(at < 0){ n.trips.push({}); at = n.trips.length-1; }
+    renderList(); renderMap(); if(ui.tab==="journal") renderJournal();
+    const inp = [...document.querySelectorAll(`[data-j="year"][data-code="${code}"][data-i="${at}"]`)].find(x=>x.offsetParent);
+    if(inp){ inp.focus({preventScroll:true}); inp.scrollIntoView({block:"center", behavior:"smooth"}); }
+    return;
   }
   if(b.dataset.deltrip){
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = t("sure"); return; }
     const dc = b.dataset.deltrip, n = notes[dc];
-    if(n){ n.trips.splice(+b.dataset.i, 1); if(!n.trips.length) delete notes[dc]; }
+    if(n){
+      const gone = n.trips[+b.dataset.i], sv = savedNotes[dc];
+      if(gone && sv){ const j = sv.trips.findIndex(x=>JSON.stringify(x)===JSON.stringify(gone)); if(j>=0) sv.trips.splice(j, 1); if(!sv.trips.length) delete savedNotes[dc]; }
+      n.trips.splice(+b.dataset.i, 1); if(!n.trips.length) delete notes[dc];
+    }
     for(const k of [...editing]) if(k.startsWith(dc+":")) editing.delete(k);
     changed(); render(); return;
   }
@@ -1842,8 +1867,10 @@ document.addEventListener("click", e=>{
   if(b.hasAttribute("data-qnext")){ quiz.i++; quiz.ans = null; quiz.left = Q_LIMIT; renderQuiz(); return; }
   if(b.dataset.set){
     const code=b.dataset.code, v=b.dataset.set;
-    if(marks[code]===v) delete marks[code]; else marks[code]=v;
-    if(marks[code]!=="want") delete prio[code];
+    let b2 = isBeen(code), w2 = isWant(code);
+    if(v==="been") b2 = !b2; else w2 = !w2;
+    if(b2 && w2) marks[code] = "both"; else if(b2) marks[code] = "been"; else if(w2) marks[code] = "want"; else delete marks[code];
+    if(!isWant(code)) delete prio[code];
     announce = true;
     changed(); render();
   } else if(b.dataset.cont){
@@ -1855,7 +1882,7 @@ document.addEventListener("click", e=>{
   } else if(b.id==="resetBtn"){
     $("resetBox").innerHTML=`<span class="confirm">${t("resetQ")} <button class="link" id="resetYes" type="button">${t("resetYes")}</button><button class="link" id="resetNo" type="button">${t("resetNo")}</button></span>`;
   } else if(b.id==="resetYes"){
-    marks={}; notes={}; prio={}; changed(); render(); restoreReset();
+    marks={}; setNotes({}); prio={}; changed(); render(); restoreReset();
   } else if(b.id==="resetNo"){ restoreReset(); }
 });
 document.querySelector(".tabs").addEventListener("keydown", e=>{
@@ -1872,7 +1899,7 @@ let downloads = null;
 function shareRot(){
   if(view==="globe") return G.rot.slice();
   let x = 0, y = 0, z = 0, n = 0; const rd = Math.PI/180;
-  for(const code in marks){ if(marks[code]!=="been") continue;
+  for(const code in marks){ if(!isBeen(code)) continue;
     const f = G.byCode[code], ll = f && !f.small ? d3.geoCentroid(f.geometry) : SMALL[code] ? [SMALL[code][1], SMALL[code][0]] : null; if(!ll) continue;
     x += Math.cos(ll[1]*rd)*Math.cos(ll[0]*rd); y += Math.cos(ll[1]*rd)*Math.sin(ll[0]*rd); z += Math.sin(ll[1]*rd); n++; }
   if(!n || Math.hypot(x,y,z) < 1e-6) return [-20,-38,0];
@@ -1898,7 +1925,7 @@ async function exportMap(kind){
     } else {
       let body = "";
       for(const el of svg.children){
-        const code = el.dataset.code, m = code ? marks[code] : null;
+        const code = el.dataset.code, m = code ? (isBeen(code) ? "been" : isWant(code) ? "want" : null) : null;
         const fill = m==="been" ? col.been : m==="want" ? col.want : (el.tagName==="circle" ? col.muted : col.line);
         if(el.tagName==="path") body += `<path d="${el.getAttribute("d")}" fill="${fill}" ${el.classList.contains("x")?'fill-opacity=".6"':""} ${el.classList.contains("cover")?'stroke="none"':`stroke="${col.surface}" stroke-width="${sw}"`}/>`;
         else if(el.tagName==="circle" && !el.classList.contains("city")) body += `<circle cx="${el.getAttribute("cx")}" cy="${el.getAttribute("cy")}" r="${r}" fill="${fill}" stroke="${col.surface}" stroke-width="${sw}"/>`;
@@ -1911,8 +1938,8 @@ async function exportMap(kind){
     const g = cv.getContext("2d");
     const F = (w, px, fam) => `${w} ${px}px ${fam==="d" ? '"Bricolage Grotesque"' : fam==="m" ? '"JetBrains Mono"' : '"Atkinson Hyperlegible"'}, system-ui, sans-serif`;
     g.fillStyle = col.bg; g.fillRect(0,0,CW,CH);
-    const been = COUNTRIES.filter(c=>marks[c.code]==="been"), b = been.length;
-    const w = COUNTRIES.filter(c=>marks[c.code]==="want").length;
+    const been = COUNTRIES.filter(c=>isBeen(c.code)), b = been.length;
+    const w = COUNTRIES.filter(c=>isWant(c.code)).length;
     const pct = pctTxt(b);
     const conts = new Set(been.map(c=>c.cont)).size;
     g.textBaseline = "alphabetic"; g.textAlign = "left";
@@ -1937,7 +1964,7 @@ async function exportMap(kind){
     const keys = Object.keys(C), half = W/2 - 20;
     keys.forEach((k, i)=>{
       const x = PAD + (i%2)*(half+40), yy = y + Math.floor(i/2)*78;
-      const all = COUNTRIES.filter(c=>c.cont===k), h = all.filter(c=>marks[c.code]==="been").length;
+      const all = COUNTRIES.filter(c=>c.cont===k), h = all.filter(c=>isBeen(c.code)).length;
       g.fillStyle = col.ink; g.font = F(400, 24); g.textAlign = "left"; g.fillText(C[k], x, yy + 30);
       g.fillStyle = col.muted; g.font = F(500, 20, "m"); g.textAlign = "right"; g.fillText(`${h}/${all.length}`, x + half, yy + 30);
       g.fillStyle = col.line; g.beginPath(); g.roundRect(x, yy + 44, half, 10, 5); g.fill();
@@ -2069,14 +2096,14 @@ async function exportBackup(){
 function cleanBackup(raw){
   if(!raw || typeof raw!=="object" || raw.app!=="atlas-putovanja" || typeof raw.marks!=="object" || !raw.marks) return null;
   const m = {};
-  for(const [k,v] of Object.entries(raw.marks)) if(BY_CODE[k] && (v==="been" || v==="want")) m[k] = v;
+  for(const [k,v] of Object.entries(raw.marks)) if(BY_CODE[k] && (v==="been" || v==="want" || v==="both")) m[k] = v;
   const n = normNotes(raw.notes); for(const k in n) if(!BY_CODE[k]) delete n[k];
   return {marks:m, notes:n, prio:normPrio(raw.prio)};
 }
 let pendingImport = null;
 function askImport(){
   const d = pendingImport, box = $("bkAsk");
-  const b = Object.values(d.marks).filter(v=>v==="been").length, w = Object.values(d.marks).filter(v=>v==="want").length;
+  const b = Object.values(d.marks).filter(v=>v==="been"||v==="both").length, w = Object.values(d.marks).filter(v=>v==="want"||v==="both").length;
   const have = Object.keys(marks).length;
   box.innerHTML = `<div>${esc(fill(t("bkFound"), {b, w, n:Object.values(d.notes).reduce((a,x)=>a+x.trips.length,0)}))}${have ? " " + esc(fill(t("bkHave"), {c:have})) : ""}</div>
     <div class="row">${have ? `<button type="button" data-bk="merge">${t("bkMerge")}</button>` : ""}<button type="button" class="primary" data-bk="replace">${t("bkReplace")}</button><button type="button" data-bk="cancel">${t("bkCancel")}</button></div>`;
@@ -2100,16 +2127,19 @@ $("bkAsk").addEventListener("click", e=>{
   const act = b.dataset.bk, d = pendingImport;
   $("bkAsk").hidden = true; pendingImport = null;
   if(act==="cancel" || !d) return;
-  if(act==="replace"){ marks = d.marks; notes = d.notes; prio = d.prio; }
+  if(act==="replace"){ marks = d.marks; setNotes(d.notes); prio = d.prio; }
   else {
-    marks = {...marks, ...d.marks}; prio = {...prio, ...d.prio};
-    notes = cleanNotes();
+    const mg = {...marks};
+    for(const [k, v] of Object.entries(d.marks)){ const o = mg[k]; mg[k] = !o || o===v ? v : "both"; }
+    marks = mg; prio = {...prio, ...d.prio};
+    const nn = cleanNotes();
     for(const k in d.notes){
-      const cur = notes[k] || (notes[k] = {trips:[]}), seen = new Set(cur.trips.map(x=>JSON.stringify(x)));
+      const cur = nn[k] || (nn[k] = {trips:[]}), seen = new Set(cur.trips.map(x=>JSON.stringify(x)));
       for(const tr of d.notes[k].trips) if(!seen.has(JSON.stringify(tr))) cur.trips.push(tr);
     }
+    setNotes(nn);
   }
-  for(const k in prio) if(marks[k]!=="want") delete prio[k];
+  for(const k in prio) if(!isWant(k)) delete prio[k];
   changed(); render(); bkMsg(t("bkDone"));
 });
 
@@ -2130,7 +2160,7 @@ $("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.
 
 (function init(){
   const local = lsGet(); if(local && typeof local==="object") marks=local;
-  notes = normNotes(lsGet(LS+"-notes")); prio = normPrio(lsGet(LS+"-prio"));
+  setNotes(lsGet(LS+"-notes")); prio = normPrio(lsGet(LS+"-prio"));
   try{ if(localStorage.getItem("atlas-view")==="globe") setView("globe", true); }catch(e){}
   applyLang();
   render();
@@ -2168,7 +2198,7 @@ $("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.
       if(snap.metadata.hasPendingWrites || saving || dirty) return;
       if(!snap.metadata.fromCache) clearTimeout(t);
       if(snap.exists){
-        const d=snap.data(); marks={...(d.marks||{})}; notes=normNotes(d.notes); prio=normPrio(d.prio); lsSet();
+        const d=snap.data(); marks={...(d.marks||{})}; if(!editing.size) setNotes(d.notes); else savedNotes=normNotes(d.notes); prio=normPrio(d.prio); lsSet();
         if(!(document.activeElement && document.activeElement.dataset && document.activeElement.dataset.j)) render();
         setSync(true,"syncSaved");
       } else if(first && !snap.metadata.fromCache){
