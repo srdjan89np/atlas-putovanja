@@ -352,6 +352,75 @@ html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
 .onb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .onb-demo{display:flex;gap:8px;justify-content:center;align-items:center}
 @media (prefers-reduced-motion:no-preference){.onb-card{animation:onbIn .25s ease-out}@keyframes onbIn{from{transform:translateY(12px);opacity:.4}}}
+
+/* Dodirne površine: najmanje ~40–44 px za prst */
+.langs button{padding:12px 14px;font-size:12px}
+.seg button{padding:12px 14px}
+.tabs button{padding:12px 4px}
+.zoom{gap:6px}
+.zoom button{width:42px;height:42px;font-size:19px}
+.btn{min-height:42px;min-width:42px;justify-content:center}
+@media (max-width:440px){.btn{padding:8px 11px}}
+.chip{min-height:40px;padding:8px 14px}
+.savebtn{min-height:44px}
+.pdot{width:42px;height:42px}
+.pdot svg{width:21px;height:21px}
+footer .link{padding:10px 0}
+.qmode{min-height:64px}
+/* Kviz i Dostignuća: usko zaglavlje, bez velikih brojki */
+body:is([data-page="quiz"],[data-page="ach"]) header{gap:6px;padding-block:0 12px}
+body:is([data-page="quiz"],[data-page="ach"]) header .stats,body:is([data-page="quiz"],[data-page="ach"]) header .eyebrow{display:none}
+body:is([data-page="quiz"],[data-page="ach"]) h1{font-size:24px}
+body:is([data-page="quiz"],[data-page="ach"]) header .topline{position:absolute;right:max(16px,env(safe-area-inset-right,0px));margin-top:-4px}
+body:is([data-page="quiz"],[data-page="ach"]) .wrap{position:relative}
+
+/* Lista po kontinentima */
+li.grp{border-top:1px solid var(--line)}
+li.grp:first-child{border-top:0}
+.grpb{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 14px;font:inherit;font-weight:700;font-size:16px;color:var(--ink);background:transparent;border:0;cursor:pointer;text-align:left}
+.grpb .gname{flex:1;min-width:0}
+.grpb em{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:500}
+.grpb .gbar{width:64px;height:6px;border-radius:3px;background:var(--line);overflow:hidden;flex:none}
+.grpb .gbar i{display:block;height:100%;background:var(--been)}
+.grpb svg{width:16px;height:16px;flex:none;transition:transform .15s;color:var(--muted)}
+.grpb[aria-expanded="true"] svg{transform:rotate(180deg)}
+.grpb[aria-expanded="true"]{background:var(--bg)}
+.grpb:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.countrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sortsel{font:inherit;font-size:13.5px;min-height:40px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);max-width:60%}
+.sortsel:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--ad-h) + var(--nav-h) + 26px + env(safe-area-inset-bottom,0px));z-index:15;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgb(0 0 0 / .18)}
+.totop svg{width:20px;height:20px}
+.totop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+html.native .totop{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
+body.searching .totop{display:none}
+.toast:has(.tact){flex-wrap:wrap}
+.toast:has(.tact) > span:not(.seal){flex:1 1 200px}
+.toast .tact{margin-left:auto;font:inherit;font-size:13.5px;font-weight:700;padding:8px 12px;min-height:40px;border-radius:8px;border:0;background:var(--surface);color:var(--ink);cursor:pointer}
+
+/* Statistika */
+.stgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:560px){.stgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.st{padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);min-width:0}
+.st b{display:block;font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.st span{font-size:12.5px;color:var(--muted)}
+.yrs{display:grid;gap:6px;margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.yrs h3{margin:0 0 4px;font-size:14px}
+.yr2{display:grid;grid-template-columns:44px minmax(0,1fr) 28px;align-items:center;gap:8px;font-size:13px}
+.yr2 b{font-family:var(--f-mono);font-weight:500}
+.yr2 .yb{height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.yr2 .yb i{display:block;height:100%;background:var(--been);border-radius:5px}
+.yr2 em{font-style:normal;text-align:right;font-family:var(--f-mono);color:var(--muted)}
+.yhead .yshare{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13px;font-weight:700;min-height:40px;padding:6px 12px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.yhead .yshare svg{width:15px;height:15px}
+.yhead .yshare:disabled{opacity:.6}
+.yhead{align-items:center}
+/* Dnevni izazov */
+.daily{display:grid;gap:6px;padding:16px;border-radius:14px;border:1.5px solid var(--accent);background:var(--accent-soft);margin-bottom:12px}
+.daily strong{font-family:var(--f-display);font-size:18px}
+.daily small{color:var(--muted);font-size:13px}
+.daily .drow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.daily .dres{font-weight:700}
 </style>
 
 <div class="wrap">
@@ -404,7 +473,7 @@ html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
   </div>
 
   <div id="listarea">
-  <div class="count" id="count"></div>
+  <div class="count countrow"><span id="count"></span><select class="sortsel" id="sort" data-i18n-aria="sortLbl" aria-label="Redosled"></select></div>
   <ul class="list" id="list"></ul>
   </div>
   </div>
@@ -413,6 +482,7 @@ html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
   </div>
   <div id="page-quiz" hidden><div id="tab-quiz"></div></div>
   <div id="page-ach" hidden>
+  <section class="ach" id="statsec" data-i18n-aria="stTitle" aria-label="Statistika"></section>
   <section class="ach" data-i18n-aria="ach" aria-label="Dostignuća">
     <h2><span data-i18n="ach">Dostignuća</span> <em id="achCount"></em></h2>
     <div class="badges" id="badges"></div>
@@ -447,6 +517,7 @@ html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
   <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.500 4h9v5a4.500 4.500 0 0 1-9 0zM7.500 5.500H4.500c0 3 1.300 4.500 3.300 4.800M16.500 5.500h3c0 3-1.300 4.500-3.300 4.800M12 13.500V17M8.500 20h7M9.500 17h5"/></svg><span data-i18n="ach">Dostignuća</span></button>
 </nav>
 <div class="toast" id="toast" role="status" hidden></div>
+<button class="totop" id="toTop" type="button" data-i18n-aria="toTop" aria-label="Na vrh" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 13V3M3.5 7.5L8 3l4.5 4.5"/></svg></button>
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
   <div class="adslot" id="admob-banner" data-ad-unit="ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX" data-ad-size="BANNER_320x50" data-i18n="adLabel">Reklama · 320×50</div>
@@ -507,6 +578,11 @@ const T = {
   sTitle:"Predlozi", sText:"Države koje još nisi obišao, a blizu su onih u kojima si bio.", sNear:"Blizu", sEmpty:"Predlozi se pojavljuju kad označiš bar jednu obiđenu državu.",
   sNoMap:"Predlozi su dostupni kad se učita mapa.", sNone:"Nema predloga: obišao si sve države u blizini.", onWishShort:"na listi želja", addWish:"Dodaj na listu želja",
   qTitle:"Kviz", qIntro:"Deset pitanja, 15 sekundi za svako. Izaberi vrstu kviza.", qFlags:"Zastave", qCaps:"Glavni gradovi", qMix:"Mešano", qShapes:"Oblik države", qShape:"Koja je ovo država?", qShapeAria:"Obris države", qFlag:"Čija je ovo zastava?", qFlagAria:"Zastava",
+  toTop:"Na vrh", grpAria:"Prikaži države: {c}", sortLbl:"Redosled", sortAz:"Abecedno", sortYear:"Po godini posete", sortPrio:"Po prioritetu",
+  remind:"Dodato je 10 novih oznaka. Sačuvaj rezervnu kopiju podataka.", remindBtn:"Sačuvaj kopiju",
+  stTitle:"Statistika", stArea:"površine sveta", stPop:"stanovništva sveta", stConts:"kontinenata", stTrips:"putovanja", stCities:"gradova", stFirst:"prvo putovanje", stTop:"najviše putovanja", stByYear:"Putovanja po godinama", stNoTrips:"Upiši putovanja u Dnevnik i ovde će se pojaviti godine.",
+  yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
+  dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
   mTitle:"Ovog meseca", mText:"Države sa tvoje liste želja kojima je ovo najbolje vreme za posetu.", mNone:"Nijednoj državi sa tvoje liste želja ovo nije najbolje vreme za posetu.", mOther:"Još država kojima je ovo najbolje vreme", privacy:"Politika privatnosti",
   qCap:"Koji je glavni grad ove države?", qCapRev:"Kojoj državi je ovo glavni grad?", qRight:"Tačno.", qWrong:"Netačno. Tačan odgovor: {a}", qNext:"Dalje", qFinish:"Rezultat",
   qScore:"Tačnih odgovora: {s} od {n}", qBest:"Najbolji rezultat: {s} poena", qNoBest:"Još nije igrano", qAgain:"Igraj ponovo", qOther:"Druga vrsta kviza", qProg:"Pitanje {i} od {n}", qQuit:"Prekini",
@@ -551,6 +627,11 @@ const T = {
   sTitle:"Suggestions", sText:"Countries you haven't visited that are close to ones you have.", sNear:"Near", sEmpty:"Suggestions appear once you mark at least one visited country.",
   sNoMap:"Suggestions are available once the map loads.", sNone:"No suggestions: you've visited every country nearby.", onWishShort:"on the wish list", addWish:"Add to wish list",
   qTitle:"Quiz", qIntro:"Ten questions, 15 seconds each. Pick a quiz type.", qFlags:"Flags", qCaps:"Capitals", qMix:"Mixed", qShapes:"Country shapes", qShape:"Which country is this?", qShapeAria:"Country outline", qFlag:"Whose flag is this?", qFlagAria:"Flag",
+  toTop:"Back to top", grpAria:"Show countries: {c}", sortLbl:"Order", sortAz:"A–Z", sortYear:"By year visited", sortPrio:"By priority",
+  remind:"You've added 10 new marks. Save a backup of your data.", remindBtn:"Save backup",
+  stTitle:"Statistics", stArea:"of the world's area", stPop:"of the world's population", stConts:"continents", stTrips:"trips", stCities:"cities", stFirst:"first trip", stTop:"most trips", stByYear:"Trips by year", stNoTrips:"Add trips to the Journal and the years will show up here.",
+  yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
+  dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
   mTitle:"This month", mText:"Countries on your wish list that are best to visit right now.", mNone:"None of the countries on your wish list are at their best this month.", mOther:"More countries at their best right now", privacy:"Privacy policy",
   qCap:"What is the capital of this country?", qCapRev:"Which country has this capital?", qRight:"Correct.", qWrong:"Not quite. Correct answer: {a}", qNext:"Next", qFinish:"See result",
   qScore:"Correct answers: {s} of {n}", qBest:"Best score: {s} points", qNoBest:"Not played yet", qAgain:"Play again", qOther:"Change quiz type", qProg:"Question {i} of {n}", qQuit:"Quit",
@@ -982,7 +1063,7 @@ function setTab(name){
 }
 function renderTab(){ if(ui.tab==="journal") renderJournal(); else if(ui.tab==="plan") renderPlan(); if(ui.page==="quiz") renderQuiz(); }
 function gotoCountry(code){
-  ui.q = ""; $("q").value = ""; ui.status = ""; ui.cont = ""; openInfo = code; picked = code;
+  ui.q = ""; $("q").value = ""; ui.status = ""; ui.cont = ""; openInfo = code; picked = code; openGroups.add(BY_CODE[code].cont);
   setPage("home"); setTab("list"); render();
   if(view==="globe") flyTo(code); else focusCountry(code);
   const row = document.querySelector(`#list [data-info="${code}"]`);
@@ -1005,7 +1086,8 @@ function renderJournal(){
   const years = [...new Set(entries.map(e=>e.tr.year || ""))].sort((a,b)=> a==="" ? 1 : b==="" ? -1 : b.localeCompare(a));
   for(const y of years){
     const es = entries.filter(e=>(e.tr.year||"")===y), fresh = y ? Object.values(first).filter(v=>v===y).length : 0;
-    html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span></div><ul class="tl">` +
+    const shareBtn = y && downloads && VB0 ? `<button type="button" class="yshare" data-shareyear="${esc(y)}" aria-label="${t("yShare")}: ${esc(y)}"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg>${t("yShare")}</button>` : "";
+    html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span>${shareBtn}</div><ul class="tl">` +
       es.map(({c, tr, key})=>`<li><button type="button" class="tli" data-jopen="${key}" aria-expanded="${openJ===key}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}${y && first[c.code]===y ? `<em class="newc">${t("jNewTag")}</em>` : ""}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span></button>${openJ===key ? `<div class="more jedit">${journalHTML(c.code, "t")}</div>` : ""}</li>`).join("") + `</ul></section>`;
   }
   box.innerHTML = html;
@@ -1101,11 +1183,42 @@ function quizBest(mode, pts){
   return b[mode] || 0;
 }
 // najbolji rezultat u bilo kojoj vrsti kviza i da li je bilo kviza bez greške (za dostignuća)
-const Q_MODES = ["flags","caps","mix","shape"];
+const Q_MODES = ["flags","caps","mix","shape","daily"];
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+function dailyData(){ let o = {}; try{ o = JSON.parse(localStorage.getItem("atlas-quiz-daily") || "{}") || {}; }catch(e){} return o && typeof o==="object" ? o : {}; }
+function dailyStreak(){
+  const d = dailyData(), x = new Date(); let n = 0;
+  if(d[dayKey(x)]==null) x.setDate(x.getDate()-1);      // danas još nije odigrano: niz traje od juče
+  while(d[dayKey(x)]!=null){ n++; x.setDate(x.getDate()-1); }
+  return n;
+}
+// isti niz slučajnih brojeva za isti dan, na svakom uređaju
+function seeded(str){ let h = 1779033703 ^ str.length; for(let i=0;i<str.length;i++){ h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = h<<13 | h>>>19; }
+  return ()=>{ h = Math.imul(h ^ h>>>16, 2246822507); h = Math.imul(h ^ h>>>13, 3266489909); h ^= h>>>16; return (h>>>0)/4294967296; }; }
+const streakTxt = n => n ? fill(t("dStreak"), {n: n + " " + (n===1 || (lang!=="en" && n%10===1 && n%100!==11) ? t("dDays1") : t("dDays"))}) : "";
+function startDaily(){
+  if(dailyData()[dayKey()]!=null) return;
+  const rnd = seeded("atlas-" + dayKey()), sh = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(rnd()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const base = COUNTRIES.filter(c=>INFO[c.code]).slice().sort((a,b)=>a.code<b.code ? -1 : 1);
+  const slots = sh(["flag","flag","flag","cap","cap","capRev","capRev","shape","shape","shape"]);
+  const order = sh(base), used = new Set();
+  quizStop();
+  Object.assign(quiz, {mode:"daily", i:0, score:0, points:0, ms:0, ans:null, left:Q_LIMIT, last:0, recorded:false});
+  quiz.qs = slots.map((type, i)=>{
+    if(type==="flag" && !flagSupport()) type = i%2 ? "cap" : "capRev";
+    if(type==="shape" && !shapeSupport()) type = i%2 ? "capRev" : "cap";
+    const c = order.find(x=>!used.has(x.code) && (type!=="shape" || shapeOf(x.code))); used.add(c.code);
+    const ok = x => x.code!==c.code && INFO[x.code].cap!==INFO[c.code].cap;
+    let same = sh(base.filter(x=>x.cont===c.cont && ok(x))).slice(0,3);
+    if(same.length < 3) same = same.concat(sh(base.filter(x=>x.cont!==c.cont && ok(x))).slice(0, 3-same.length));
+    return {type, code:c.code, opts: sh([c.code, ...same.map(x=>x.code)])};
+  });
+  renderQuiz();
+}
 function quizData(){
   let points = {}; try{ points = JSON.parse(localStorage.getItem("atlas-quiz-points") || "{}") || {}; }catch(e){}
   let perfect = false; try{ perfect = localStorage.getItem("atlas-quiz-perfect")==="1"; }catch(e){}
-  return {points, perfect};
+  return {points, perfect, daily: dailyData()};
 }
 // spaja rezultate iz rezervne kopije ili sa naloga: uvek ostaje bolji rezultat
 function mergeQuiz(q){
@@ -1113,7 +1226,11 @@ function mergeQuiz(q){
   const cur = quizData(), src = q.points && typeof q.points==="object" ? q.points : {}; let ch = false;
   for(const m of Q_MODES){ const v = Math.round(+src[m]); if(Number.isFinite(v) && v>0 && v<=2000 && v>(+cur.points[m]||0)){ cur.points[m] = v; ch = true; } }
   if(q.perfect===true && !cur.perfect){ cur.perfect = true; ch = true; }
-  if(ch) try{ localStorage.setItem("atlas-quiz-points", JSON.stringify(cur.points)); if(cur.perfect) localStorage.setItem("atlas-quiz-perfect", "1"); }catch(e){}
+  if(q.daily && typeof q.daily==="object"){
+    for(const [k, v] of Object.entries(q.daily)){ const n = Math.round(+v); if(/^\d{4}-\d{2}-\d{2}$/.test(k) && Number.isFinite(n) && n>=0 && n<=2000 && !(cur.daily[k]>=n)){ cur.daily[k] = n; ch = true; } }
+    const ks = Object.keys(cur.daily).sort(); while(ks.length > 400) delete cur.daily[ks.shift()];
+  }
+  if(ch) try{ localStorage.setItem("atlas-quiz-points", JSON.stringify(cur.points)); if(cur.perfect) localStorage.setItem("atlas-quiz-perfect", "1"); localStorage.setItem("atlas-quiz-daily", JSON.stringify(cur.daily)); }catch(e){}
   return ch;
 }
 function quizStats(){
@@ -1162,7 +1279,13 @@ function renderQuiz(){
   const box = $("tab-quiz"), max = 10*(Q_BASE+Q_BONUS);
   if(!quiz.mode){
     const modes = [["flags", t("qFlags")], ["caps", t("qCaps")], ["shape", t("qShapes")], ["mix", t("qMix")]].filter(m=>(m[0]!=="flags" || flagSupport()) && (m[0]!=="shape" || shapeSupport()));
-    box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><p class="secp">${t("qIntro")}</p><div class="qmodes">` +
+    const dd = dailyData()[dayKey()], streak = dailyStreak();
+    const dayTxt = new Intl.DateTimeFormat(lang==="en" ? "en-GB" : "sr-Latn", {day:"numeric", month:"long"}).format(new Date());
+    const stTxt = streakTxt(streak);
+    const daily = `<div class="daily"><div class="drow"><strong>${t("dTitle")} · ${esc(dayTxt)}</strong>${stTxt ? `<small>${esc(stTxt)}</small>` : ""}</div>
+      ${dd!=null ? `<div class="drow"><span class="dres">${fill(t("dDone"), {s:nf.format(dd)})}</span><small>${t("dTomorrow")}</small></div>`
+        : `<small>${t("dText")}</small><div class="drow"><span></span><button type="button" class="onb-next" data-daily>${t("dPlay")}</button></div>`}</div>`;
+    box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2>${daily}<p class="secp">${t("qIntro")}</p><div class="qmodes">` +
       modes.map(([m,l])=>{ const b = quizBest(m); return `<button type="button" class="qmode" data-qmode="${m}"><strong>${l}</strong><small>${b ? fill(t("qBest"), {s:nf.format(b)}) : t("qNoBest")}</small></button>`; }).join("") +
       `</div><p class="secp qrules">${fill(t("qRules"), {b:Q_BASE, x:Q_BONUS, s:Q_LIMIT/1000})}</p>`;
     return;
@@ -1172,12 +1295,14 @@ function renderQuiz(){
     if(!quiz.recorded){
       quiz.recorded = true;
       if(quiz.score===quiz.qs.length) try{ localStorage.setItem("atlas-quiz-perfect", "1"); }catch(e){}
+      if(quiz.mode==="daily"){ const dd = dailyData(); if(dd[dayKey()]==null){ dd[dayKey()] = quiz.points; try{ localStorage.setItem("atlas-quiz-daily", JSON.stringify(dd)); }catch(e){} } }
       announce = true; renderAch(); changed();
     }
     box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><div class="qcard qend"><div class="qbig">${nf.format(quiz.points)}</div><p class="qof">${fill(t("qOf"), {n:nf.format(max)})}</p>
       <div class="qstats"><div><b>${quiz.score}/${quiz.qs.length}</b><span>${t("qCorrect")}</span></div><div><b>${fmtTime(quiz.ms)}</b><span>${t("qTimeUsed")}</span></div></div>
       <p class="secp">${quiz.points > before && quiz.points > 0 ? t("qNewBest") : fill(t("qBest"), {s:nf.format(best)})}</p>
-      <div class="qrow"><button type="button" class="onb-next" data-qmode="${quiz.mode}">${t("qAgain")}</button><button type="button" class="onb-back" data-qquit>${t("qOther")}</button></div></div>`;
+      ${quiz.mode==="daily" ? `<p class="secp">${t("dTomorrow")}${dailyStreak() ? " " + esc(streakTxt(dailyStreak())) : ""}</p>` : ""}
+      <div class="qrow">${quiz.mode==="daily" ? "" : `<button type="button" class="onb-next" data-qmode="${quiz.mode}">${t("qAgain")}</button>`}<button type="button" class="onb-back" data-qquit>${t("qOther")}</button></div></div>`;
     return;
   }
   const q = quiz.qs[quiz.i], c = BY_CODE[q.code], done = quiz.ans !== null;
@@ -1204,7 +1329,7 @@ function renderQuiz(){
 /* ---------- stranice: Početna, Kviz, Dostignuća ---------- */
 function setPage(name){
   if(name!==ui.page) discardDrafts();
-  ui.page = name;
+  ui.page = name; document.body.dataset.page = name; $("toTop").hidden = true;
   for(const k of ["home","quiz","ach"]) $("page-"+k).hidden = k!==name;
   document.querySelectorAll(".bnav button").forEach(b=>{ if(b.dataset.page===name) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
   if(name==="quiz") renderQuiz(); else quizStop();
@@ -1245,12 +1370,38 @@ function achState(){
   });
 }
 let toastTimer = null, achKnown = null, announce = false;
-function toast(text, err){
+function toast(text, err, action){
   const el = $("toast"); el.classList.toggle("err", !!err);
-  el.innerHTML = (err ? "" : `<span class="seal">${ICON.been}</span>`) + `<span>${esc(text)}</span>`;
-  el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ el.hidden = true; }, err ? 5000 : 3800);
+  el.innerHTML = (err ? "" : `<span class="seal">${ICON.been}</span>`) + `<span>${esc(text)}</span>` + (action ? `<button type="button" class="tact" ${action.attr}>${esc(action.label)}</button>` : "");
+  el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ el.hidden = true; }, action ? 9000 : err ? 5000 : 3800);
+}
+// posle svakih 10 novih oznaka podseti na rezervnu kopiju (samo kad se podaci čuvaju samo na uređaju)
+function countForBackup(){
+  if(docRef) return;
+  let n = 0; try{ n = (+localStorage.getItem("atlas-bk-count") || 0) + 1; localStorage.setItem("atlas-bk-count", String(n)); }catch(e){ return; }
+  if(n % 10) return;
+  const show = ()=>toast(t("remind"), false, {attr:"data-bkremind", label:t("remindBtn")});
+  if(!$("toast").hidden) setTimeout(show, 3900); else show();
+}
+function renderStatsPage(){
+  const box = $("statsec"); if(!box) return;
+  const been = COUNTRIES.filter(c=>isBeen(c.code));
+  let A = 0, P = 0, a = 0, p = 0;
+  for(const c of COUNTRIES){ const i = INFO[c.code]; if(!i) continue; A += i.area; P += i.pop; if(isBeen(c.code)){ a += i.area; p += i.pop; } }
+  const pct = v => { const x = v*100; const s = x>0 && x<1 ? x.toFixed(1) : Math.round(x).toString(); return (lang==="en" ? s : s.replace(".",",")) + "%"; };
+  const sn = cleanNotes(), trips = [], cities = new Set();
+  for(const code in sn){ if(!isBeen(code)) continue; for(const tr of sn[code].trips){ trips.push(tr); for(const part of String(tr.cities||"").split(/[,;]/)){ const k = fold(part.trim()); if(k) cities.add(code+":"+k); } } }
+  const perY = {}; for(const tr of trips) if(tr.year) perY[tr.year] = (perY[tr.year]||0) + 1;
+  const ys = Object.keys(perY).sort();
+  const top = ys.length ? ys.reduce((m,y)=>perY[y]>perY[m] || (perY[y]===perY[m] && y>m) ? y : m) : null;
+  const tiles = [[pct(a/A), t("stArea")], [pct(p/P), t("stPop")], [new Set(been.map(c=>c.cont)).size + "/6", t("stConts")], [nf.format(trips.length), t("stTrips")],
+    [nf.format(cities.size), t("stCities")], [ys[0] || "–", t("stFirst")], [top ? `${top}` : "–", t("stTop") + (top ? ` (${perY[top]})` : "")], [nf.format(been.length), t("imgBeen")]];
+  const shown = ys.slice(-8).reverse(), mx = Math.max(1, ...shown.map(y=>perY[y]));
+  box.innerHTML = `<h2><span>${t("stTitle")}</span></h2><div class="stgrid">${tiles.map(([n,l])=>`<div class="st"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>
+    <div class="yrs"><h3>${t("stByYear")}</h3>${shown.length ? shown.map(y=>`<div class="yr2"><b>${esc(y)}</b><span class="yb"><i style="width:${perY[y]/mx*100}%"></i></span><em>${perY[y]}</em></div>`).join("") : `<small class="secp" style="margin:0">${t("stNoTrips")}</small>`}</div>`;
 }
 function renderAch(){
+  renderStatsPage();
   const st = achState(); let on = 0;
   const now = new Set(st.filter(x=>x.done).map(x=>x.a.t));
   if(announce && achKnown){ const fresh = st.filter(x=>x.done && !achKnown.has(x.a.t)); if(fresh.length) toast(t("achToast") + ": " + fresh.map(x=>lang==="en" ? x.a.te : x.a.t).join(", ")); }
@@ -1278,7 +1429,9 @@ function setNotes(n){ savedNotes = normNotes(n); notes = cloneNotes(savedNotes);
 // Nesačuvana i prazna putovanja se odbacuju kad se zatvori panel, promeni država ili kartica.
 function discardDrafts(){ notes = cloneNotes(savedNotes); editing.clear(); }
 let prio = {};            // code -> 1..3 (lista želja)
-let ui = {cont:"", status:"", q:"", tab:"list", page:"home"};
+let ui = {cont:"", status:"", q:"", tab:"list", page:"home", sort:"az"};
+try{ const so = localStorage.getItem("atlas-sort"); if(["az","year","prio"].includes(so)) ui.sort = so; }catch(e){}
+const openGroups = new Set();     // kontinenti otvoreni u listi
 const LS = "atlas-putovanja-v1";
 const $ = id => document.getElementById(id);
 
@@ -1323,11 +1476,31 @@ function renderList(){
     return !q || c.key.includes(q);
   });
   $("count").textContent = lang==="en" ? (rows.length===1 ? "1 country" : rows.length + " countries") : rows.length===1 ? "1 država" : rows.length + (rows.length%10>=2&&rows.length%10<=4&&(rows.length%100<10||rows.length%100>=20) ? " države" : " država");
+  const sel = $("sort");
+  sel.innerHTML = [["az", t("sortAz")], ["year", t("sortYear")], ["prio", t("sortPrio")]].map(([v,l])=>`<option value="${v}" ${ui.sort===v ? "selected" : ""}>${l}</option>`).join("");
   if(!rows.length){
     $("list").innerHTML = `<li class="empty">${ui.status==="want"&&!q ? t("emptyWant") : ui.status==="been"&&!q ? t("emptyBeen") : t("emptySearch")}</li>`;
     return;
   }
-  $("list").innerHTML = rows.map(c=>{
+  if(ui.sort==="year"){
+    const last = code => { const y = yearsOf(code); return y.length ? +y[y.length-1] : 0; };
+    rows.sort((a,b)=> (isBeen(b.code)-isBeen(a.code)) || (last(b.code)-last(a.code)));
+  } else if(ui.sort==="prio"){
+    rows.sort((a,b)=> (isWant(b.code)-isWant(a.code)) || ((prio[b.code]||0)-(prio[a.code]||0)));
+  }
+  // bez pretrage i filtera, abecedno: države su grupisane po kontinentima i otvaraju se na dodir
+  if(!q && !ui.cont && !ui.status && ui.sort==="az"){
+    const chev = '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3.5 6l4.5 4.5L12.5 6"/></svg>';
+    $("list").innerHTML = Object.keys(C).map(k=>{
+      const all = rows.filter(c=>c.cont===k), h = all.filter(c=>isBeen(c.code)).length, open = openGroups.has(k);
+      return `<li class="grp"><button type="button" class="grpb" data-grp="${k}" aria-expanded="${open}" aria-label="${fill(t("grpAria"), {c:C[k]})}"><span class="gname">${C[k]}</span><em>${h}/${all.length}</em><span class="gbar"><i style="width:${all.length ? h/all.length*100 : 0}%"></i></span>${chev}</button></li>` + (open ? all.map(rowHTML).join("") : "");
+    }).join("");
+    return;
+  }
+  $("list").innerHTML = rows.map(rowHTML).join("");
+}
+function rowHTML(c){
+  {
     const m = marks[c.code];
     const open = openInfo===c.code, cap = INFO[c.code] ? L(INFO[c.code],"cap") : "";
     return `<li class="c ${m?"is-"+m:""}">
@@ -1338,7 +1511,7 @@ function renderList(){
         <button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="${isWant(c.code)}" aria-label="${t("wantVisit")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button>
         <button class="btn been" type="button" data-code="${c.code}" data-set="been" aria-pressed="${isBeen(c.code)}" aria-label="${t("visitedL")}: ${c.name}">${ICON.been}<span class="lbl">${t("been")}</span></button>
       </div>${open ? `<div class="more">${moreHTML(c.code,"l")}</div>` : ""}</li>`;
-  }).join("");
+  }
 }
 
 /* ---------- map ---------- */
@@ -1829,6 +2002,11 @@ function showTip(e){
 function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); }
 
 /* ---------- events ---------- */
+$("sort").addEventListener("change", e=>{ ui.sort = e.target.value; try{ localStorage.setItem("atlas-sort", ui.sort); }catch(err){} renderList(); });
+// dugme Na vrh: pojavljuje se kad se Početna odskroluje daleko
+function toTopState(){ $("toTop").hidden = !(ui.page==="home" && scrollY > 1400); }
+addEventListener("scroll", toTopState, {passive:true});
+$("toTop").addEventListener("click", ()=>{ window.scrollTo({top:0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); });
 $("q").addEventListener("input", e=>{
   ui.q=e.target.value;
   const hits = searchHits();
@@ -1904,6 +2082,10 @@ document.addEventListener("click", e=>{
     openInfo = openInfo===b.dataset.info ? null : b.dataset.info; discardDrafts(); renderList(); renderMap(); return;
   }
   if(b.dataset.tab){ setTab(b.dataset.tab); return; }
+  if(b.dataset.grp){ const k = b.dataset.grp; if(openGroups.has(k)) openGroups.delete(k); else openGroups.add(k); renderList(); return; }
+  if(b.hasAttribute("data-bkremind")){ $("toast").hidden = true; setPage("ach"); exportBackup(); return; }
+  if(b.dataset.shareyear){ exportYear(b.dataset.shareyear, b); return; }
+  if(b.hasAttribute("data-daily")){ startDaily(); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
   if(b.dataset.jopen){ openJ = openJ===b.dataset.jopen ? null : b.dataset.jopen; discardDrafts(); renderJournal(); renderMap(); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
@@ -1948,13 +2130,17 @@ document.addEventListener("click", e=>{
   if(b.dataset.share){ exportMap(b.dataset.share); return; }
   if(b.dataset.page){ setPage(b.dataset.page); return; }
   if(b.dataset.qmode){ startQuiz(b.dataset.qmode); return; }
-  if(b.hasAttribute("data-qquit")){ quizStop(); quiz.mode = null; renderQuiz(); return; }
+  if(b.hasAttribute("data-qquit")){
+    // dnevni izazov se igra jednom: prekid upisuje poene osvojene do tada
+    if(quiz.mode==="daily" && !quiz.recorded && quiz.i < quiz.qs.length){ const dd = dailyData(); if(dd[dayKey()]==null){ dd[dayKey()] = quiz.points; try{ localStorage.setItem("atlas-quiz-daily", JSON.stringify(dd)); }catch(e){} changed(); } }
+    quizStop(); quiz.mode = null; renderQuiz(); return; }
   if(b.dataset.qopt){ quizAnswer(b.dataset.qopt); return; }
   if(b.hasAttribute("data-qnext")){ quiz.i++; quiz.ans = null; quiz.left = Q_LIMIT; renderQuiz(); return; }
   if(b.dataset.set){
     const code=b.dataset.code, v=b.dataset.set;
     let b2 = isBeen(code), w2 = isWant(code);
     if(v==="been") b2 = !b2; else w2 = !w2;
+    if((v==="been" && b2) || (v==="want" && w2)) setTimeout(countForBackup, 0);
     if(b2 && w2) marks[code] = "both"; else if(b2) marks[code] = "been"; else if(w2) marks[code] = "want"; else delete marks[code];
     if(!isWant(code)) delete prio[code];
     announce = true;
@@ -2082,6 +2268,83 @@ async function exportMap(kind){
   }finally{ btns.forEach(b=>{ b.disabled = false; }); }
 }
 
+// Slika jedne godine iz Dnevnika: države, gradovi i mapa samo sa tim državama
+async function exportYear(year, btn){
+  if(!VB0 || !downloads) return;
+  if(btn) btn.disabled = true;
+  try{
+    const sn = cleanNotes(), rows = [], cities = new Set(), first = {};
+    for(const code in sn){ if(!isBeen(code) || !BY_CODE[code]) continue;
+      for(const tr of sn[code].trips){ if(tr.year && (!first[code] || tr.year < first[code])) first[code] = tr.year; }
+      const trs = sn[code].trips.filter(tr=>tr.year===year); if(!trs.length) continue;
+      const cs = []; for(const tr of trs) for(const part of String(tr.cities||"").split(/[,;]/)){ const x = part.trim(); if(x && !cs.includes(x)) cs.push(x); }
+      cs.forEach(x=>cities.add(code+":"+fold(x)));
+      rows.push({c:BY_CODE[code], n:trs.length, cs});
+    }
+    if(!rows.length) return;
+    rows.sort((a,b)=>b.n-a.n || a.c.name.localeCompare(b.c.name, lang==="en" ? "en" : "sr"));
+    const set = new Set(rows.map(r=>r.c.code)), fresh = rows.filter(r=>first[r.c.code]===year).length, nTrips = rows.reduce((s,r)=>s+r.n,0);
+    const cs = getComputedStyle(document.documentElement), tk = n => cs.getPropertyValue(n).trim();
+    const col = {bg:tk("--bg"), surface:tk("--surface"), line:tk("--line"), ink:tk("--ink"), muted:tk("--muted"), been:tk("--been"), accent:tk("--accent")};
+    // mapa se približi državama te godine (okvir 2:1, ne uži od 1/7 sveta)
+    let bx0 = Infinity, by0 = Infinity, bx1 = -Infinity, by1 = -Infinity;
+    for(const code of set){
+      const sh = shapeOf(code);
+      if(sh){ const [x,y,w,h] = sh.vb.split(" ").map(Number); bx0 = Math.min(bx0,x); by0 = Math.min(by0,y); bx1 = Math.max(bx1,x+w); by1 = Math.max(by1,y+h); }
+      else { const dot = document.querySelector(`#map circle[data-code="${code}"]`); if(dot){ const x = +dot.getAttribute("cx"), y = +dot.getAttribute("cy"); bx0 = Math.min(bx0,x); by0 = Math.min(by0,y); bx1 = Math.max(bx1,x); by1 = Math.max(by1,y); } }
+    }
+    let V = {x:VB0.x, y:VB0.y, w:VB0.w, h:VB0.h};
+    if(bx0 < Infinity){
+      let w = Math.max((bx1-bx0)*1.5, VB0.w/5), h = Math.max((by1-by0)*1.5, w/2); w = Math.max(w, h*2); h = w/2;
+      w = Math.min(w, VB0.w); h = Math.min(h, VB0.h);
+      const cx = (bx0+bx1)/2, cy = (by0+by1)/2;
+      V = {x: Math.min(VB0.x+VB0.w-w, Math.max(VB0.x, cx-w/2)), y: Math.min(VB0.y+VB0.h-h, Math.max(VB0.y, cy-h/2)), w, h};
+    }
+    const CW = 1080, CH = 1350, PAD = 56, W = CW - PAD*2, sc = W / V.w, MH = Math.round(V.h*sc);
+    const sw = (1.4/sc).toFixed(3), r = (7/sc).toFixed(3);
+    let body = "";
+    for(const el of $("map").children){
+      const code = el.dataset.code, on = code && set.has(code), fillc = on ? col.been : (el.tagName==="circle" ? col.muted : col.line);
+      // pojednostavljena mapa iz blizine ima pukotine između država: prvo se popune debljom ivicom iste boje, pa se preko crta tanka granica
+      if(el.tagName==="path" && !el.classList.contains("cover")) body += `<path d="${el.getAttribute("d")}" fill="${fillc}" stroke="${fillc}" stroke-width="${(2.6/sc).toFixed(3)}" stroke-linejoin="round"/>`;
+      else if(el.tagName==="circle" && !el.classList.contains("city") && on) body += `<circle cx="${el.getAttribute("cx")}" cy="${el.getAttribute("cy")}" r="${r}" fill="${fillc}" stroke="${col.surface}" stroke-width="${sw}"/>`;
+    }
+    // tanke granice; Srbija (sa Kosovom) se crta bez unutrašnje linije, granice joj daju susedi
+    for(const el of $("map").querySelectorAll("path:not(.cover)")) if(el.dataset.code!=="RS") body += `<path d="${el.getAttribute("d")}" fill="none" stroke="${col.surface}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+    const cover = $("map").querySelector('path.cover[data-code="RS"]');
+    if(cover) body += `<path d="${cover.getAttribute("d")}" fill="${set.has("RS") ? col.been : col.line}" stroke="none"/>`;
+    const url = URL.createObjectURL(new Blob([`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${MH}" viewBox="${V.x} ${V.y} ${V.w} ${V.h}">${body}</svg>`], {type:"image/svg+xml"}));
+    const img = await new Promise((ok, bad)=>{ const i = new Image(); i.onload = ()=>ok(i); i.onerror = bad; i.src = url; });
+    const cv = document.createElement("canvas"); cv.width = CW; cv.height = CH; const g = cv.getContext("2d");
+    const F = (w, px, fam) => `${w} ${px}px ${fam==="d" ? '"Bricolage Grotesque"' : fam==="m" ? '"JetBrains Mono"' : '"Atkinson Hyperlegible"'}, system-ui, sans-serif`;
+    g.fillStyle = col.bg; g.fillRect(0,0,CW,CH); g.textAlign = "left"; g.textBaseline = "alphabetic";
+    g.fillStyle = col.muted; g.font = F(500, 22, "m"); g.fillText(t("yEyebrow"), PAD, 92);
+    g.fillStyle = col.been; g.font = F(800, 150, "d"); g.fillText(year, PAD - 4, 232);
+    const stats = [[rows.length, t("yCountries")], [nTrips, t("yTrips")], [cities.size, t("yCities")], [fresh, t("yNew")]], colW = W/4;
+    stats.forEach(([n,l],i)=>{ const x = PAD + i*colW; g.fillStyle = col.ink; g.font = F(700, 58, "d"); g.fillText(String(n), x, 330); g.fillStyle = col.muted; g.font = F(400, 23); g.fillText(l, x, 366); });
+    const MY = 410;
+    g.save(); g.beginPath(); g.roundRect(PAD-16, MY-16, W+32, MH+32, 22); g.fillStyle = col.surface; g.fill(); g.clip();
+    g.drawImage(img, PAD, MY, W, MH); g.restore(); URL.revokeObjectURL(url);
+    let y = MY + MH + 76;
+    const fit = (txt, max) => { if(g.measureText(txt).width <= max) return txt; while(txt.length > 1 && g.measureText(txt + "…").width > max) txt = txt.slice(0,-1); return txt.trimEnd() + "…"; };
+    const maxRows = Math.max(1, Math.floor((CH - 40 - y) / 64));
+    const list = rows.length > maxRows ? rows.slice(0, maxRows-1) : rows;
+    for(const rw of list){
+      g.font = "44px system-ui, sans-serif"; g.fillStyle = col.ink; g.fillText(rw.c.flag, PAD, y);
+      g.font = F(700, 30, "d"); g.fillStyle = col.ink; const nm = fit(rw.c.name, 380); g.fillText(nm, PAD + 66, y - 4);
+      if(rw.cs.length){ g.font = F(400, 24); g.fillStyle = col.muted; g.fillText(fit(rw.cs.join(", "), W - 66 - 400), PAD + 66 + 400, y - 4); }
+      y += 64;
+    }
+    if(list.length < rows.length){ g.font = F(400, 26); g.fillStyle = col.muted; g.fillText(fill(t("yMore"), {n: rows.length - list.length}), PAD + 66, y - 4); }
+    const blob = await new Promise(ok => cv.toBlob(ok, "image/png"));
+    await downloads.save({filename:`${t("yFile")}-${year}.png`, data:blob});
+    toast(window.__nativeShareImage ? t("shareSent") : t("saved"));
+  }catch(e){
+    const c = e && (e.code || (e.name==="AbortError" ? "declined" : ""));
+    if(c!=="declined") toast(c==="rate_limited" ? t("wait") : t("cantSave"), true);
+  }finally{ if(btn) btn.disabled = false; }
+}
+
 /* ---------- persistence ---------- */
 let docRef=null, saving=false, dirty=false, timer=null;
 let syncState = [false, "loading"];
@@ -2175,7 +2438,7 @@ async function exportBackup(){
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
   const d = new Date(), day = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
   const btn = $("bkExport"); btn.disabled = true;
-  try{ await downloads.save({filename:`${t("bkFile")}-${day}.json`, data:blob}); bkMsg(t("bkSaved")); }
+  try{ await downloads.save({filename:`${t("bkFile")}-${day}.json`, data:blob}); bkMsg(t("bkSaved")); try{ localStorage.setItem("atlas-bk-count", "0"); }catch(e){} }
   catch(e){ const c = e && (e.code || (e.name==="AbortError" ? "declined" : "")); if(c!=="declined") bkMsg(c==="rate_limited" ? t("wait") : t("cantSave"), true); }
   finally{ btn.disabled = false; }
 }
