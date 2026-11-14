@@ -1047,6 +1047,12 @@ function quizBest(mode, pts){
   if(pts != null && pts > (b[mode]||0)){ b[mode] = pts; try{ localStorage.setItem("atlas-quiz-points", JSON.stringify(b)); }catch(e){} }
   return b[mode] || 0;
 }
+// najbolji rezultat u bilo kojoj vrsti kviza i da li je bilo kviza bez greške (za dostignuća)
+function quizStats(){
+  let b = {}; try{ b = JSON.parse(localStorage.getItem("atlas-quiz-points") || "{}") || {}; }catch(e){}
+  let perfect = false; try{ perfect = localStorage.getItem("atlas-quiz-perfect")==="1"; }catch(e){}
+  return {best: Math.max(0, ...Object.values(b).map(Number).filter(Number.isFinite)), perfect};
+}
 const fmtTime = ms => { const s = Math.round(ms/1000); return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); };
 const quizLive = () => !!quiz.mode && quiz.i < quiz.qs.length && quiz.ans === null;
 function quizStop(){ if(quiz.tick){ clearInterval(quiz.tick); quiz.tick = null; if(quizLive()) quiz.left = Math.max(0, quiz.left - (performance.now() - quiz.t0)); } }
@@ -1075,7 +1081,7 @@ function startQuiz(mode){
   const types = shuffle(mode==="flags" ? Array(10).fill("flag") : mode==="caps" ? caps(10) : flagSupport() ? [...Array(5).fill("flag"), ...caps(5)] : caps(10));
   const pool = shuffle(COUNTRIES.filter(c=>INFO[c.code])).slice(0,10);
   quizStop();
-  Object.assign(quiz, {mode, i:0, score:0, points:0, ms:0, ans:null, left:Q_LIMIT, last:0});
+  Object.assign(quiz, {mode, i:0, score:0, points:0, ms:0, ans:null, left:Q_LIMIT, last:0, recorded:false});
   quiz.qs = pool.map((c, i)=>{
     const type = types[i];
     const same = shuffle(COUNTRIES.filter(x=>x.cont===c.cont && x.code!==c.code && INFO[x.code] && INFO[x.code].cap!==INFO[c.code].cap)).slice(0,3);
@@ -1094,6 +1100,11 @@ function renderQuiz(){
   }
   if(quiz.i >= quiz.qs.length){
     const before = quizBest(quiz.mode), best = quizBest(quiz.mode, quiz.points);
+    if(!quiz.recorded){
+      quiz.recorded = true;
+      if(quiz.score===quiz.qs.length) try{ localStorage.setItem("atlas-quiz-perfect", "1"); }catch(e){}
+      announce = true; renderAch();
+    }
     box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><div class="qcard qend"><div class="qbig">${nf.format(quiz.points)}</div><p class="qof">${fill(t("qOf"), {n:nf.format(max)})}</p>
       <div class="qstats"><div><b>${quiz.score}/${quiz.qs.length}</b><span>${t("qCorrect")}</span></div><div><b>${fmtTime(quiz.ms)}</b><span>${t("qTimeUsed")}</span></div></div>
       <p class="secp">${quiz.points > before && quiz.points > 0 ? t("qNewBest") : fill(t("qBest"), {s:nf.format(best)})}</p>
@@ -1142,6 +1153,8 @@ const ACH = [
   {t:"Ceo kontinent", d:"Sve države jednog kontinenta", te:"Whole continent", de:"Every country on one continent", full:true},
   {t:"Oko Mediterana", d:"10 mediteranskih država", te:"Around the Mediterranean", de:"10 Mediterranean countries", set:"ES FR MC IT MT SI HR BA ME AL GR TR CY SY LB IL PS EG LY TN DZ MA", n:10},
   {t:"Ostrvljanin", d:"5 ostrvskih država", te:"Islander", de:"5 island nations", set:"IS IE GB MT CY JP PH ID SG LK MV BH NZ FJ KI MH FM NR PW WS SB TO TV VU PG TL MG MU SC KM CV ST AG BS BB CU DM DO GD HT JM KN LC VC TT", n:5},
+  {t:"Bez greške", d:"Kviz sa svih 10 tačnih odgovora", te:"Flawless", de:"A quiz with all 10 answers right", quiz:"perfect", n:1},
+  {t:"Munjevit", d:"1.600 poena u jednom kvizu", te:"Lightning", de:"1,600 points in one quiz", quiz:"pts", n:1600},
 ];
 function achState(){
   const been = COUNTRIES.filter(c=>isBeen(c.code));
@@ -1155,6 +1168,7 @@ function achState(){
       have = best.h; need = best.n;
       if(have && have < need) a.dd = `${t("closest")}: ${C[best.k]}`; else if(have >= need) a.dd = lang==="en" ? `${C[best.k]} ${t("whole")}` : `${C[best.k]} ${t("whole")}`; else a.dd = "";
     }
+    else if(a.quiz){ const q = quizStats(); have = a.quiz==="perfect" ? (q.perfect ? 1 : 0) : q.best; need = a.n; }
     else if(a.set){ const set = Array.isArray(a.set) ? a.set : a.set.split(" "); have = set.filter(k=>isBeen(k)).length; need = a.n || set.length; }
     else { have = been.length; need = a.n; }
     return {a, have, need, done: have >= need};

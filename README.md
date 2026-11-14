@@ -24,7 +24,7 @@ Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo p
 - **Dnevnik**: više putovanja po državi (godina, gradovi, beleška), vremenska linija po godinama, poznati gradovi kao tačke na mapi.
 - **Plan**: prioritet na listi želja i predlozi država blizu onih koje si obišao.
 - **Kviz**: zastave i glavni gradovi, deset pitanja, 15 sekundi po pitanju. Poeni se računaju iz tačnosti i brzine (najviše 2.000).
-- **Dostignuća**: deset pečata i napredak po kontinentima, sa porukom kad se dostignuće otključa.
+- **Dostignuća**: dvanaest pečata (deset za putovanja, dva za kviz: *Bez greške* i *Munjevit*, 1.600+ poena) i napredak po kontinentima, sa porukom kad se dostignuće otključa.
 - **Podeli mapu**: slika 1080×1350 sa mapom ili globusom i statistikom.
 - **Rezervna kopija**: izvoz i uvoz oznaka i beleški (JSON).
 - Tri stranice sa donjom navigacijom: **Početna** (mapa, države, dnevnik, plan), **Kviz** i **Dostignuća** (sa rezervnom kopijom).
@@ -40,7 +40,7 @@ Sve se čuva na uređaju:
 | `localStorage` `atlas-putovanja-v1` | oznake država |
 | `localStorage` `atlas-putovanja-v1-notes` | putovanja (`{"IT":{"trips":[{"year":"2019","cities":"Rim","note":"…"}]}}`) |
 | `localStorage` `atlas-putovanja-v1-prio` | prioriteti liste želja |
-| `localStorage` `atlas-lang`, `atlas-view`, `atlas-onboarded`, `atlas-quiz-best` | podešavanja |
+| `localStorage` `atlas-lang`, `atlas-view`, `atlas-onboarded`, `atlas-quiz-points`, `atlas-quiz-perfect` | podešavanja |
 
 Kada se stranica otvori kao Claude artifact, oznake i beleške se dodatno čuvaju na Claude nalogu.
 
