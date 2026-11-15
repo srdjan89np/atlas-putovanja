@@ -28,7 +28,7 @@ Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo p
 - **Statistika** (stranica Dostignuća): procenat površine i stanovništva sveta, kontinenti, putovanja, gradovi, putovanja po godinama.
 - **Dostignuća**: dvanaest pečata (deset za putovanja, dva za kviz: *Bez greške* i *Munjevit*, 1.600+ poena) i napredak po kontinentima, sa porukom kad se dostignuće otključa.
 - **Podeli mapu**: slika 1080×1350 sa mapom ili globusom i statistikom.
-- **Rezervna kopija**: izvoz i uvoz oznaka, beleški i rezultata kviza (JSON), sa podsetnikom posle svakih 10 novih oznaka.
+- **Rezervna kopija**: izvoz i uvoz oznaka, beleški i rezultata kviza (JSON), sa podsetnikom posle svakih 10 novih oznaka. U Android aplikaciji kopija se čuva na telefonu u `Documents/Atlas putovanja/`.
 - Tri stranice sa donjom navigacijom: **Početna** (mapa, države, dnevnik, plan), **Kviz** i **Dostignuća** (sa rezervnom kopijom).
 - Srpski i engleski jezik, svetla i tamna tema, uvodni ekrani.
 - Rezervisano mesto za AdMob baner 320×50 na dnu ekrana (`#admob-banner`).

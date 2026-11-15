@@ -560,7 +560,7 @@ const T = {
   reset:"Obriši sve oznake", resetQ:"Obrisati sve oznake i beleške?", resetYes:"Da, obriši", resetNo:"Odustani",
   bn:" mlrd.", mn:" mil.",
   bkTitle:"Rezervna kopija", bkText:"Sačuvaj oznake i beleške u datoteku, pa ih vrati na drugom uređaju ili posle brisanja podataka pregledača.",
-  bkExport:"Izvezi podatke", bkImport:"Uvezi podatke", bkFile:"atlas-putovanja-rezerva", bkSaved:"Rezervna kopija je sačuvana.", bkEmpty:"Još nema oznaka ni beleški za izvoz.",
+  bkExport:"Izvezi podatke", bkImport:"Uvezi podatke", bkFile:"atlas-putovanja-rezerva", bkSaved:"Rezervna kopija je sačuvana.", bkSavedTo:"Rezervna kopija je sačuvana na telefonu: {p}", bkEmpty:"Još nema oznaka ni beleški za izvoz.",
   bkBad:"Ova datoteka nije rezervna kopija Atlasa putovanja.", bkReadErr:"Datoteka ne može da se pročita.",
   bkFound:"U datoteci: obiđeno {b} · na listi želja {w} · beleške {n}.", bkHave:"Trenutno označenih država: {c}.",
   bkMerge:"Dodaj postojećim", bkReplace:"Zameni sve", bkCancel:"Odustani", bkDone:"Podaci su uvezeni.",
@@ -609,7 +609,7 @@ const T = {
   reset:"Clear all marks", resetQ:"Clear all marks and notes?", resetYes:"Yes, clear", resetNo:"Cancel",
   bn:" bn", mn:" m",
   bkTitle:"Backup", bkText:"Save your marks and notes to a file, then restore them on another device or after clearing browser data.",
-  bkExport:"Export data", bkImport:"Import data", bkFile:"travel-atlas-backup", bkSaved:"Backup saved.", bkEmpty:"There are no marks or notes to export yet.",
+  bkExport:"Export data", bkImport:"Import data", bkFile:"travel-atlas-backup", bkSaved:"Backup saved.", bkSavedTo:"Backup saved on your phone: {p}", bkEmpty:"There are no marks or notes to export yet.",
   bkBad:"This file isn't a Travel Atlas backup.", bkReadErr:"The file can't be read.",
   bkFound:"In the file: visited {b} · wish list {w} · notes {n}.", bkHave:"Currently marked countries: {c}.",
   bkMerge:"Add to current", bkReplace:"Replace all", bkCancel:"Cancel", bkDone:"Data imported.",
@@ -2438,7 +2438,7 @@ async function exportBackup(){
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
   const d = new Date(), day = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
   const btn = $("bkExport"); btn.disabled = true;
-  try{ await downloads.save({filename:`${t("bkFile")}-${day}.json`, data:blob}); bkMsg(t("bkSaved")); try{ localStorage.setItem("atlas-bk-count", "0"); }catch(e){} }
+  try{ const res = await downloads.save({filename:`${t("bkFile")}-${day}.json`, data:blob}); const ok = res && res.where ? fill(t("bkSavedTo"), {p:res.where}) : t("bkSaved"); bkMsg(ok); toast(ok); try{ localStorage.setItem("atlas-bk-count", "0"); }catch(e){} }
   catch(e){ const c = e && (e.code || (e.name==="AbortError" ? "declined" : "")); if(c!=="declined") bkMsg(c==="rate_limited" ? t("wait") : t("cantSave"), true); }
   finally{ btn.disabled = false; }
 }
@@ -2525,7 +2525,11 @@ $("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.
         const b64 = await new Promise((ok, bad)=>{ const r = new FileReader(); r.onload = ()=>ok(String(r.result).split(",")[1]); r.onerror = ()=>bad(r.error); r.readAsDataURL(data); });
         await window.__nativeShareImage(filename, b64, t("title")); return {status:"saved"};
       }
-      if(window.__nativeExport && !/^image\//.test(data.type)){ await window.__nativeExport(filename, await data.text()); return {status:"saved"}; }
+      if(!/^image\//.test(data.type)){
+        // Android aplikacija: kopija se upiše pravo u telefon; ako to ne uspe, otvori se „Deli“
+        if(window.__nativeSaveFile){ try{ const where = await window.__nativeSaveFile(filename, await data.text()); return {status:"saved", where}; }catch(e){} }
+        if(window.__nativeExport){ await window.__nativeExport(filename, await data.text()); return {status:"saved"}; }
+      }
       const file = new File([data], filename, {type: data.type || "application/octet-stream"});
       if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], title:t("title")}); return {status:"saved"}; }
       const a = document.createElement("a"); a.href = URL.createObjectURL(data); a.download = filename;

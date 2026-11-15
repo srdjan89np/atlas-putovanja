@@ -17,5 +17,9 @@ const re = /<meta-data\s+android:name="com\.google\.android\.gms\.ads\.APPLICATI
 
 if (re.test(xml)) xml = xml.replace(re, tag);
 else xml = xml.replace("</application>", `    ${tag}\n    </application>`);
+// Rezervna kopija u Documents: Android 9 i stariji traže WRITE_EXTERNAL_STORAGE, Android 10 legacy pristup.
+const perm = `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28"/>`;
+if (!xml.includes("android.permission.WRITE_EXTERNAL_STORAGE")) xml = xml.replace(/(<application\b)/, `${perm}\n    $1`);
+if (!/requestLegacyExternalStorage/.test(xml)) xml = xml.replace(/<application\b/, `<application android:requestLegacyExternalStorage="true"`);
 fs.writeFileSync(file, xml);
 console.log("AdMob APPLICATION_ID:", id.startsWith("ca-app-pub-3940256099942544") ? "probni (Google test)" : "pravi");

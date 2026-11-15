@@ -57,6 +57,14 @@ const bridge = `<script>
         return SH.share({ title: name, files: [r.uri], dialogTitle: name });
       });
     };
+    // Rezervna kopija ide pravo u telefon: Documents/Atlas putovanja/<datoteka>.json
+    // (Android 9 i stariji traže dozvolu za pisanje; Android 10+ ne traži ništa za sopstvene datoteke).
+    window.__nativeSaveFile = function (name, text) {
+      var ask = FS.requestPermissions ? FS.requestPermissions().catch(function () { return null; }) : Promise.resolve(null);
+      return ask.then(function () {
+        return FS.writeFile({ path: "Atlas putovanja/" + name, data: text, directory: "DOCUMENTS", encoding: "utf8", recursive: true });
+      }).then(function () { return "Documents › Atlas putovanja › " + name; });
+    };
     window.__nativeShareImage = function (name, b64, title) {
       return FS.writeFile({ path: name, data: b64, directory: "CACHE" }).then(function (r) {
         return SH.share({ title: title, files: [r.uri], dialogTitle: title });
