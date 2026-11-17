@@ -429,7 +429,7 @@ body.searching .totop{display:none}
       <div class="langs" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">SR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div></div>
     <h1 data-i18n="title">Atlas putovanja</h1>
     <div class="stats">
-      <div class="stat been"><b id="sBeen">0</b><span><span data-i18n="visited">obiđeno</span> · <span id="sPct">0%</span> <span data-i18n="ofWorld">sveta</span></span></div>
+      <div class="stat been"><b id="sBeen">0</b><span><span data-i18n="visited">obiđeno</span> · <span id="sPct">0%</span> <span data-i18n="ofWorld">država sveta</span></span></div>
       <div class="stat want"><b id="sWant">0</b><span data-i18n="onWish">na listi želja</span></div>
     </div>
   </header>
@@ -543,7 +543,7 @@ body.searching .totop{display:none}
 
 /* ---------- jezik / language ---------- */
 const T = {
- sr:{eyebrow:"195 država · ISO 3166", title:"Atlas putovanja", visited:"obiđeno", ofWorld:"sveta", onWish:"na listi želja",
+ sr:{eyebrow:"195 država · ISO 3166", title:"Atlas putovanja", visited:"obiđeno", ofWorld:"država sveta", onWish:"na listi želja",
   worldMap:"Mapa sveta", mapAria:"Mapa sveta sa označenim državama", loadingMap:"Učitavanje mape…", mapFail:"Mapa trenutno ne može da se učita. Lista ispod radi normalno.",
   zoomIn:"Uvećaj", zoomOut:"Umanji", zoomAll:"Cela mapa", been:"Obišao", want:"Želim", all:"Sve", hint:"Dodirni državu na mapi da je označiš", share:"Podeli mapu",
   contsAria:"Napredak po kontinentima", ach:"Dostignuća", unlocked:"otključano", searchPh:"Pretraži državu ili kod (npr. JP)", searchAria:"Pretraga država", filterAria:"Filter po statusu",
@@ -554,7 +554,7 @@ const T = {
   myTrip:"Moja putovanja", year:"Godina", cities:"Gradovi", citiesPh:"npr. Rim, Firenca", note:"Beleška", notePh:"Šta pamtiš sa ovog putovanja?",
   people:"stanovnika", clickMore:"Klikni za više", closest:"Najbliže", whole:"u celosti",
   making:"Pravim sliku…", saved:"Slika je sačuvana. Podeli je iz galerije na Instagramu, Fejsbuku ili WhatsAppu.", wait:"Sačekaj trenutak pa probaj ponovo", cantSave:"Slika trenutno ne može da se sačuva",
-  imgEyebrow:"MOJA MAPA PUTOVANJA", imgBeen:"obiđenih država", imgWorld:"sveta", imgConts:"kontinenata", imgWish:"na listi želja", byCont:"Po kontinentima", file:"moja-mapa-putovanja.png",
+  imgEyebrow:"MOJA MAPA PUTOVANJA", imgBeen:"obiđenih država", imgWorld:"država sveta", imgConts:"kontinenata", imgWish:"na listi želja", byCont:"Po kontinentima", file:"moja-mapa-putovanja.png",
   loading:"Učitavanje…", syncLocal:"Oznake se čuvaju u ovom pregledaču", syncSaved:"Sačuvano na tvom nalogu", syncFail:"Čuvanje nije uspelo, oznake su sačuvane u ovom pregledaču",
   syncOff:"Nalog trenutno nije dostupan, oznake su u ovom pregledaču", syncOn:"Povezano sa tvojim nalogom",
   reset:"Obriši sve oznake", resetQ:"Obrisati sve oznake i beleške?", resetYes:"Da, obriši", resetNo:"Odustani",
@@ -592,7 +592,7 @@ const T = {
   o3t:"Mapa i globus", o3p:"Dodirni državu na mapi da je označiš. Dugmetom Mapa / Globus biraš ravnu mapu ili globus koji se okreće. Dugme ⓘ otvara podatke o državi.",
   o4t:"Dnevnik i plan", o4p:"Na početnoj strani, kartica Dnevnik čuva tvoja putovanja po godinama, sa gradovima i beleškama. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
   o5t:"Dostignuća, kviz i deljenje", o5p:"Otključavaj pečate kako putuješ, proveri znanje u kvizu na vreme i podeli sliku svoje mape. Rezervna kopija je na stranici Dostignuća."},
- en:{eyebrow:"195 countries · ISO 3166", title:"Travel Atlas", visited:"visited", ofWorld:"of the world", onWish:"on the wish list",
+ en:{eyebrow:"195 countries · ISO 3166", title:"Travel Atlas", visited:"visited", ofWorld:"of all countries", onWish:"on the wish list",
   worldMap:"World map", mapAria:"World map with marked countries", loadingMap:"Loading map…", mapFail:"The map can't load right now. The list below still works.",
   zoomIn:"Zoom in", zoomOut:"Zoom out", zoomAll:"Whole map", been:"Visited", want:"Want to go", all:"All", hint:"Tap a country on the map to mark it", share:"Share map",
   contsAria:"Progress by continent", ach:"Achievements", unlocked:"unlocked", searchPh:"Search a country or code (e.g. JP)", searchAria:"Search countries", filterAria:"Filter by status",
@@ -603,7 +603,7 @@ const T = {
   myTrip:"My trips", year:"Year", cities:"Cities", citiesPh:"e.g. Rome, Florence", note:"Note", notePh:"What do you remember from this trip?",
   people:"people", clickMore:"Click for more", closest:"Closest", whole:"completed",
   making:"Creating image…", saved:"Image saved. Share it from your gallery to Instagram, Facebook or WhatsApp.", wait:"Wait a moment and try again", cantSave:"The image can't be saved right now",
-  imgEyebrow:"MY TRAVEL MAP", imgBeen:"countries visited", imgWorld:"of the world", imgConts:"continents", imgWish:"on the wish list", byCont:"By continent", file:"my-travel-map.png",
+  imgEyebrow:"MY TRAVEL MAP", imgBeen:"countries visited", imgWorld:"of all countries", imgConts:"continents", imgWish:"on the wish list", byCont:"By continent", file:"my-travel-map.png",
   loading:"Loading…", syncLocal:"Marks are saved in this browser", syncSaved:"Saved to your account", syncFail:"Couldn't save to your account; marks are kept in this browser",
   syncOff:"Your account isn't reachable right now; marks are kept in this browser", syncOn:"Connected to your account",
   reset:"Clear all marks", resetQ:"Clear all marks and notes?", resetYes:"Yes, clear", resetNo:"Cancel",
@@ -1394,8 +1394,8 @@ function renderStatsPage(){
   const perY = {}; for(const tr of trips) if(tr.year) perY[tr.year] = (perY[tr.year]||0) + 1;
   const ys = Object.keys(perY).sort();
   const top = ys.length ? ys.reduce((m,y)=>perY[y]>perY[m] || (perY[y]===perY[m] && y>m) ? y : m) : null;
-  const tiles = [[pct(a/A), t("stArea")], [pct(p/P), t("stPop")], [new Set(been.map(c=>c.cont)).size + "/6", t("stConts")], [nf.format(trips.length), t("stTrips")],
-    [nf.format(cities.size), t("stCities")], [ys[0] || "–", t("stFirst")], [top ? `${top}` : "–", t("stTop") + (top ? ` (${perY[top]})` : "")], [nf.format(been.length), t("imgBeen")]];
+  const tiles = [[pctTxt(been.length)+"%", t("ofWorld")], [pct(a/A), t("stArea")], [pct(p/P), t("stPop")], [new Set(been.map(c=>c.cont)).size + "/6", t("stConts")], [nf.format(trips.length), t("stTrips")],
+    [nf.format(cities.size), t("stCities")], [ys[0] || "–", t("stFirst")], [top ? `${top}` : "–", t("stTop") + (top ? ` (${perY[top]})` : "")]];
   const shown = ys.slice(-8).reverse(), mx = Math.max(1, ...shown.map(y=>perY[y]));
   box.innerHTML = `<h2><span>${t("stTitle")}</span></h2><div class="stgrid">${tiles.map(([n,l])=>`<div class="st"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>
     <div class="yrs"><h3>${t("stByYear")}</h3>${shown.length ? shown.map(y=>`<div class="yr2"><b>${esc(y)}</b><span class="yb"><i style="width:${perY[y]/mx*100}%"></i></span><em>${perY[y]}</em></div>`).join("") : `<small class="secp" style="margin:0">${t("stNoTrips")}</small>`}</div>`;
