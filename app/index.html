@@ -628,9 +628,9 @@ const T = {
   remind:"Dodato je 10 novih oznaka. Sačuvaj rezervnu kopiju podataka.", remindBtn:"Sačuvaj kopiju",
   stTitle:"Statistika", stArea:"površine sveta", stPop:"stanovništva sveta", stConts:"kontinenata", stTrips:"putovanja", stCities:"gradova", stFirst:"prvo putovanje", stTop:"najviše putovanja", stByYear:"Putovanja po godinama", stNoTrips:"Upiši putovanja u Dnevnik i ovde će se pojaviti godine.",
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
-  dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
+  dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dBest:"Najduži niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
   rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju",
-  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi obiđenu državu", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
+  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
   cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
@@ -685,9 +685,9 @@ const T = {
   remind:"You've added 10 new marks. Save a backup of your data.", remindBtn:"Save backup",
   stTitle:"Statistics", stArea:"of the world's area", stPop:"of the world's population", stConts:"continents", stTrips:"trips", stCities:"cities", stFirst:"first trip", stTop:"most trips", stByYear:"Trips by year", stNoTrips:"Add trips to the Journal and the years will show up here.",
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
-  dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
+  dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dBest:"Longest streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
   rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app",
-  jAddTitle:"Add a trip", jPickPh:"Choose a visited country", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
+  jAddTitle:"Add a trip", jPickPh:"Choose a country", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
   cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
@@ -1266,10 +1266,19 @@ function dailyStreak(){
   while(d[dayKey(x)]!=null){ n++; x.setDate(x.getDate()-1); }
   return n;
 }
+// najduži niz uzastopnih dana sa odigranim dnevnim izazovom
+function dailyBest(){
+  const days = Object.keys(dailyData()).filter(k=>/^\d{4}-\d{2}-\d{2}$/.test(k)).map(k=>Date.UTC(+k.slice(0,4), +k.slice(5,7)-1, +k.slice(8,10))/864e5).sort((a,b)=>a-b);
+  let best = 0, run = 0, prev = null;
+  for(const d of days){ run = prev!==null && d-prev===1 ? run+1 : d===prev ? run : 1; best = Math.max(best, run); prev = d; }
+  return best;
+}
 // isti niz slučajnih brojeva za isti dan, na svakom uređaju
 function seeded(str){ let h = 1779033703 ^ str.length; for(let i=0;i<str.length;i++){ h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = h<<13 | h>>>19; }
   return ()=>{ h = Math.imul(h ^ h>>>16, 2246822507); h = Math.imul(h ^ h>>>13, 3266489909); h ^= h>>>16; return (h>>>0)/4294967296; }; }
-const streakTxt = n => n ? fill(t("dStreak"), {n: n + " " + (n===1 || (lang!=="en" && n%10===1 && n%100!==11) ? t("dDays1") : t("dDays"))}) : "";
+const daysTxt = n => n + " " + (n===1 || (lang!=="en" && n%10===1 && n%100!==11) ? t("dDays1") : t("dDays"));
+const streakTxt = n => n ? fill(t("dStreak"), {n: daysTxt(n)}) : "";
+const bestTxtD = n => n ? fill(t("dBest"), {n: daysTxt(n)}) : "";
 function startDaily(){
   if(dailyData()[dayKey()]!=null) return;
   const rnd = seeded("atlas-" + dayKey()), sh = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(rnd()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
@@ -1355,7 +1364,7 @@ function renderQuiz(){
     const modes = [["flags", t("qFlags")], ["caps", t("qCaps")], ["shape", t("qShapes")], ["mix", t("qMix")]].filter(m=>(m[0]!=="flags" || flagSupport()) && (m[0]!=="shape" || shapeSupport()));
     const dd = dailyData()[dayKey()], streak = dailyStreak();
     const dayTxt = new Intl.DateTimeFormat(lang==="en" ? "en-GB" : "sr-Latn", {day:"numeric", month:"long"}).format(new Date());
-    const stTxt = streakTxt(streak);
+    const stTxt = [streakTxt(streak), bestTxtD(dailyBest())].filter(Boolean).join(" · ");
     const daily = `<div class="daily"><div class="drow"><strong>${t("dTitle")} · ${esc(dayTxt)}</strong>${stTxt ? `<small>${esc(stTxt)}</small>` : ""}</div>
       ${dd!=null ? `<div class="drow"><span class="dres">${fill(t("dDone"), {s:nf.format(dd)})}</span><small>${t("dTomorrow")}</small></div>`
         : `<small>${t("dText")}</small><div class="drow"><span></span><button type="button" class="onb-next" data-daily>${t("dPlay")}</button></div>`}</div>`;
@@ -1375,7 +1384,7 @@ function renderQuiz(){
     box.innerHTML = `<h2 class="sech">${t("qTitle")}</h2><div class="qcard qend"><div class="qbig">${nf.format(quiz.points)}</div><p class="qof">${fill(t("qOf"), {n:nf.format(max)})}</p>
       <div class="qstats"><div><b>${quiz.score}/${quiz.qs.length}</b><span>${t("qCorrect")}</span></div><div><b>${fmtTime(quiz.ms)}</b><span>${t("qTimeUsed")}</span></div></div>
       <p class="secp">${quiz.points > before && quiz.points > 0 ? t("qNewBest") : fill(t("qBest"), {s:nf.format(best)})}</p>
-      ${quiz.mode==="daily" ? `<p class="secp">${t("dTomorrow")}${dailyStreak() ? " " + esc(streakTxt(dailyStreak())) : ""}</p>` : ""}
+      ${quiz.mode==="daily" ? `<p class="secp">${t("dTomorrow")}${dailyStreak() ? " " + esc(streakTxt(dailyStreak())) : ""}${dailyBest() ? " · " + esc(bestTxtD(dailyBest())) : ""}</p>` : ""}
       <div class="qrow">${quiz.mode==="daily" ? "" : `<button type="button" class="onb-next" data-qmode="${quiz.mode}">${t("qAgain")}</button>`}<button type="button" class="onb-back" data-qquit>${t("qOther")}</button></div></div>`;
     return;
   }
