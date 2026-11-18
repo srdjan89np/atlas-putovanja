@@ -23,7 +23,7 @@ Web verzija aplikacije više nije javno objavljena. Na GitHub Pages stoji samo p
 - **Mapa i globus**: države se boje prema oznaci, male države su tačke, prikaz se bira dugmetom *Mapa / Globus*. Kosovo je prikazano kao deo Srbije.
 - **Podaci o državi**: glavni grad, stanovništvo, površina, gustina, valuta, jezik, pozivni broj, strana vožnje i najbolje vreme za posetu.
 - **Dnevnik**: više putovanja po državi (godina, gradovi, beleška), vremenska linija po godinama, poznati gradovi kao tačke na mapi i slika *Moja godina* za deljenje.
-- **Plan**: *Ovog meseca* (države kojima je tekući mesec najbolje vreme za posetu), prioritet na listi želja i predlozi država blizu onih koje si obišao. Obiđena država može ponovo na listu želja.
+- **Plan**: *Ovog meseca* (države kojima je tekući mesec najbolje vreme za posetu), prioritet na listi želja i predlozi država blizu onih koje si obišao. Obiđena država može ponovo na listu želja. Predlozi ne obuhvataju države sa upozorenjem za putovanja (State Department SAD, nivo 3 i 4, stanje novembar 2026; spisak je u `TRAVEL_L4` / `TRAVEL_L3`), a takve države na listi želja dobijaju upozorenje.
 - **Kviz**: dnevni izazov (ista pitanja za sve tog dana, niz dana zaredom), zastave, glavni gradovi i oblik države (obris sa mape), deset pitanja, 15 sekundi po pitanju. Poeni se računaju iz tačnosti i brzine (najviše 2.000).
 - **Statistika** (stranica Dostignuća): procenat površine i stanovništva sveta, kontinenti, putovanja, gradovi, putovanja po godinama.
 - **Dostignuća**: dvanaest pečata (deset za putovanja, dva za kviz: *Bez greške* i *Munjevit*, 1.600+ poena) i napredak po kontinentima, sa porukom kad se dostignuće otključa.

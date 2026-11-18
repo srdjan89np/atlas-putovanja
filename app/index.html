@@ -292,6 +292,8 @@ small .newc{margin-left:0;margin-right:6px}
 .qshape{display:block;width:100%;max-width:280px;height:180px;margin:0 auto}
 .qshape path{fill:var(--accent);stroke:var(--accent);stroke-width:.4;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .mname{font-weight:500;color:var(--muted)}
+.pname small.warn{color:var(--want);font-weight:700}
+.wnote{margin-top:14px;font-size:12px}
 .msub{margin-top:14px}
 .qsubj{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,7vw,34px);line-height:1.1;text-align:center;text-wrap:balance}
 .qopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
@@ -583,6 +585,7 @@ const T = {
   stTitle:"Statistika", stArea:"površine sveta", stPop:"stanovništva sveta", stConts:"kontinenata", stTrips:"putovanja", stCities:"gradova", stFirst:"prvo putovanje", stTop:"najviše putovanja", stByYear:"Putovanja po godinama", stNoTrips:"Upiši putovanja u Dnevnik i ovde će se pojaviti godine.",
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
+  wDanger:"Ne putovati (savet za putovanja)", wRisk:"Preispitajte putovanje (savet za putovanja)", wNote:"Predlozi ne obuhvataju države sa upozorenjem za putovanja (stanje: novembar 2026).",
   mTitle:"Ovog meseca", mText:"Države sa tvoje liste želja kojima je ovo najbolje vreme za posetu.", mNone:"Nijednoj državi sa tvoje liste želja ovo nije najbolje vreme za posetu.", mOther:"Još država kojima je ovo najbolje vreme", privacy:"Politika privatnosti",
   qCap:"Koji je glavni grad ove države?", qCapRev:"Kojoj državi je ovo glavni grad?", qRight:"Tačno.", qWrong:"Netačno. Tačan odgovor: {a}", qNext:"Dalje", qFinish:"Rezultat",
   qScore:"Tačnih odgovora: {s} od {n}", qBest:"Najbolji rezultat: {s} poena", qNoBest:"Još nije igrano", qAgain:"Igraj ponovo", qOther:"Druga vrsta kviza", qProg:"Pitanje {i} od {n}", qQuit:"Prekini",
@@ -632,6 +635,7 @@ const T = {
   stTitle:"Statistics", stArea:"of the world's area", stPop:"of the world's population", stConts:"continents", stTrips:"trips", stCities:"cities", stFirst:"first trip", stTop:"most trips", stByYear:"Trips by year", stNoTrips:"Add trips to the Journal and the years will show up here.",
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
+  wDanger:"Do not travel (travel advisory)", wRisk:"Reconsider travel (travel advisory)", wNote:"Suggestions leave out countries with a travel warning (as of November 2026).",
   mTitle:"This month", mText:"Countries on your wish list that are best to visit right now.", mNone:"None of the countries on your wish list are at their best this month.", mOther:"More countries at their best right now", privacy:"Privacy policy",
   qCap:"What is the capital of this country?", qCapRev:"Which country has this capital?", qRight:"Correct.", qWrong:"Not quite. Correct answer: {a}", qNext:"Next", qFinish:"See result",
   qScore:"Correct answers: {s} of {n}", qBest:"Best score: {s} points", qNoBest:"Not played yet", qAgain:"Play again", qOther:"Change quiz type", qProg:"Question {i} of {n}", qQuit:"Quit",
@@ -669,6 +673,12 @@ sortCountries();
 
 /* ---------- najbolje vreme za posetu (meseci, okvirno) ---------- */
 const BEST = Object.fromEntries(`AL:5-9;AD:6-9,12-3;AT:5-9,12-3;BY:5-9;BE:5-9;BA:5-9;BG:5-9;HR:5-9;CY:4-6,9-10;CZ:5-9;DK:5-9;EE:5-9;FI:6-8,12-3;FR:4-10;DE:5-9;GR:4-6,9-10;HU:4-10;IS:6-8;IE:5-9;IT:4-6,9-10;LV:5-9;LI:5-9;LT:5-9;LU:5-9;MT:4-6,9-10;MD:5-9;MC:4-10;ME:5-9;NL:4-9;MK:5-9;NO:6-8;PL:5-9;PT:4-10;RO:5-9;RU:5-9;SM:4-10;RS:4-10;SK:5-9;SI:5-9;ES:4-6,9-10;SE:5-9;CH:6-9,12-3;UA:5-9;GB:5-9;VA:4-6,9-10;AF:4-5,9-10;AM:5-10;AZ:4-6,9-10;BH:11-3;BD:11-2;BT:3-5,9-11;BN:1-5;KH:11-3;CN:4-5,9-10;GE:5-10;IN:10-3;ID:5-9;IR:3-5,9-11;IQ:3-5,10-11;IL:3-5,9-11;JP:3-5,10-11;JO:3-5,9-11;KZ:5-9;KW:11-3;KG:6-9;LA:11-3;LB:4-6,9-11;MY:2-9;MV:11-4;MN:6-8;MM:11-2;NP:3-5,10-11;KP:4-5,9-10;OM:10-4;PK:3-5,9-11;PS:3-5,9-11;PH:12-4;QA:11-3;SA:11-3;SG:2-4;KR:4-5,9-10;LK:12-3;SY:3-5,9-11;TJ:6-9;TH:11-3;TL:5-10;TR:4-6,9-10;TM:4-5,9-10;AE:11-3;UZ:4-5,9-10;VN:2-4,10-11;YE:10-3;DZ:3-5,9-11;AO:5-10;BJ:11-2;BW:5-10;BF:11-2;BI:6-9;CV:11-6;CM:11-2;CF:12-3;TD:11-2;KM:5-10;CG:6-9;CD:6-9;CI:11-3;DJ:11-3;EG:10-4;GQ:12-2;ER:10-3;SZ:5-9;ET:10-3;GA:6-9;GM:11-4;GH:11-3;GN:11-4;GW:11-4;KE:6-10,1-2;LS:10-4;LR:11-4;LY:3-5,10-11;MG:4-11;MW:5-10;ML:11-2;MR:11-3;MU:5-12;MA:3-5,9-11;MZ:5-10;NA:5-10;NE:11-2;NG:11-2;RW:6-9;ST:6-9;SN:11-5;SC:4-5,10-11;SL:11-4;SO:12-3;ZA:3-5,9-11;SS:12-3;SD:11-2;TZ:6-10;TG:11-2;TN:4-6,9-10;UG:6-8,12-2;ZM:5-10;ZW:5-10;AG:12-4;BS:12-4;BB:12-4;BZ:12-4;CA:6-9;CR:12-4;CU:11-4;DM:12-4;DO:12-4;SV:11-4;GD:12-4;GT:11-4;HT:11-3;HN:12-4;JM:12-4;MX:11-4;NI:11-4;PA:12-4;KN:12-4;LC:12-4;VC:12-4;TT:1-5;US:4-10;AR:10-4;BO:5-10;BR:4-10;CL:10-4;CO:12-3,7-8;EC:6-9;GY:2-4,8-10;PY:5-9;PE:5-9;SR:2-4,8-11;UY:11-3;VE:12-4;AU:3-5,9-11;FJ:5-10;KI:5-10;MH:12-4;FM:12-4;NR:3-10;NZ:12-3;PW:11-4;PG:5-10;WS:5-10;SB:5-10;TO:5-10;TV:5-10;VU:5-10`.split(";").map(x=>x.split(":")));
+// Upozorenja za putovanja, State Department SAD, stanje novembar 2026.
+// Nivo 4 „Ne putovati“ i nivo 3 „Preispitajte putovanje“: ne predlažu se u Planu; na listi želja dobijaju upozorenje.
+const TRAVEL_L4 = new Set("AF BY BF MM CF TD CD HT IR IQ LB LY ML NE KP RU SO SS SD SY UG UA YE PS".split(" "));
+const TRAVEL_L3 = new Set("AZ BH BI CO ET GT GW GY HN IL JO KE KW MR NI NG OM PK PG QA RW SA TT AE VE".split(" "));
+const unsafe = code => TRAVEL_L4.has(code) || TRAVEL_L3.has(code);
+const warnHTML = code => TRAVEL_L4.has(code) ? `<small class="warn">⚠ ${t("wDanger")}</small>` : TRAVEL_L3.has(code) ? `<small class="warn">⚠ ${t("wRisk")}</small>` : "";
 function bestIn(code, m){
   const b = BEST[code]; if(!b) return false;
   return b.split(",").some(r=>{ const [a,z] = r.split("-").map(Number); return a<=z ? m>=a && m<=z : m>=a || m<=z; });
@@ -1103,10 +1113,10 @@ function renderPlan(){
   const now = wish.filter(c=>bestIn(c.code, mon));
   html += `<p class="secp">${now.length ? t("mText") : t("mNone")}</p>`;
   if(now.length) html += `<ul class="list plist">` + now.map(c=>`<li class="prow">
-      <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${t("fBest")}: ${bestTxt(c.code)}</small></span></button>${prioHTML(c.code)}</li>`).join("") + `</ul>`;
+      <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${t("fBest")}: ${bestTxt(c.code)}</small>${warnHTML(c.code)}</span></button>${prioHTML(c.code)}</li>`).join("") + `</ul>`;
   // još nekoliko država kojima je ovo dobar mesec: stalan izbor za mesec, bez obiđenih i onih sa liste želja
   const hash = code => ((code.charCodeAt(0)*31 + code.charCodeAt(1)) * (mon+7)) % 101;
-  const more = COUNTRIES.filter(c=>!marks[c.code] && bestIn(c.code, mon)).sort((a,b)=>hash(a.code)-hash(b.code)).slice(0, now.length ? 4 : 6);
+  const more = COUNTRIES.filter(c=>!marks[c.code] && !unsafe(c.code) && bestIn(c.code, mon)).sort((a,b)=>hash(a.code)-hash(b.code)).slice(0, now.length ? 4 : 6);
   if(more.length) html += `<p class="secp msub">${t("mOther")}</p><ul class="list plist">` + more.map(c=>`<li class="prow">
       <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${t("fBest")}: ${bestTxt(c.code)}</small></span></button>
       <button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="false" aria-label="${t("addWish")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button></li>`).join("") + `</ul>`;
@@ -1115,7 +1125,7 @@ function renderPlan(){
   else{
     const top = prio[wish[0].code] ? wish[0].code : null;
     html += `<ul class="list plist">` + wish.map(c=>`<li class="prow${c.code===top ? " top" : ""}">
-      <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${c.code===top ? `<em class="newc">${t("pNext")}</em>` : ""}${t("fBest")}: ${bestTxt(c.code)}</small></span></button>${prioHTML(c.code)}</li>`).join("") + `</ul>`;
+      <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${c.code===top ? `<em class="newc">${t("pNext")}</em>` : ""}${t("fBest")}: ${bestTxt(c.code)}</small>${warnHTML(c.code)}</span></button>${prioHTML(c.code)}</li>`).join("") + `</ul>`;
   }
   html += `<h2 class="sech">${t("sTitle")}</h2><p class="secp">${t("sText")}</p>`;
   const visited = new Set(COUNTRIES.filter(c=>isBeen(c.code)).map(c=>c.code));
@@ -1123,12 +1133,13 @@ function renderPlan(){
   if(!adj) html += `<p class="emptyp">${t("sNoMap")}</p>`;
   else if(!visited.size) html += `<p class="emptyp">${t("sEmpty")}</p>`;
   else{
-    const sug = COUNTRIES.filter(c=>!visited.has(c.code) && adj[c.code]).map(c=>{ const near = [...adj[c.code]].filter(x=>visited.has(x)); return {c, near, score: near.length + (isWant(c.code) ? .5 : 0)}; })
+    const sug = COUNTRIES.filter(c=>!visited.has(c.code) && !unsafe(c.code) && adj[c.code]).map(c=>{ const near = [...adj[c.code]].filter(x=>visited.has(x)); return {c, near, score: near.length + (isWant(c.code) ? .5 : 0)}; })
       .filter(x=>x.near.length).sort((a,b)=>b.score-a.score).slice(0,6);
     html += sug.length ? `<ul class="list plist">` + sug.map(({c, near})=>`<li class="prow">
       <button type="button" class="pname" data-goto="${c.code}"><span class="flag" aria-hidden="true">${c.flag}</span><span><strong>${c.name}</strong><small>${t("sNear")}: ${near.slice(0,4).map(x=>BY_CODE[x].name).join(", ")}${near.length>4 ? "…" : ""}</small><small>${t("fBest")}: ${bestTxt(c.code)}</small></span></button>
       ${isWant(c.code) ? `<span class="onwish">${t("onWishShort")}</span>` : `<button class="btn want" type="button" data-code="${c.code}" data-set="want" aria-pressed="false" aria-label="${t("addWish")}: ${c.name}">${ICON.want}<span class="lbl">${t("want")}</span></button>`}</li>`).join("") + `</ul>` : `<p class="emptyp">${t("sNone")}</p>`;
   }
+  html += `<p class="secp wnote">${t("wNote")}</p>`;
   box.innerHTML = html;
 }
 
