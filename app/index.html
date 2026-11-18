@@ -417,6 +417,35 @@ body.searching .totop{display:none}
 .yhead .yshare svg{width:15px;height:15px}
 .yhead .yshare:disabled{opacity:.6}
 .yhead{align-items:center}
+/* Ocena aplikacije */
+.rate{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--ad-h) + var(--nav-h) + 16px + env(safe-area-inset-bottom,0px));z-index:31;max-width:420px;margin:0 auto;display:grid;gap:8px;padding:16px;border-radius:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 14px 40px rgb(0 0 0 / .25)}
+html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
+.rate strong{font-family:var(--f-display);font-size:18px}
+.rate p{margin:0;font-size:14px;color:var(--muted)}
+.rate .rrow{display:flex;justify-content:flex-end;gap:8px}
+/* Dnevnik: dodavanje putovanja */
+.jadd{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.jadd select{flex:1 1 180px;min-width:0;font:inherit;font-size:15px;min-height:44px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.jadd select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.jnew{margin:0 0 16px}
+/* Uporedi sa prijateljem */
+.cmplbl{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.cmpin{font:inherit;font-size:15px;width:100%;min-height:44px;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.cmpin.mono{font-family:var(--f-mono);font-size:12.5px;word-break:break-all}
+.cmpin:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.savebtn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.cmpres{display:grid;gap:10px;margin-top:6px}
+.cmpres h4{margin:0;font-family:var(--f-display);font-size:16px}
+.cmpgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cmpgrid .st{background:var(--bg)}
+.flagset{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:22px;line-height:1.2}
+.flagset span{cursor:default}
+.flagset em{font-style:normal;font-size:12.5px;color:var(--muted);align-self:center}
+.cmpsub{font-size:13px;font-weight:700;margin:4px 0 0}
+/* Gradovi */
+.cities{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.cities span{font-size:13px;padding:4px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.cities span.cap{border-color:var(--been);color:var(--been);font-weight:700}
 /* Dnevni izazov */
 .daily{display:grid;gap:6px;padding:16px;border-radius:14px;border:1.5px solid var(--accent);background:var(--accent-soft);margin-bottom:12px}
 .daily strong{font-family:var(--f-display);font-size:18px}
@@ -491,6 +520,19 @@ body.searching .totop{display:none}
   </section>
 
   <hr class="sep">
+  <section class="backup cmp" data-i18n-aria="cmpTitle" aria-label="Uporedi sa prijateljem">
+    <h3 data-i18n="cmpTitle">Uporedi sa prijateljem</h3>
+    <p data-i18n="cmpText">Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.</p>
+    <label class="cmplbl" for="cmpName"><span data-i18n="cmpName">Tvoje ime (neobavezno)</span><input id="cmpName" class="cmpin" maxlength="24" autocomplete="off" data-i18n-ph="cmpNamePh" placeholder="npr. Marko"></label>
+    <label class="cmplbl" for="cmpMine"><span data-i18n="cmpMine">Moj kod</span><input id="cmpMine" class="cmpin mono" readonly></label>
+    <div class="row"><button class="savebtn" id="cmpShare" type="button" data-i18n="cmpShare">Podeli</button><button class="savebtn" id="cmpCopy" type="button" data-i18n="cmpCopy">Kopiraj</button></div>
+    <label class="cmplbl" for="cmpIn"><span data-i18n="cmpPaste">Prijateljev kod</span><textarea id="cmpIn" class="cmpin mono" rows="2" autocomplete="off" data-i18n-ph="cmpPastePh" placeholder="Nalepi kod ili celu poruku"></textarea></label>
+    <div class="row"><button class="savebtn primary" id="cmpGo" type="button" data-i18n="cmpGo">Uporedi</button></div>
+    <div class="bkmsg" id="cmpMsg" role="status"></div>
+    <div id="cmpRes"></div>
+  </section>
+
+  <hr class="sep">
   <section class="backup" data-i18n-aria="bkTitle" aria-label="Rezervna kopija">
     <h3 data-i18n="bkTitle">Rezervna kopija</h3>
     <p data-i18n="bkText">Sačuvaj oznake i beleške u datoteku, pa ih vrati na drugom uređaju ili posle brisanja podataka pregledača.</p>
@@ -508,6 +550,7 @@ body.searching .totop{display:none}
     <span id="sync"><span class="dot"></span>Učitavanje…</span>
     <span id="resetBox"><button class="link" id="resetBtn" type="button">Obriši sve oznake</button></span>
     <button class="link" id="helpBtn" type="button" data-i18n="howTo">Kako radi</button>
+    <button class="link" id="rateBtn" type="button" data-rate="yes" data-i18n="rateLink" hidden>Oceni aplikaciju</button>
     <a class="link" id="privacyLink" href="https://srdjan89np.github.io/atlas-putovanja/privatnost.html" target="_blank" rel="noopener" data-i18n="privacy">Politika privatnosti</a>
     <button class="link" id="adPrivacyBtn" type="button" data-i18n="adPrivacy" hidden>Privatnost oglasa</button>
   </footer>
@@ -519,6 +562,7 @@ body.searching .totop{display:none}
   <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.500 4h9v5a4.500 4.500 0 0 1-9 0zM7.500 5.500H4.500c0 3 1.300 4.500 3.300 4.800M16.500 5.500h3c0 3-1.300 4.500-3.300 4.800M12 13.500V17M8.500 20h7M9.500 17h5"/></svg><span data-i18n="ach">Dostignuća</span></button>
 </nav>
 <div class="toast" id="toast" role="status" hidden></div>
+<div class="rate" id="rate" role="dialog" aria-labelledby="rateT" hidden><strong id="rateT"></strong><p id="rateP"></p><div class="rrow"><button type="button" class="onb-back" data-rate="later" id="rateLater"></button><button type="button" class="onb-next" data-rate="yes" id="rateYes"></button></div></div>
 <button class="totop" id="toTop" type="button" data-i18n-aria="toTop" aria-label="Na vrh" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 13V3M3.5 7.5L8 3l4.5 4.5"/></svg></button>
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
@@ -574,7 +618,7 @@ const T = {
   tabsAria:"Delovi aplikacije", tabList:"Države", tabJournal:"Dnevnik", tabPlan:"Plan", tabQuiz:"Kviz",
   viewAria:"Prikaz mape", viewFlat:"Mapa", viewGlobe:"Globus", globeFail:"Globus trenutno ne može da se učita.", hintGlobe:"Okreni globus prstom, dodirni državu da je označiš",
   addTrip:"Dodaj putovanje", saveTrip:"Sačuvaj", tripSaved:"Sačuvano", delTrip:"Ukloni", sure:"Sigurno ukloniti?", fBest:"Najbolje vreme",
-  jTitle:"Dnevnik putovanja", jEmpty:"Još nema upisanih putovanja. Označi državu kao obiđenu, pa joj preko dugmeta ⓘ dodaj godinu i gradove.", jNoYear:"Bez godine",
+  jTitle:"Dnevnik putovanja", jEmpty:"Još nema upisanih putovanja. Izaberi državu iznad i dodaj prvo putovanje.", jEmptyOld:"Još nema upisanih putovanja. Označi državu kao obiđenu, pa joj preko dugmeta ⓘ dodaj godinu i gradove.", jNoYear:"Bez godine",
   jTrips:"putovanja: {n}", jNew:"nove države: {n}", jNewTag:"prvi put", jMissing:"bez upisanog putovanja: {n}", jSum:"Putovanja: {t} · Države: {c}",
   pTitle:"Lista želja po prioritetu", pEmpty:"Lista želja je prazna. Označi zvezdicom države koje želiš da posetiš.", prio:"Prioritet", pNext:"sledeće",
   sTitle:"Predlozi", sText:"Države koje još nisi obišao, a blizu su onih u kojima si bio.", sNear:"Blizu", sEmpty:"Predlozi se pojavljuju kad označiš bar jednu obiđenu državu.",
@@ -585,6 +629,13 @@ const T = {
   stTitle:"Statistika", stArea:"površine sveta", stPop:"stanovništva sveta", stConts:"kontinenata", stTrips:"putovanja", stCities:"gradova", stFirst:"prvo putovanje", stTop:"najviše putovanja", stByYear:"Putovanja po godinama", stNoTrips:"Upiši putovanja u Dnevnik i ovde će se pojaviti godine.",
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
+  rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju",
+  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi obiđenu državu", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
+  cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
+  cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
+  cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
+  cmpMsg:"Uporedi svoja putovanja sa mnom u aplikaciji Atlas putovanja! Moj kod: {c}", cmpClear:"Ukloni poređenje",
+  stCaps:"prestonica", stCityList:"Gradovi", stCityNone:"Upiši gradove u Dnevnik i ovde će se pojaviti.",
   wDanger:"Ne putovati (savet za putovanja)", wRisk:"Preispitajte putovanje (savet za putovanja)", wNote:"Predlozi ne obuhvataju države sa upozorenjem za putovanja (stanje: novembar 2026).",
   mTitle:"Ovog meseca", mText:"Države sa tvoje liste želja kojima je ovo najbolje vreme za posetu.", mNone:"Nijednoj državi sa tvoje liste želja ovo nije najbolje vreme za posetu.", mOther:"Još država kojima je ovo najbolje vreme", privacy:"Politika privatnosti",
   qCap:"Koji je glavni grad ove države?", qCapRev:"Kojoj državi je ovo glavni grad?", qRight:"Tačno.", qWrong:"Netačno. Tačan odgovor: {a}", qNext:"Dalje", qFinish:"Rezultat",
@@ -624,7 +675,7 @@ const T = {
   tabsAria:"App sections", tabList:"Countries", tabJournal:"Journal", tabPlan:"Plan", tabQuiz:"Quiz",
   viewAria:"Map view", viewFlat:"Map", viewGlobe:"Globe", globeFail:"The globe can't load right now.", hintGlobe:"Drag to rotate, tap a country to mark it",
   addTrip:"Add a trip", saveTrip:"Save", tripSaved:"Saved", delTrip:"Remove", sure:"Remove for sure?", fBest:"Best time",
-  jTitle:"Travel journal", jEmpty:"No trips yet. Mark a country as visited, then add the year and cities with the ⓘ button.", jNoYear:"No year",
+  jTitle:"Travel journal", jEmpty:"No trips yet. Choose a country above and add your first trip.", jEmptyOld:"No trips yet. Mark a country as visited, then add the year and cities with the ⓘ button.", jNoYear:"No year",
   jTrips:"trips: {n}", jNew:"new countries: {n}", jNewTag:"first time", jMissing:"no trip details: {n}", jSum:"Trips: {t} · Countries: {c}",
   pTitle:"Wish list by priority", pEmpty:"Your wish list is empty. Star the countries you want to visit.", prio:"Priority", pNext:"next",
   sTitle:"Suggestions", sText:"Countries you haven't visited that are close to ones you have.", sNear:"Near", sEmpty:"Suggestions appear once you mark at least one visited country.",
@@ -635,6 +686,13 @@ const T = {
   stTitle:"Statistics", stArea:"of the world's area", stPop:"of the world's population", stConts:"continents", stTrips:"trips", stCities:"cities", stFirst:"first trip", stTop:"most trips", stByYear:"Trips by year", stNoTrips:"Add trips to the Journal and the years will show up here.",
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
+  rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app",
+  jAddTitle:"Add a trip", jPickPh:"Choose a visited country", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
+  cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
+  cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
+  cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
+  cmpMsg:"Compare your travels with me in the Travel Atlas app! My code: {c}", cmpClear:"Clear comparison",
+  stCaps:"capitals", stCityList:"Cities", stCityNone:"Add cities to your Journal and they'll show up here.",
   wDanger:"Do not travel (travel advisory)", wRisk:"Reconsider travel (travel advisory)", wNote:"Suggestions leave out countries with a travel warning (as of November 2026).",
   mTitle:"This month", mText:"Countries on your wish list that are best to visit right now.", mNone:"None of the countries on your wish list are at their best this month.", mOther:"More countries at their best right now", privacy:"Privacy policy",
   qCap:"What is the capital of this country?", qCapRev:"Which country has this capital?", qRight:"Correct.", qWrong:"Not quite. Correct answer: {a}", qNext:"Next", qFinish:"See result",
@@ -1065,7 +1123,7 @@ function prioHTML(code){
 /* ---------- kartice ---------- */
 const TABS = ["list","journal","plan"];
 function setTab(name){
-  if(name!==ui.tab) discardDrafts();
+  if(name!==ui.tab){ discardDrafts(); jStart = null; }
   ui.tab = name;
   for(const k of TABS){ $("tab-"+k).hidden = k!==name; }
   document.querySelectorAll(".tabs button").forEach(b=>{ const on = b.dataset.tab===name; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
@@ -1081,6 +1139,7 @@ function gotoCountry(code){
 }
 
 /* ---------- dnevnik: vremenska linija ---------- */
+let jStart = null;                 // država izabrana u Dnevniku za novo putovanje
 let openJ = null;                  // putovanje otvoreno za izmenu u Dnevniku ("kod:redni broj")
 function renderJournal(){
   const box = $("tab-journal"), entries = [], first = {};
@@ -1091,7 +1150,11 @@ function renderJournal(){
   }
   const missing = been.filter(c=>!tripsOf(c.code).some(tripFilled)).length;
   let html = `<h2 class="sech">${t("jTitle")}</h2>`;
-  if(!entries.length){ box.innerHTML = html + `<p class="emptyp">${t("jEmpty")}</p>`; return; }
+  if(!been.length){ box.innerHTML = html + `<p class="emptyp">${t("jEmpty2")}</p><p style="text-align:center;margin-top:12px"><button type="button" class="savebtn primary" data-gotolist>${t("jGoList")}</button></p>`; return; }
+  const sorted = been.slice().sort((x,y)=>x.name.localeCompare(y.name, lang==="en" ? "en" : "sr"));
+  html += `<div class="jadd"><select id="jPick" aria-label="${t("jPickPh")}"><option value="">${t("jPickPh")}</option>${sorted.map(c=>`<option value="${c.code}" ${jStart===c.code ? "selected" : ""}>${c.flag} ${c.name}</option>`).join("")}</select><button type="button" class="savebtn primary" data-jstart>+ ${t("jAddTitle")}</button></div>`;
+  if(jStart && isBeen(jStart)) html += `<div class="jnew">${journalHTML(jStart, "n")}</div>`;
+  if(!entries.length){ box.innerHTML = html + (jStart ? "" : `<p class="emptyp">${t("jEmpty")}</p>`); return; }
   html += `<p class="secp">${fill(t("jSum"), {t:entries.length, c:new Set(entries.map(e=>e.c.code)).size})}${missing ? " · " + fill(t("jMissing"), {n:missing}) : ""}</p>`;
   const years = [...new Set(entries.map(e=>e.tr.year || ""))].sort((a,b)=> a==="" ? 1 : b==="" ? -1 : b.localeCompare(a));
   for(const y of years){
@@ -1359,6 +1422,8 @@ const ACH = [
   {t:"Ceo kontinent", d:"Sve države jednog kontinenta", te:"Whole continent", de:"Every country on one continent", full:true},
   {t:"Oko Mediterana", d:"10 mediteranskih država", te:"Around the Mediterranean", de:"10 Mediterranean countries", set:"ES FR MC IT MT SI HR BA ME AL GR TR CY SY LB IL PS EG LY TN DZ MA", n:10},
   {t:"Ostrvljanin", d:"5 ostrvskih država", te:"Islander", de:"5 island nations", set:"IS IE GB MT CY JP PH ID SG LK MV BH NZ FJ KI MH FM NR PW WS SB TO TV VU PG TL MG MU SC KM CV ST AG BS BB CU DM DO GD HT JM KN LC VC TT", n:5},
+  {t:"Gradski putnik", d:"25 gradova u dnevniku", te:"City hopper", de:"25 cities in your journal", city:"all", n:25},
+  {t:"Prestonice", d:"10 glavnih gradova", te:"Capitals", de:"10 capital cities", city:"cap", n:10},
   {t:"Bez greške", d:"Kviz sa svih 10 tačnih odgovora", te:"Flawless", de:"A quiz with all 10 answers right", quiz:"perfect", n:1},
   {t:"Munjevit", d:"1.600 poena u jednom kvizu", te:"Lightning", de:"1,600 points in one quiz", quiz:"pts", n:1600},
 ];
@@ -1374,6 +1439,7 @@ function achState(){
       have = best.h; need = best.n;
       if(have && have < need) a.dd = `${t("closest")}: ${C[best.k]}`; else if(have >= need) a.dd = lang==="en" ? `${C[best.k]} ${t("whole")}` : `${C[best.k]} ${t("whole")}`; else a.dd = "";
     }
+    else if(a.city){ const vc = visitedCities(); have = a.city==="cap" ? vc.filter(x=>x.cap).length : vc.length; need = a.n; }
     else if(a.quiz){ const q = quizStats(); have = a.quiz==="perfect" ? (q.perfect ? 1 : 0) : q.best; need = a.n; }
     else if(a.set){ const set = Array.isArray(a.set) ? a.set : a.set.split(" "); have = set.filter(k=>isBeen(k)).length; need = a.n || set.length; }
     else { have = been.length; need = a.n; }
@@ -1386,6 +1452,98 @@ function toast(text, err, action){
   el.innerHTML = (err ? "" : `<span class="seal">${ICON.been}</span>`) + `<span>${esc(text)}</span>` + (action ? `<button type="button" class="tact" ${action.attr}>${esc(action.label)}</button>` : "");
   el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ el.hidden = true; }, action ? 9000 : err ? 5000 : 3800);
 }
+/* ---------- ocena aplikacije (samo Android aplikacija) ---------- */
+const PLAY_URL = "https://play.google.com/store/apps/details?id=rs.atlasputovanja.app";
+const isNative = () => document.documentElement.classList.contains("native");
+function rateState(){ try{ return JSON.parse(localStorage.getItem("atlas-rate") || "{}") || {}; }catch(e){ return {}; } }
+function rateSave(o){ try{ localStorage.setItem("atlas-rate", JSON.stringify(o)); }catch(e){} }
+// Ponudi ocenu kad korisnik ima bar 10 obiđenih država; najviše dva puta, drugi put bar 7 dana posle „Kasnije“.
+function maybeAskRate(){
+  if(!isNative() || !$("onb").hidden) return;
+  const st = rateState(); if(st.done || (st.asks||0) >= 2) return;
+  if(COUNTRIES.filter(c=>isBeen(c.code)).length < 10) return;
+  if(st.later && Date.now() - st.later < 7*864e5) return;
+  rateSave({...st, asks:(st.asks||0)+1});
+  $("rateT").textContent = t("rateT"); $("rateP").textContent = t("rateP"); $("rateYes").textContent = t("rateYes"); $("rateLater").textContent = t("rateLater");
+  $("toast").hidden = true; $("rate").hidden = false; $("rateYes").focus({preventScroll:true});
+}
+function rateAnswer(a){
+  $("rate").hidden = true;
+  if(a==="yes"){ rateSave({...rateState(), done:true}); location.href = PLAY_URL; }
+  else rateSave({...rateState(), later:Date.now()});
+}
+addEventListener("load", ()=>{ document.getElementById("rateBtn").hidden = !isNative(); });
+
+/* ---------- uporedi sa prijateljem ---------- */
+// Kod: "AP1." + 2 bita po državi (obišao, želim) redom po ISO kodu + "." + ime; sve base64url.
+const CMP_ORDER = COUNTRIES.map(c=>c.code).sort();
+const b64u = bytes => btoa(String.fromCharCode(...bytes)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const unb64u = str => { const b = atob(str.replace(/-/g,"+").replace(/_/g,"/") + "===".slice((str.length+3)%4)); return Uint8Array.from(b, ch=>ch.charCodeAt(0)); };
+function myCode(){
+  const bytes = new Uint8Array(Math.ceil(CMP_ORDER.length/4));
+  CMP_ORDER.forEach((code,i)=>{ const v = (isBeen(code)?1:0) | (isWant(code)?2:0); bytes[i>>2] |= v << ((i&3)*2); });
+  const name = ($("cmpName").value || "").trim().slice(0,24);
+  return "AP1." + b64u(bytes) + (name ? "." + b64u(new TextEncoder().encode(name)) : "");
+}
+function readCode(text){
+  const m = String(text||"").match(/AP1\.([A-Za-z0-9_-]{60,})(?:\.([A-Za-z0-9_-]+))?/); if(!m) return null;
+  try{
+    const bytes = unb64u(m[1]); if(bytes.length < Math.ceil(CMP_ORDER.length/4)) return null;
+    const been = new Set(), want = new Set();
+    CMP_ORDER.forEach((code,i)=>{ const v = (bytes[i>>2] >> ((i&3)*2)) & 3; if(v&1) been.add(code); if(v&2) want.add(code); });
+    let name = ""; if(m[2]) try{ name = new TextDecoder().decode(unb64u(m[2])).trim().slice(0,24); }catch(e){}
+    return {been, want, name, code: m[0]};
+  }catch(e){ return null; }
+}
+function cmpRefreshMine(){ const el = $("cmpMine"); if(el) el.value = myCode(); }
+function flagsHTML(codes, max = 40){
+  const list = codes.map(c=>BY_CODE[c]).filter(Boolean).sort((x,y)=>x.name.localeCompare(y.name, lang==="en" ? "en" : "sr"));
+  return `<div class="flagset">${list.slice(0,max).map(c=>`<span title="${esc(c.name)}" aria-label="${esc(c.name)}" role="img">${c.flag}</span>`).join("")}${list.length>max ? `<em>+${list.length-max}</em>` : ""}</div>`;
+}
+function renderCompare(){
+  cmpRefreshMine();
+  let saved = null; try{ saved = localStorage.getItem("atlas-friend"); }catch(e){}
+  const fr = saved ? readCode(saved) : null, box = $("cmpRes");
+  if(!fr){ box.innerHTML = ""; return; }
+  const f = fr.name || t("cmpFriend");
+  const mine = new Set(COUNTRIES.filter(c=>isBeen(c.code)).map(c=>c.code));
+  const both = [...mine].filter(c=>fr.been.has(c)), onlyMe = [...mine].filter(c=>!fr.been.has(c)), onlyThem = [...fr.been].filter(c=>!mine.has(c));
+  const wish = COUNTRIES.filter(c=>isWant(c.code) && fr.want.has(c.code)).map(c=>c.code);
+  box.innerHTML = `<div class="cmpres"><h4>${esc(fill(t("cmpVs"), {f}))}</h4>
+    <div class="cmpgrid"><div class="st"><b>${both.length}</b><span>${t("cmpBoth")}</span></div><div class="st"><b>${onlyMe.length}</b><span>${t("cmpMe")}</span></div><div class="st"><b>${onlyThem.length}</b><span>${esc(fill(t("cmpThem"), {f}))}</span></div></div>
+    ${both.length ? `<p class="cmpsub">${t("cmpBoth")}</p>${flagsHTML(both)}` : ""}
+    ${onlyThem.length ? `<p class="cmpsub">${esc(fill(t("cmpThem"), {f}))}</p>${flagsHTML(onlyThem)}` : ""}
+    ${wish.length ? `<p class="cmpsub">${t("cmpWish")}</p>${flagsHTML(wish)}` : ""}
+    <div><button type="button" class="link" id="cmpClear">${t("cmpClear")}</button></div></div>`;
+  $("cmpClear").onclick = ()=>{ try{ localStorage.removeItem("atlas-friend"); }catch(e){} $("cmpIn").value = ""; renderCompare(); };
+}
+function initCompare(){
+try{ $("cmpName").value = localStorage.getItem("atlas-name") || ""; }catch(e){}
+$("cmpName").addEventListener("input", ()=>{ try{ localStorage.setItem("atlas-name", $("cmpName").value.trim()); }catch(e){} cmpRefreshMine(); });
+$("cmpMine").addEventListener("focus", e=>e.target.select());
+$("cmpCopy").addEventListener("click", async ()=>{
+  const code = myCode();
+  $("cmpMsg").classList.remove("err");
+  try{ await navigator.clipboard.writeText(fill(t("cmpMsg"), {c:code})); $("cmpMsg").textContent = t("cmpCopied"); }
+  catch(e){ $("cmpMine").focus(); $("cmpMine").select(); try{ document.execCommand("copy"); $("cmpMsg").textContent = t("cmpCopied"); }catch(err){} }
+});
+$("cmpShare").addEventListener("click", async ()=>{
+  const text = fill(t("cmpMsg"), {c:myCode()});
+  try{
+    if(window.__nativeShareText){ await window.__nativeShareText(text, t("cmpTitle")); return; }
+    if(navigator.share){ await navigator.share({text}); return; }
+  }catch(e){ if(e && e.name==="AbortError") return; }
+  $("cmpCopy").click();
+});
+$("cmpGo").addEventListener("click", ()=>{
+  const fr = readCode($("cmpIn").value);
+  if(!fr){ $("cmpMsg").textContent = t("cmpBad"); $("cmpMsg").classList.add("err"); return; }
+  $("cmpMsg").textContent = ""; $("cmpMsg").classList.remove("err");
+  try{ localStorage.setItem("atlas-friend", fr.code); }catch(e){}
+  renderCompare(); $("cmpRes").scrollIntoView({block:"nearest", behavior:"smooth"});
+});
+}
+
 // posle svakih 10 novih oznaka podseti na rezervnu kopiju (samo kad se podaci čuvaju samo na uređaju)
 function countForBackup(){
   if(docRef) return;
@@ -1405,14 +1563,16 @@ function renderStatsPage(){
   const perY = {}; for(const tr of trips) if(tr.year) perY[tr.year] = (perY[tr.year]||0) + 1;
   const ys = Object.keys(perY).sort();
   const top = ys.length ? ys.reduce((m,y)=>perY[y]>perY[m] || (perY[y]===perY[m] && y>m) ? y : m) : null;
+  const vc = visitedCities();
   const tiles = [[pctTxt(been.length)+"%", t("ofWorld")], [pct(a/A), t("stArea")], [pct(p/P), t("stPop")], [new Set(been.map(c=>c.cont)).size + "/6", t("stConts")], [nf.format(trips.length), t("stTrips")],
-    [nf.format(cities.size), t("stCities")], [ys[0] || "–", t("stFirst")], [top ? `${top}` : "–", t("stTop") + (top ? ` (${perY[top]})` : "")]];
+    [nf.format(vc.length), t("stCities")], [nf.format(vc.filter(x=>x.cap).length), t("stCaps")], [ys[0] || "–", t("stFirst")]];
   const shown = ys.slice(-8).reverse(), mx = Math.max(1, ...shown.map(y=>perY[y]));
   box.innerHTML = `<h2><span>${t("stTitle")}</span></h2><div class="stgrid">${tiles.map(([n,l])=>`<div class="st"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>
-    <div class="yrs"><h3>${t("stByYear")}</h3>${shown.length ? shown.map(y=>`<div class="yr2"><b>${esc(y)}</b><span class="yb"><i style="width:${perY[y]/mx*100}%"></i></span><em>${perY[y]}</em></div>`).join("") : `<small class="secp" style="margin:0">${t("stNoTrips")}</small>`}</div>`;
+    <div class="yrs"><h3>${t("stByYear")}</h3>${shown.length ? shown.map(y=>`<div class="yr2"><b>${esc(y)}</b><span class="yb"><i style="width:${perY[y]/mx*100}%"></i></span><em>${perY[y]}</em></div>`).join("") : `<small class="secp" style="margin:0">${t("stNoTrips")}</small>`}</div>
+    <div class="yrs"><h3>${t("stCityList")}${vc.length ? ` (${vc.length})` : ""}</h3>${vc.length ? `<div class="cities">${vc.slice().sort((x,y)=>(y.cap-x.cap) || x.name.localeCompare(y.name, lang==="en" ? "en" : "sr")).map(x=>`<span class="${x.cap ? "cap" : ""}" title="${esc(BY_CODE[x.code].name)}">${BY_CODE[x.code].flag} ${esc(x.name)}</span>`).join("")}</div>` : `<small class="secp" style="margin:0">${t("stCityNone")}</small>`}</div>`;
 }
 function renderAch(){
-  renderStatsPage();
+  renderStatsPage(); if(document.getElementById("cmpRes") && typeof $ === "function") renderCompare();
   const st = achState(); let on = 0;
   const now = new Set(st.filter(x=>x.done).map(x=>x.a.t));
   if(announce && achKnown){ const fresh = st.filter(x=>x.done && !achKnown.has(x.a.t)); if(fresh.length) toast(t("achToast") + ": " + fresh.map(x=>lang==="en" ? x.a.te : x.a.t).join(", ")); }
@@ -1532,6 +1692,19 @@ const SVGNS = "http://www.w3.org/2000/svg";
 
 /* ---------- gradovi iz dnevnika kao tačke ---------- */
 let mapData = null, mapProj = null, cityList = [], citySig = null;
+// Gradovi iz sačuvanih putovanja (svaki grad jednom po državi); cap = glavni grad te države
+function visitedCities(){
+  const sn = cleanNotes(), out = [], seen = new Set();
+  for(const code in sn){
+    if(!isBeen(code) || !BY_CODE[code]) continue;
+    const caps = new Set([INFO[code] && INFO[code].cap, capEn[code]].filter(Boolean).map(x=>fold(x)));
+    for(const tr of sn[code].trips) for(const part of String(tr.cities || "").split(/[,;]/)){
+      const name = part.trim(), k = fold(name); if(!k || seen.has(code+":"+k)) continue;
+      seen.add(code+":"+k); out.push({code, name, cap: caps.has(k)});
+    }
+  }
+  return out;
+}
 function tripCities(){
   const out = [];
   for(const code in notes){
@@ -2013,6 +2186,7 @@ function showTip(e){
 function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); }
 
 /* ---------- events ---------- */
+initCompare();
 $("sort").addEventListener("change", e=>{ ui.sort = e.target.value; try{ localStorage.setItem("atlas-sort", ui.sort); }catch(err){} renderList(); });
 // dugme Na vrh: pojavljuje se kad se Početna odskroluje daleko
 function toTopState(){ $("toTop").hidden = !(ui.page==="home" && scrollY > 1400); }
@@ -2105,6 +2279,7 @@ document.addEventListener("click", e=>{
     for(const k of [...editing]) if(k.startsWith(code+":")) editing.delete(k);
     if(notes[code]){ notes[code].trips = notes[code].trips.filter(tripFilled); if(!notes[code].trips.length) delete notes[code]; }
     if(notes[code]) savedNotes[code] = cloneNotes(notes[code]); else delete savedNotes[code];
+    if(jStart===code) jStart = null;
     const at = tr ? tripsOf(code).indexOf(tr) : -1;
     lsSet();
     if(docRef){ dirty = true; clearTimeout(timer); flush(); }
@@ -2112,6 +2287,17 @@ document.addEventListener("click", e=>{
     clearTimeout(savedTimer); savedTimer = setTimeout(()=>{ savedFlash = null; document.querySelectorAll(".jsaved").forEach(e=>{ e.textContent = ""; }); }, 3000);
     return;
   }
+  if(b.hasAttribute("data-gotolist")){ setTab("list"); return; }
+  if(b.hasAttribute("data-jstart")){
+    const code = $("jPick").value; if(!code){ $("jPick").focus(); return; }
+    discardDrafts(); jStart = code;
+    const n = notes[code] || (notes[code] = {trips:[]});
+    let at = n.trips.findIndex(x=>!tripFilled(x)); if(at < 0){ n.trips.push({}); at = n.trips.length-1; }
+    renderJournal();
+    const inp = document.getElementById(`j-n-${code}-${at}-y`); if(inp){ inp.focus({preventScroll:true}); inp.scrollIntoView({block:"center", behavior:"smooth"}); }
+    return;
+  }
+  if(b.dataset.rate){ rateAnswer(b.dataset.rate); return; }
   if(b.dataset.addtrip){
     const code = b.dataset.addtrip, n = notes[code] || (notes[code] = {trips:[]});
     if(!n.trips.length) n.trips.push({});
@@ -2152,6 +2338,7 @@ document.addEventListener("click", e=>{
     let b2 = isBeen(code), w2 = isWant(code);
     if(v==="been") b2 = !b2; else w2 = !w2;
     if((v==="been" && b2) || (v==="want" && w2)) setTimeout(countForBackup, 0);
+    if(v==="been" && b2) setTimeout(maybeAskRate, 1500);
     if(b2 && w2) marks[code] = "both"; else if(b2) marks[code] = "been"; else if(w2) marks[code] = "want"; else delete marks[code];
     if(!isWant(code)) delete prio[code];
     announce = true;

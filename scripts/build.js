@@ -65,6 +65,10 @@ const bridge = `<script>
         return FS.writeFile({ path: "Atlas putovanja/" + name, data: text, directory: "DOCUMENTS", encoding: "utf8", recursive: true });
       }).then(function () { return "Documents › Atlas putovanja › " + name; });
     };
+    // Tekst (kod za poređenje sa prijateljem) ide kroz Android „Deli“.
+    window.__nativeShareText = function (text, title) {
+      return SH.share({ title: title, text: text, dialogTitle: title });
+    };
     window.__nativeShareImage = function (name, b64, title) {
       return FS.writeFile({ path: name, data: b64, directory: "CACHE" }).then(function (r) {
         return SH.share({ title: title, files: [r.uri], dialogTitle: title });
