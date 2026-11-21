@@ -630,6 +630,7 @@ header > *{min-width:0}
     <span id="sync"><span class="dot"></span>Učitavanje…</span>
     <span id="resetBox"><button class="link" id="resetBtn" type="button">Obriši sve oznake</button></span>
     <button class="link" id="helpBtn" type="button" data-i18n="howTo">Kako radi</button>
+    <button class="link" id="supportBtn" type="button" hidden><span data-i18n="supLink">Podrška autoru: pogledaj reklamu</span><span id="supCount"></span></button>
     <button class="link" id="rateBtn" type="button" data-rate="yes" data-i18n="rateLink" hidden>Oceni aplikaciju</button>
     <button class="link" id="adPrivacyBtn" type="button" data-i18n="adPrivacy" hidden>Privatnost oglasa</button>
   </footer>
@@ -710,7 +711,7 @@ const T = {
   stTitle:"Statistika", stArea:"površine sveta", stPop:"stanovništva sveta", stConts:"kontinenata", stTrips:"putovanja", stCities:"gradova", stFirst:"prvo putovanje", stTop:"najviše putovanja", stByYear:"Putovanja po godinama", stNoTrips:"Upiši putovanja u Dnevnik i ovde će se pojaviti godine.",
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dBest:"Najduži niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
-  rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju",
+  rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju", supLink:"Podrška autoru: pogledaj reklamu", supLoading:"Učitavam reklamu…", supThanks:"Hvala na podršci! Ovo ti je {n}. put.", supThanks1:"Hvala na podršci!", supFail:"Reklama trenutno nije dostupna. Probaj malo kasnije.", supSkip:"Reklama je prekinuta pre kraja, pa se ne računa.", supTimes:" · hvala, {n}×",
   jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", navMap:"Mapa", navMe:"Ja", setTitle:"Podešavanja", setTheme:"Tema", setLang:"Jezik", thAutoS:"Kao telefon", thLightS:"Svetla", thDarkS:"Tamna", planTitle:"Plan puta", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
   cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
@@ -724,9 +725,10 @@ const T = {
   howTo:"Kako radi", adLabel:"Reklama · 320×50", adAria:"Reklama", skip:"Preskoči", back:"Nazad", next:"Dalje", start:"Počni",
   o1t:"Dobrodošao u Atlas putovanja", o1p:"Vodi evidenciju o svim državama koje si obišao i onima koje tek želiš da vidiš. Svih 195 država na jednom mestu.",
   o2t:"Označi države", o2p:"Zvezdica znači da želiš da posetiš državu, a kvačica da si već bio tamo. Ponovni dodir briše oznaku.",
-  o3t:"Mapa i globus", o3p:"Dodirni državu na mapi da je označiš. Dugmetom Mapa / Globus biraš ravnu mapu ili globus koji se okreće. Dugme ⓘ otvara podatke o državi.",
-  o4t:"Dnevnik i plan", o4p:"Na početnoj strani, kartica Dnevnik čuva tvoja putovanja po godinama, sa gradovima i beleškama. Kartica Plan ređa listu želja po prioritetu i predlaže sledeću državu.",
-  o5t:"Dostignuća, kviz i deljenje", o5p:"Otključavaj pečate kako putuješ, proveri znanje u kvizu na vreme i podeli sliku svoje mape. Rezervna kopija je na stranici Dostignuća."},
+  o3t:"Mapa i globus", o3p:"Na stranici Mapa dodirni državu da je označiš. Dugme Mapa / Globus menja prikaz, a ⓘ otvara podatke o državi. Gore biraš jezik.",
+  o4t:"Dnevnik i Plan", o4p:"U donjem meniju, Dnevnik čuva tvoja putovanja po godinama, sa gradovima i beleškama. Plan ređa listu želja po prioritetu i predlaže gde je najlepše ovog meseca.",
+  o5t:"Kviz", o5p:"Pogađaj zastave, glavne gradove i oblike država na vreme. Dnevni izazov je isti za sve, a niz dana pokazuje koliko si uporan.",
+  o6t:"Ja i podešavanja", o6p:"Na stranici Ja su statistika, dostignuća i poređenje sa prijateljem. U Podešavanjima biraš temu i jezik, a tu je i rezervna kopija podataka."},
  en:{eyebrow:"195 countries · ISO 3166", title:"Travel Atlas", visited:"visited", ofWorld:"of all countries", onWish:"on the wish list",
   worldMap:"World map", mapAria:"World map with marked countries", loadingMap:"Loading map…", mapFail:"The map can't load right now. The list below still works.",
   zoomIn:"Zoom in", zoomOut:"Zoom out", zoomAll:"Whole map", been:"Visited", want:"Want to go", all:"All", hint:"Tap a country on the map to mark it", share:"Share map",
@@ -767,7 +769,7 @@ const T = {
   stTitle:"Statistics", stArea:"of the world's area", stPop:"of the world's population", stConts:"continents", stTrips:"trips", stCities:"cities", stFirst:"first trip", stTop:"most trips", stByYear:"Trips by year", stNoTrips:"Add trips to the Journal and the years will show up here.",
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dBest:"Longest streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
-  rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app",
+  rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app", supLink:"Support the author: watch an ad", supLoading:"Loading the ad…", supThanks:"Thanks for your support! That's time number {n}.", supThanks1:"Thanks for your support!", supFail:"No ad is available right now. Try again a bit later.", supSkip:"The ad was closed before the end, so it doesn't count.", supTimes:" · thanks, {n}×",
   jAddTitle:"Add a trip", jPickPh:"Choose a country", navMap:"Map", navMe:"Me", setTitle:"Settings", setTheme:"Theme", setLang:"Language", thAutoS:"Like phone", thLightS:"Light", thDarkS:"Dark", planTitle:"Trip plan", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
   cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
@@ -781,9 +783,10 @@ const T = {
   howTo:"How it works", adLabel:"Ad · 320×50", adAria:"Advertisement", skip:"Skip", back:"Back", next:"Next", start:"Get started",
   o1t:"Welcome to Travel Atlas", o1p:"Keep track of every country you've visited and the ones you still want to see. All 195 countries in one place.",
   o2t:"Mark countries", o2p:"A star means you want to go, a tick means you've been there. Tap again to clear the mark.",
-  o3t:"Map and globe", o3p:"Tap a country on the map to mark it. The Map / Globe switch changes between a flat map and a globe you can spin. The ⓘ button shows country facts.",
-  o4t:"Journal and plan", o4p:"On the home page, the Journal tab keeps your trips by year, with cities and notes. The Plan tab sorts your wish list by priority and suggests where to go next.",
-  o5t:"Achievements, quiz and sharing", o5p:"Unlock stamps as you travel, race the clock in the flags and capitals quiz, and share an image of your map. Backup lives on the Achievements page."}
+  o3t:"Map and globe", o3p:"On the Map page, tap a country to mark it. The Map / Globe switch changes the view, and ⓘ shows country facts. Pick the language at the top.",
+  o4t:"Journal and Plan", o4p:"In the bottom menu, Journal keeps your trips by year, with cities and notes. Plan sorts your wish list by priority and suggests where it's best to go this month.",
+  o5t:"Quiz", o5p:"Guess flags, capitals and country shapes against the clock. The daily challenge is the same for everyone, and your streak shows how many days in a row you've played.",
+  o6t:"Me and settings", o6p:"The Me page has your stats, achievements and comparing with a friend. Settings let you pick the theme and language, and that's where the backup is too."}
 };
 const CONT = {sr:{E:"Evropa",A:"Azija",F:"Afrika",N:"Severna Amerika",S:"Južna Amerika",O:"Okeanija"},
               en:{E:"Europe",A:"Asia",F:"Africa",N:"North America",S:"South America",O:"Oceania"}};
@@ -2360,7 +2363,7 @@ function applyLang(){
   if(!$("mapmsg").hidden) $("mapmsg").textContent = mapFailed ? t("mapFail") : t("loadingMap");
   $("tip").dataset.code = ""; $("tip").hidden = true;
   $("savemsg").textContent = "";
-  setSync(...syncState); restoreReset();
+  setSync(...syncState); restoreReset(); if(typeof supRefresh==="function") supRefresh();
   if(!$("onb").hidden) renderOnb();
   if(pendingImport && !$("bkAsk").hidden) askImport();
   bkMsg("");
@@ -2689,12 +2692,20 @@ const ONB_ART = [
    <path d="M60 50l30-10 25 12-6 22-28 6-18-12z" fill="var(--been)"/><path d="M125 45l35-6 20 16-10 20-30-4z" fill="var(--line)"/><path d="M190 52l40-8 30 18-12 26-40-2-14-16z" fill="var(--want)"/>
    <path d="M95 88l30 4 6 24-26 6-16-14z" fill="var(--line)"/><path d="M200 98l24 2 4 18-22 2z" fill="var(--been)"/><circle cx="168" cy="96" r="4" fill="var(--muted)"/>
    <circle cx="150" cy="58" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M162 70l14 14" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/></svg>`,
-  // kartice: dnevnik i plan
-  `<svg viewBox="0 0 320 150" aria-hidden="true"><rect x="36" y="18" width="248" height="26" rx="13" fill="var(--surface)" stroke="var(--line)"/>
-   <rect x="40" y="22" width="58" height="18" rx="9" fill="var(--line)"/><rect x="102" y="22" width="58" height="18" rx="9" fill="var(--ink)"/><rect x="164" y="22" width="58" height="18" rx="9" fill="var(--line)"/><rect x="226" y="22" width="54" height="18" rx="9" fill="var(--line)"/>
-   <text x="40" y="74" font-size="20" font-weight="800" fill="var(--ink)" font-family="system-ui">2024</text>
-   <rect x="36" y="84" width="248" height="50" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="50" y="117" font-size="22">🇯🇵</text>
-   <rect x="86" y="98" width="80" height="9" rx="4" fill="var(--ink)" opacity=".8"/><rect x="86" y="113" width="110" height="7" rx="3.5" fill="var(--muted)" opacity=".5"/></svg>`,
+  // donji meni: Dnevnik i Plan
+  `<svg viewBox="0 0 320 150" aria-hidden="true"><rect x="36" y="14" width="248" height="70" rx="14" fill="var(--surface)" stroke="var(--line)"/>
+   <text x="52" y="44" font-size="18" font-weight="800" fill="var(--ink)" font-family="system-ui">2024</text><text x="52" y="70" font-size="20">🇯🇵</text>
+   <rect x="86" y="56" width="80" height="9" rx="4" fill="var(--ink)" opacity=".8"/><rect x="180" y="56" width="80" height="7" rx="3.5" fill="var(--muted)" opacity=".5"/>
+   <rect x="30" y="98" width="260" height="42" rx="18" fill="var(--surface)" stroke="var(--line)"/>
+   <rect x="84" y="103" width="44" height="32" rx="12" fill="var(--been-soft)"/>
+   <g fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="58" cy="119" r="8"/><path d="M150 127l5-14 6 8 4-5 5 11z"/><circle cx="210" cy="120" r="7"/><circle cx="262" cy="115" r="4"/><path d="M254 128a8 8 0 0 1 16 0"/></g>
+   <path d="M98 111h12a3 3 0 0 1 3 3v12h-12a3 3 0 0 1-3-3z" fill="none" stroke="var(--been)" stroke-width="2.2" stroke-linejoin="round"/></svg>`,
+  // kviz
+  `<svg viewBox="0 0 320 150" aria-hidden="true"><circle cx="160" cy="44" r="28" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.5"/>
+   <path d="M160 30v14l9 6" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+   <rect x="40" y="86" width="116" height="24" rx="10" fill="var(--surface)" stroke="var(--line)"/><rect x="164" y="86" width="116" height="24" rx="10" fill="var(--been-soft)" stroke="var(--been)" stroke-width="2"/>
+   <rect x="40" y="116" width="116" height="24" rx="10" fill="var(--surface)" stroke="var(--line)"/><rect x="164" y="116" width="116" height="24" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+   <path d="M214 98l5 5 10-10" fill="none" stroke="var(--been)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   // pečati
   `<svg viewBox="0 0 320 150" aria-hidden="true"><g transform="rotate(-8 100 75)"><circle cx="100" cy="75" r="38" fill="var(--been-soft)" stroke="var(--been)" stroke-width="2.5"/><circle cx="100" cy="75" r="30" fill="none" stroke="var(--been)" stroke-width="1" stroke-dasharray="3 3"/><text x="100" y="82" text-anchor="middle" font-size="20" font-weight="800" fill="var(--been)" font-family="system-ui">100</text></g>
    <g transform="rotate(6 200 70)"><circle cx="200" cy="70" r="32" fill="none" stroke="var(--want)" stroke-width="2.5" stroke-dasharray="4 4"/><path d="M200 52l5 10.5 11.5 1.3-8.6 7.8 2.4 11.4-10.3-5.8-10.3 5.8 2.4-11.4-8.6-7.8 11.5-1.3z" fill="var(--want)"/></g>
@@ -2812,6 +2823,24 @@ window.__atlasBack = function(){
 // Android (EU): AdMob traži da korisnik može da promeni saglasnost za oglase.
 function adPrivacyReady(){ if(window.__adPrivacy) $("adPrivacyBtn").hidden = false; }
 window.addEventListener("adprivacy", adPrivacyReady); adPrivacyReady();
+// Podrška autoru: korisnik sam bira da pogleda reklamu sa nagradom (samo u Android aplikaciji).
+function supCountGet(){ try{ return +localStorage.getItem("atlas-support") || 0; }catch(e){ return 0; } }
+function supRefresh(){
+  $("supportBtn").hidden = !window.__nativeReward;
+  const n = supCountGet(); $("supCount").textContent = n ? t("supTimes").replace("{n}", n) : "";
+}
+let supBusy = false;
+$("supportBtn").addEventListener("click", async ()=>{
+  if(supBusy || !window.__nativeReward) return;
+  supBusy = true; toast(t("supLoading"));
+  try{
+    const ok = await window.__nativeReward();
+    if(ok){ const n = supCountGet() + 1; try{ localStorage.setItem("atlas-support", String(n)); }catch(e){} supRefresh(); toast(n>1 ? fill(t("supThanks"), {n}) : t("supThanks1")); }
+    else toast(t("supSkip"), true);
+  }catch(e){ toast(t("supFail"), true); }
+  supBusy = false;
+});
+window.addEventListener("adreward", supRefresh); supRefresh();
 $("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.__adPrivacy(); });
 
 (function init(){

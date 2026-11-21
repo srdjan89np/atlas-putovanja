@@ -58,6 +58,7 @@ jobs:
       - name: Web deo (www/, radi bez interneta)
         env:
           ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
+          ADMOB_REWARD_ID: ${{ secrets.ADMOB_REWARD_ID }}
         run: npm run build:android
 
       - name: Android projekat, ikonice i splash

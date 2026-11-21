@@ -35,6 +35,10 @@ const TEST_BANNER = "ca-app-pub-3940256099942544/6300978111";
 const REAL_BANNER = process.env.ADMOB_BANNER_ID || ADCFG.bannerId || "";
 const TESTING = process.env.ADMOB_TEST === "1" || !REAL_BANNER;
 const BANNER = TESTING ? TEST_BANNER : REAL_BANNER;
+// Reklama sa nagradom za „Podrška autoru“: ADMOB_REWARD_ID > admob.config.json > Google probni ID.
+const TEST_REWARD = "ca-app-pub-3940256099942544/5224354917";
+const REAL_REWARD = process.env.ADMOB_REWARD_ID || ADCFG.rewardId || "";
+const REWARD = TESTING || !REAL_REWARD ? TEST_REWARD : REAL_REWARD;
 
 const bridge = `<script>
 (function () {
@@ -80,6 +84,8 @@ const bridge = `<script>
   // a bez njega se koristi Google-ov probni baner („Test Ad“).
   var BANNER = ${JSON.stringify(BANNER)};
   var TESTING = ${JSON.stringify(TESTING)};
+  var REWARD = ${JSON.stringify(REWARD)};
+  var REWARD_ON = ${JSON.stringify(TESTING || !!REAL_REWARD)};
   if (AD) {
     AD.addListener("bannerAdSizeChanged", function (s) { setH(s && s.height); });
     AD.addListener("bannerAdFailedToLoad", function () { setH(0); });
@@ -99,6 +105,21 @@ const bridge = `<script>
           window.__adPrivacy = function () { return AD.showPrivacyOptionsForm().catch(function () {}); };
           window.dispatchEvent(new Event("adprivacy"));
         }
+        // „Podrška autoru“: reklama sa nagradom, samo kad je korisnik sam zatraži. Vraća true ako je odgledana do kraja.
+        // Bez pravog ID-ja reklame sa nagradom (a nije probna verzija), link „Podrška autoru“ se ne prikazuje.
+        if (REWARD_ON) window.__nativeReward = function () {
+          return new Promise(function (resolve, reject) {
+            var got = false, end = false, hs = [];
+            var finish = function (fn, v) { if (end) return; end = true; hs.forEach(function (h) { Promise.resolve(h).then(function (x) { if (x && x.remove) x.remove(); }); }); fn(v); };
+            hs.push(AD.addListener("onRewardedVideoAdReward", function () { got = true; }));
+            hs.push(AD.addListener("onRewardedVideoAdDismissed", function () { setTimeout(function () { finish(resolve, got); }, 400); }));
+            hs.push(AD.addListener("onRewardedVideoAdFailedToShow", function (e) { finish(reject, e); }));
+            AD.prepareRewardVideoAd({ adId: REWARD, isTesting: TESTING || REWARD === ${JSON.stringify(TEST_REWARD)} })
+              .then(function () { return AD.showRewardVideoAd(); })
+              .then(function (r) { if (r && (r.amount || r.type)) got = true; }, function (e) { finish(reject, e); });
+          });
+        };
+        if (REWARD_ON) window.dispatchEvent(new Event("adreward"));
         return AD.showBanner({ adId: BANNER, adSize: "ADAPTIVE_BANNER", position: "BOTTOM_CENTER", margin: 0, isTesting: TESTING });
       })
       .catch(function () { setH(0); });
@@ -128,4 +149,4 @@ fs.mkdirSync(WWW, { recursive: true });
 fs.writeFileSync(path.join(WWW, "index.html"), html);
 fs.copyFileSync(need(nm("jsvectormap/dist/maps/world.js"), "mape sveta"), path.join(WWW, "world.js"));
 fs.copyFileSync(need(nm("d3/dist/d3.min.js"), "d3"), path.join(WWW, "d3.min.js"));
-console.log(`www/ spreman: index.html ${(html.length / 1024).toFixed(0)} KB, AdMob baner: ${TESTING ? "probni (Google test)" : "pravi"}`);
+console.log(`www/ spreman: index.html ${(html.length / 1024).toFixed(0)} KB, AdMob baner: ${TESTING ? "probni (Google test)" : "pravi"}, nagrada: ${REAL_REWARD && !TESTING ? "prava" : TESTING ? "probna" : "isključena (nema rewardId)"}`);
