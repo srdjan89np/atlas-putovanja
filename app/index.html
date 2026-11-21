@@ -499,12 +499,30 @@ html.native .bnav{bottom:calc(var(--ad-h) + 8px)}
 html.native .toast,html.native .totop{bottom:calc(var(--ad-h) + var(--nav-h) + 24px)}
 html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 20px)}
 .adbar{background:var(--bg)}
+
+/* ===== Stranice: Mapa, Dnevnik, Plan, Kviz, Ja ===== */
+.tabs{display:none!important}
+body:not([data-page="home"]) header{display:none}
+body[data-page="journal"] .map,body[data-page="plan"] .map{display:none}
+.ptitle,#tab-journal > .sech:first-child,#tab-quiz > .sech:first-child,#tab-plan > .ptitle{font-family:var(--f-display);font-weight:700;font-size:30px;letter-spacing:-.03em;line-height:1.1;margin:6px 0 14px}
+.wrap{padding-top:max(20px,env(safe-area-inset-top,0px))}
+.thbtn{flex:none}
+.sets{gap:14px}
+.setrow{display:grid;gap:8px}
+.setrow > span{font-size:13px;font-weight:600;color:var(--muted)}
+.seg.wide{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);border-radius:14px;padding:4px;background:var(--bg)}
+.seg.wide button{border-radius:11px;font-family:var(--f-body);font-size:14px;letter-spacing:0;padding:11px 8px;min-height:44px}
+.seg.wide button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgb(0 0 0 / .15)}
+.bnav button{max-width:120px;font-size:11px}
+.bnav svg{width:21px;height:21px}
+.ptitle + .sech{margin-top:0}
+#page-ach h1.ptitle{font-size:30px}
 </style>
 
 <div class="wrap">
   <header>
     <div class="topline"><div class="eyebrow" data-i18n="eyebrow">195 država · ISO 3166</div>
-      <div class="tright"><div class="langs" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">SR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="thbtn" id="themeBtn" aria-label="Tema"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button></div></div>
+      <button type="button" class="thbtn" data-page="ach" data-goset data-i18n-aria="setTitle" aria-label="Podešavanja"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
     <h1 data-i18n="title">Atlas putovanja</h1>
     <div class="stats">
       <div class="stat been"><b id="sBeen">0</b><span><span data-i18n="visited">obiđeno</span> · <span id="sPct">0%</span> <span data-i18n="ofWorld">država sveta</span></span></div>
@@ -560,10 +578,20 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 20px)}
   </div>
   <div id="page-quiz" hidden><div id="tab-quiz"></div></div>
   <div id="page-ach" hidden>
+  <h1 class="ptitle" data-i18n="navMe">Ja</h1>
   <section class="ach" id="statsec" data-i18n-aria="stTitle" aria-label="Statistika"></section>
   <section class="ach" data-i18n-aria="ach" aria-label="Dostignuća">
     <h2><span data-i18n="ach">Dostignuća</span> <em id="achCount"></em></h2>
     <div class="badges" id="badges"></div>
+  </section>
+
+  <hr class="sep">
+  <section class="backup sets" id="settings" data-i18n-aria="setTitle" aria-label="Podešavanja">
+    <h3 data-i18n="setTitle">Podešavanja</h3>
+    <div class="setrow"><span data-i18n="setTheme">Tema</span>
+      <div class="seg wide" id="themeSeg" role="group" data-i18n-aria="setTheme" aria-label="Tema"><button type="button" data-themeset="auto" aria-pressed="true" data-i18n="thAutoS">Kao telefon</button><button type="button" data-themeset="light" aria-pressed="false" data-i18n="thLightS">Svetla</button><button type="button" data-themeset="dark" aria-pressed="false" data-i18n="thDarkS">Tamna</button></div></div>
+    <div class="setrow"><span data-i18n="setLang">Jezik</span>
+      <div class="seg wide langs" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">Srpski</button><button type="button" data-lang="en" aria-pressed="false">English</button></div></div>
   </section>
 
   <hr class="sep">
@@ -604,9 +632,11 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 20px)}
   </div>
 </div>
 <nav class="bnav" data-i18n-aria="navAria" aria-label="Stranice">
-  <button type="button" data-page="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.500 12h17M12 3.500c3 3 3 14 0 17M12 3.500c-3 3-3 14 0 17"/></svg><span data-i18n="navHome">Početna</span></button>
+  <button type="button" data-page="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.500 12h17M12 3.500c3 3 3 14 0 17M12 3.500c-3 3-3 14 0 17"/></svg><span data-i18n="navMap">Mapa</span></button>
+  <button type="button" data-page="journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span data-i18n="tabJournal">Dnevnik</span></button>
+  <button type="button" data-page="plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-12 5 7 3-4 4 9z"/></svg><span data-i18n="tabPlan">Plan</span></button>
   <button type="button" data-page="quiz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.500"/><path d="M12 9v4.200l2.600 1.600M9.500 2.800h5M12 2.800v2.700"/></svg><span data-i18n="tabQuiz">Kviz</span></button>
-  <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.500 4h9v5a4.500 4.500 0 0 1-9 0zM7.500 5.500H4.500c0 3 1.300 4.500 3.300 4.800M16.500 5.500h3c0 3-1.300 4.500-3.300 4.800M12 13.500V17M8.500 20h7M9.500 17h5"/></svg><span data-i18n="ach">Dostignuća</span></button>
+  <button type="button" data-page="ach"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.500 20a7.500 7.500 0 0 1 15 0"/></svg><span data-i18n="navMe">Ja</span></button>
 </nav>
 <div class="toast" id="toast" role="status" hidden></div>
 <div class="rate" id="rate" role="dialog" aria-labelledby="rateT" hidden><strong id="rateT"></strong><p id="rateP"></p><div class="rrow"><button type="button" class="onb-back" data-rate="later" id="rateLater"></button><button type="button" class="onb-next" data-rate="yes" id="rateYes"></button></div></div>
@@ -677,7 +707,7 @@ const T = {
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dBest:"Najduži niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
   rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju",
-  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", thAuto:"Tema: kao na telefonu", thLight:"Tema: svetla", thDark:"Tema: tamna", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
+  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", navMap:"Mapa", navMe:"Ja", setTitle:"Podešavanja", setTheme:"Tema", setLang:"Jezik", thAutoS:"Kao telefon", thLightS:"Svetla", thDarkS:"Tamna", planTitle:"Plan puta", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
   cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
@@ -734,7 +764,7 @@ const T = {
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dBest:"Longest streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
   rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app",
-  jAddTitle:"Add a trip", jPickPh:"Choose a country", thAuto:"Theme: same as phone", thLight:"Theme: light", thDark:"Theme: dark", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
+  jAddTitle:"Add a trip", jPickPh:"Choose a country", navMap:"Map", navMe:"Me", setTitle:"Settings", setTheme:"Theme", setLang:"Language", thAutoS:"Like phone", thLightS:"Light", thDarkS:"Dark", planTitle:"Trip plan", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
   cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
@@ -765,11 +795,7 @@ let theme = "auto";
 try{ const th = localStorage.getItem("atlas-theme"); if(th==="light"||th==="dark") theme = th; }catch(e){}
 function applyTheme(){
   if(theme==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", theme);
-  const b = document.getElementById("themeBtn"); if(!b) return;
-  const ic = {auto:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>', light:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>', dark:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'};
-  b.querySelector("svg").innerHTML = ic[theme];
-  const lbl = t(theme==="auto" ? "thAuto" : theme==="light" ? "thLight" : "thDark");
-  b.setAttribute("aria-label", lbl); b.title = lbl;
+  document.querySelectorAll("[data-themeset]").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.themeset===theme)));
 }
 applyTheme();
 const C = {...CONT[lang]};
@@ -1184,6 +1210,7 @@ function setTab(name){
   if(name!==ui.tab){ discardDrafts(); jStart = null; }
   ui.tab = name;
   for(const k of TABS){ $("tab-"+k).hidden = k!==name; }
+  if(ui.page==="home") navSync(name==="list" ? "home" : name);
   document.querySelectorAll(".tabs button").forEach(b=>{ const on = b.dataset.tab===name; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
   renderTab();
 }
@@ -1230,7 +1257,7 @@ function renderPlan(){
   const wish = COUNTRIES.filter(c=>isWant(c.code)).sort((a,b)=>(prio[b.code]||0)-(prio[a.code]||0));
   const mon = new Date().getMonth()+1;
   const monName = new Intl.DateTimeFormat(lang==="en" ? "en-GB" : "sr-Latn", {month:"long"}).format(new Date(2024, mon-1, 15));
-  let html = `<h2 class="sech">${t("mTitle")} <span class="mname">· ${esc(monName)}</span></h2>`;
+  let html = `<h1 class="ptitle">${t("planTitle")}</h1><h2 class="sech">${t("mTitle")} <span class="mname">· ${esc(monName)}</span></h2>`;
   const now = wish.filter(c=>bestIn(c.code, mon));
   html += `<p class="secp">${now.length ? t("mText") : t("mNone")}</p>`;
   if(now.length) html += `<ul class="list plist">` + now.map(c=>`<li class="prow">
@@ -1468,13 +1495,22 @@ function renderQuiz(){
 }
 
 /* ---------- stranice: Početna, Kviz, Dostignuća ---------- */
+function navSync(v){
+  document.body.dataset.page = v;
+  document.querySelectorAll(".bnav button").forEach(b=>{ if(b.dataset.page===v) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+}
+// Stranice u donjem meniju: Mapa, Dnevnik, Plan, Kviz, Ja. Dnevnik i Plan žive u #page-home kao kartice.
 function setPage(name){
-  if(name!==ui.page) discardDrafts();
-  ui.page = name; document.body.dataset.page = name; $("toTop").hidden = true;
-  for(const k of ["home","quiz","ach"]) $("page-"+k).hidden = k!==name;
-  document.querySelectorAll(".bnav button").forEach(b=>{ if(b.dataset.page===name) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
-  if(name==="quiz") renderQuiz(); else quizStop();
-  if(name==="home") requestAnimationFrame(()=>{ if(view==="globe"){ if(G){ resizeGlobe(); gKick(); } } else if(vb) setVB(vb); });
+  const tab = name==="journal" || name==="plan" ? name : name==="home" ? "list" : null;
+  const page = tab ? "home" : name;
+  const v = tab ? (tab==="list" ? "home" : tab) : name;
+  if(v!==document.body.dataset.page) discardDrafts();
+  ui.page = page; $("toTop").hidden = true;
+  for(const k of ["home","quiz","ach"]) $("page-"+k).hidden = k!==page;
+  navSync(v);
+  if(page==="quiz") renderQuiz(); else quizStop();
+  if(tab) setTab(tab);
+  if(tab==="list") requestAnimationFrame(()=>{ if(view==="globe"){ if(G){ resizeGlobe(); gKick(); } } else if(vb) setVB(vb); });
   window.scrollTo(0, 0);
 }
 
@@ -2254,7 +2290,7 @@ function render(){ renderStats(); renderAch(); renderChips(); renderList(); rend
 
 /* ---------- events ---------- */
 initCompare();
-$("themeBtn").addEventListener("click", ()=>{ theme = theme==="auto" ? "light" : theme==="light" ? "dark" : "auto"; try{ if(theme==="auto") localStorage.removeItem("atlas-theme"); else localStorage.setItem("atlas-theme", theme); }catch(e){} applyTheme(); toast(t(theme==="auto" ? "thAuto" : theme==="light" ? "thLight" : "thDark")); });
+$("themeSeg").addEventListener("click", e=>{ const b = e.target.closest("[data-themeset]"); if(!b) return; theme = b.dataset.themeset; try{ if(theme==="auto") localStorage.removeItem("atlas-theme"); else localStorage.setItem("atlas-theme", theme); }catch(err){} applyTheme(); });
 $("sort").addEventListener("change", e=>{ ui.sort = e.target.value; try{ localStorage.setItem("atlas-sort", ui.sort); }catch(err){} renderList(); });
 // dugme Na vrh: pojavljuje se kad se Početna odskroluje daleko
 function toTopState(){ $("toTop").hidden = !(ui.page==="home" && scrollY > 1400); }
@@ -2394,7 +2430,7 @@ document.addEventListener("click", e=>{
     changed(); render(); return;
   }
   if(b.dataset.share){ exportMap(b.dataset.share); return; }
-  if(b.dataset.page){ setPage(b.dataset.page); return; }
+  if(b.dataset.page){ setPage(b.dataset.page); if(b.hasAttribute("data-goset")) $("settings").scrollIntoView({block:"start"}); return; }
   if(b.dataset.qmode){ startQuiz(b.dataset.qmode); return; }
   if(b.hasAttribute("data-qquit")){
     // dnevni izazov se igra jednom: prekid upisuje poene osvojene do tada
