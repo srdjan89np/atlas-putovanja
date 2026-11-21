@@ -502,7 +502,7 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 20px)}
 
 /* ===== Stranice: Mapa, Dnevnik, Plan, Kviz, Ja ===== */
 .tabs{display:none!important}
-body:not([data-page="home"]) header{display:none}
+body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{display:none}
 body[data-page="journal"] .map,body[data-page="plan"] .map{display:none}
 .ptitle,#tab-journal > .sech:first-child,#tab-quiz > .sech:first-child,#tab-plan > .ptitle{font-family:var(--f-display);font-weight:700;font-size:30px;letter-spacing:-.03em;line-height:1.1;margin:6px 0 14px}
 .wrap{padding-top:max(20px,env(safe-area-inset-top,0px))}
@@ -517,15 +517,20 @@ body[data-page="journal"] .map,body[data-page="plan"] .map{display:none}
 .bnav svg{width:21px;height:21px}
 .ptitle + .sech{margin-top:0}
 #page-ach h1.ptitle{font-size:30px}
+.stat.been small.of195{font-family:var(--f-display);font-size:22px;font-weight:600;color:var(--muted);letter-spacing:0}
+header > *{min-width:0}
+.stat.been #sBeen{font-size:inherit;color:inherit}
+.hlang{height:44px;align-items:center;padding:3px}
+.hlang button{padding:0 13px;height:36px;border-radius:11px}
 </style>
 
 <div class="wrap">
   <header>
     <div class="topline"><div class="eyebrow" data-i18n="eyebrow">195 država · ISO 3166</div>
-      <button type="button" class="thbtn" data-page="ach" data-goset data-i18n-aria="setTitle" aria-label="Podešavanja"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+      <div class="tright"><div class="langs hlang" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">SR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="thbtn" data-page="ach" data-goset data-i18n-aria="setTitle" aria-label="Podešavanja"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div></div>
     <h1 data-i18n="title">Atlas putovanja</h1>
     <div class="stats">
-      <div class="stat been"><b id="sBeen">0</b><span><span data-i18n="visited">obiđeno</span> · <span id="sPct">0%</span> <span data-i18n="ofWorld">država sveta</span></span></div>
+      <div class="stat been"><b><span id="sBeen">0</span><small class="of195"> / 195</small></b><span><span data-i18n="visited">obiđeno</span> · <span id="sPct">0%</span> <span data-i18n="ofWorld">država sveta</span></span></div>
       <div class="stat want"><b id="sWant">0</b><span data-i18n="onWish">na listi želja</span></div>
     </div>
   </header>
@@ -626,7 +631,6 @@ body[data-page="journal"] .map,body[data-page="plan"] .map{display:none}
     <span id="resetBox"><button class="link" id="resetBtn" type="button">Obriši sve oznake</button></span>
     <button class="link" id="helpBtn" type="button" data-i18n="howTo">Kako radi</button>
     <button class="link" id="rateBtn" type="button" data-rate="yes" data-i18n="rateLink" hidden>Oceni aplikaciju</button>
-    <a class="link" id="privacyLink" href="https://srdjan89np.github.io/atlas-putovanja/privatnost.html" target="_blank" rel="noopener" data-i18n="privacy">Politika privatnosti</a>
     <button class="link" id="adPrivacyBtn" type="button" data-i18n="adPrivacy" hidden>Privatnost oglasa</button>
   </footer>
   </div>
@@ -2351,7 +2355,6 @@ function applyLang(){
   document.querySelectorAll("[data-i18n-aria]").forEach(el=>{ el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
   document.querySelectorAll(".langs button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===lang)));
-  $("privacyLink").href = "https://srdjan89np.github.io/atlas-putovanja/privatnost.html?lang=" + lang;
   document.querySelectorAll("#map [data-code] > title").forEach(ti=>{ const c = BY_CODE[ti.parentNode.dataset.code]; if(c) ti.textContent = c.name; });
   citySig = null;
   if(!$("mapmsg").hidden) $("mapmsg").textContent = mapFailed ? t("mapFail") : t("loadingMap");
