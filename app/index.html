@@ -13,33 +13,38 @@ img{max-width:100%}
 </head>
 <body>
 <title>Atlas putovanja</title>
+<script>try{var th=localStorage.getItem("atlas-theme");if(th==="light"||th==="dark")document.documentElement.setAttribute("data-theme",th)}catch(e){}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: passport-page header with stamp-count stats, continent progress strip, sticky filter bar, dense country list */
+/* Dizajn B · Noćni let: tamni globus i sjajni akcenti, uz svetlu varijantu. Tema: sistem / svetla / tamna (data-theme) */
 :root{
-  --bg:#EDF1F3; --surface:#FFFFFF; --line:#D3DCE2; --ink:#14263A; --muted:#5A6B7A;
-  --accent:#2340B0; --accent-soft:#E3E8F9;
-  --been:#17734F; --been-soft:#DDF0E7;
-  --want:#B5650B; --want-soft:#FBEBD6;
-  --ocean:#C3D5E6; --ocean-deep:#9DB8D2; --land:#F1F4F6;
-  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --bg:#F3F6FA; --surface:#FFFFFF; --line:#DAE1EA; --ink:#0B1220; --muted:#55657A;
+  --accent:#2457D6; --accent-soft:#E4ECFC;
+  --been:#087A52; --been-soft:#DCF3E8;
+  --want:#A85C00; --want-soft:#FCEFD9;
+  --ocean:#CADCF0; --ocean-deep:#A7C2E2; --land:#EEF2F7;
+  --hero:#E1EAFB; --glass:rgb(255 255 255 / .86); --shadow:0 10px 30px rgb(11 18 32 / .10);
+  --f-display:"Sora", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", "Segoe UI", system-ui, sans-serif;
   --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0F1720; --surface:#16212D; --line:#263545; --ink:#E6EDF3; --muted:#93A4B4;
-  --accent:#8CA3FF; --accent-soft:#1E2A4F;
-  --been:#4FCB98; --been-soft:#143528;
-  --want:#F0A84A; --want-soft:#3A2A14;
-  --ocean:#14283C; --ocean-deep:#0B1826; --land:#2A3A4B; color-scheme:dark}}
+  --bg:#0B1220; --surface:#121B2E; --line:#22304A; --ink:#EAF0F7; --muted:#94A3B8;
+  --accent:#6FB2FF; --accent-soft:#16294A;
+  --been:#3DDC97; --been-soft:#11352A;
+  --want:#F5A524; --want-soft:#3A2A0E;
+  --ocean:#16264A; --ocean-deep:#0B1220; --land:#2A3A55;
+  --hero:#1A2D55; --glass:rgb(18 27 46 / .86); --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F1720; --surface:#16212D; --line:#263545; --ink:#E6EDF3; --muted:#93A4B4;
-  --accent:#8CA3FF; --accent-soft:#1E2A4F;
-  --been:#4FCB98; --been-soft:#143528;
-  --want:#F0A84A; --want-soft:#3A2A14;
-  --ocean:#14283C; --ocean-deep:#0B1826; --land:#2A3A4B; color-scheme:dark}
+  --bg:#0B1220; --surface:#121B2E; --line:#22304A; --ink:#EAF0F7; --muted:#94A3B8;
+  --accent:#6FB2FF; --accent-soft:#16294A;
+  --been:#3DDC97; --been-soft:#11352A;
+  --want:#F5A524; --want-soft:#3A2A0E;
+  --ocean:#16264A; --ocean-deep:#0B1220; --land:#2A3A55;
+  --hero:#1A2D55; --glass:rgb(18 27 46 / .86); --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
 
 *{box-sizing:border-box}
 html,body{background:var(--bg);color:var(--ink)}
@@ -452,12 +457,54 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
 .daily small{color:var(--muted);font-size:13px}
 .daily .drow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .daily .dres{font-weight:700}
+
+/* ===== Dizajn B: kartice, zaobljenja, plutajuća navigacija ===== */
+h1,h2,h3,.stat b,.st b,.qbig{font-family:var(--f-display)}
+h1{font-weight:700;letter-spacing:-.03em}
+.topline .eyebrow{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tright{flex:none;display:flex;gap:8px;align-items:center}
+.thbtn{width:44px;height:44px;flex:none;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0}
+.thbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.thbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.langs{border-radius:14px}
+header{margin-bottom:16px;padding:18px;border-radius:26px;border:1px solid var(--line);background:radial-gradient(120% 110% at 90% -10%,var(--hero) 0%,transparent 60%),var(--surface)}
+.stat.been b{font-size:48px;letter-spacing:-.03em}
+.stat.want b{font-size:34px}
+body:is([data-page="quiz"],[data-page="ach"]) header{background:none;border:0;padding:0 0 12px;margin-bottom:0}
+body:is([data-page="quiz"],[data-page="ach"]) header .topline{margin-top:0}
+.mapbox{border-radius:24px;background:radial-gradient(90% 90% at 50% 35%,var(--hero),var(--surface) 75%)}
+ul.list,.tl,.backup,.st,.yrs,.pick,.qmode,.emptyp,.daily{border-radius:20px}
+.tabs{border-radius:18px;padding:5px}
+.tabs button{border-radius:14px}
+.search{border-radius:16px;min-height:50px;padding-inline:16px}
+.btn{border-radius:12px}
+.savebtn,.yhead .yshare{border-radius:12px}
+.chip{border-radius:999px}
+.badge{border-radius:16px}
+.sortsel,.jadd select,.cmpin{border-radius:12px}
+.zoom button{border-radius:12px}
+.onb-card{border-radius:26px}
+.onb-next,.onb-back{border-radius:12px}
+.rate{border-radius:22px}
+.toast{border-radius:16px}
+.filters{border-bottom:0}
+/* plutajuća, providna donja navigacija */
+.bnav{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(var(--ad-h) + 21px + env(safe-area-inset-bottom,0px));
+  border:1px solid var(--line);border-radius:22px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--shadow);padding:0 6px}
+.bnav button{border-radius:16px;margin:6px 2px}
+.bnav button[aria-current="page"]{color:var(--been);background:var(--been-soft)}
+body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 29px + env(safe-area-inset-bottom,0px))}
+html.native body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
+html.native .bnav{bottom:calc(var(--ad-h) + 8px)}
+html.native .toast,html.native .totop{bottom:calc(var(--ad-h) + var(--nav-h) + 24px)}
+html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 20px)}
+.adbar{background:var(--bg)}
 </style>
 
 <div class="wrap">
   <header>
     <div class="topline"><div class="eyebrow" data-i18n="eyebrow">195 država · ISO 3166</div>
-      <div class="langs" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">SR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div></div>
+      <div class="tright"><div class="langs" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">SR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="thbtn" id="themeBtn" aria-label="Tema"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button></div></div>
     <h1 data-i18n="title">Atlas putovanja</h1>
     <div class="stats">
       <div class="stat been"><b id="sBeen">0</b><span><span data-i18n="visited">obiđeno</span> · <span id="sPct">0%</span> <span data-i18n="ofWorld">država sveta</span></span></div>
@@ -630,7 +677,7 @@ const T = {
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dBest:"Najduži niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
   rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju",
-  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
+  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", thAuto:"Tema: kao na telefonu", thLight:"Tema: svetla", thDark:"Tema: tamna", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
   cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
@@ -687,7 +734,7 @@ const T = {
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dBest:"Longest streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
   rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app",
-  jAddTitle:"Add a trip", jPickPh:"Choose a country", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
+  jAddTitle:"Add a trip", jPickPh:"Choose a country", thAuto:"Theme: same as phone", thLight:"Theme: light", thDark:"Theme: dark", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
   cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
@@ -714,6 +761,17 @@ const CUR_EN_FIX = {ZWG:"Zimbabwe Gold", SLE:"Sierra Leonean Leone", STN:"São T
 let lang = "sr";
 try{ const l = localStorage.getItem("atlas-lang"); if(l==="en"||l==="sr") lang = l; }catch(e){}
 const t = k => (T[lang] && T[lang][k]) ?? T.sr[k] ?? k;
+let theme = "auto";
+try{ const th = localStorage.getItem("atlas-theme"); if(th==="light"||th==="dark") theme = th; }catch(e){}
+function applyTheme(){
+  if(theme==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", theme);
+  const b = document.getElementById("themeBtn"); if(!b) return;
+  const ic = {auto:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>', light:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>', dark:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'};
+  b.querySelector("svg").innerHTML = ic[theme];
+  const lbl = t(theme==="auto" ? "thAuto" : theme==="light" ? "thLight" : "thDark");
+  b.setAttribute("aria-label", lbl); b.title = lbl;
+}
+applyTheme();
 const C = {...CONT[lang]};
 const RAW = `AL Albanija E|AD Andora E|AT Austrija E|BY Belorusija E|BE Belgija E|BA Bosna i Hercegovina E|BG Bugarska E|HR Hrvatska E|CY Kipar E|CZ Češka E|DK Danska E|EE Estonija E|FI Finska E|FR Francuska E|DE Nemačka E|GR Grčka E|HU Mađarska E|IS Island E|IE Irska E|IT Italija E|LV Letonija E|LI Lihtenštajn E|LT Litvanija E|LU Luksemburg E|MT Malta E|MD Moldavija E|MC Monako E|ME Crna Gora E|NL Holandija E|MK Severna Makedonija E|NO Norveška E|PL Poljska E|PT Portugalija E|RO Rumunija E|RU Rusija E|SM San Marino E|RS Srbija E|SK Slovačka E|SI Slovenija E|ES Španija E|SE Švedska E|CH Švajcarska E|UA Ukrajina E|GB Ujedinjeno Kraljevstvo E|VA Vatikan E|AF Avganistan A|AM Jermenija A|AZ Azerbejdžan A|BH Bahrein A|BD Bangladeš A|BT Butan A|BN Brunej A|KH Kambodža A|CN Kina A|GE Gruzija A|IN Indija A|ID Indonezija A|IR Iran A|IQ Irak A|IL Izrael A|JP Japan A|JO Jordan A|KZ Kazahstan A|KW Kuvajt A|KG Kirgistan A|LA Laos A|LB Liban A|MY Malezija A|MV Maldivi A|MN Mongolija A|MM Mjanmar A|NP Nepal A|KP Severna Koreja A|OM Oman A|PK Pakistan A|PS Palestina A|PH Filipini A|QA Katar A|SA Saudijska Arabija A|SG Singapur A|KR Južna Koreja A|LK Šri Lanka A|SY Sirija A|TJ Tadžikistan A|TH Tajland A|TL Istočni Timor A|TR Turska A|TM Turkmenistan A|AE Ujedinjeni Arapski Emirati A|UZ Uzbekistan A|VN Vijetnam A|YE Jemen A|DZ Alžir F|AO Angola F|BJ Benin F|BW Bocvana F|BF Burkina Faso F|BI Burundi F|CV Zelenortska Ostrva F|CM Kamerun F|CF Centralnoafrička Republika F|TD Čad F|KM Komori F|CG Kongo F|CD DR Kongo F|CI Obala Slonovače F|DJ Džibuti F|EG Egipat F|GQ Ekvatorijalna Gvineja F|ER Eritreja F|SZ Esvatini F|ET Etiopija F|GA Gabon F|GM Gambija F|GH Gana F|GN Gvineja F|GW Gvineja Bisao F|KE Kenija F|LS Lesoto F|LR Liberija F|LY Libija F|MG Madagaskar F|MW Malavi F|ML Mali F|MR Mauritanija F|MU Mauricijus F|MA Maroko F|MZ Mozambik F|NA Namibija F|NE Niger F|NG Nigerija F|RW Ruanda F|ST Sao Tome i Principe F|SN Senegal F|SC Sejšeli F|SL Sijera Leone F|SO Somalija F|ZA Južnoafrička Republika F|SS Južni Sudan F|SD Sudan F|TZ Tanzanija F|TG Togo F|TN Tunis F|UG Uganda F|ZM Zambija F|ZW Zimbabve F|AG Antigva i Barbuda N|BS Bahami N|BB Barbados N|BZ Beliz N|CA Kanada N|CR Kostarika N|CU Kuba N|DM Dominika N|DO Dominikanska Republika N|SV Salvador N|GD Grenada N|GT Gvatemala N|HT Haiti N|HN Honduras N|JM Jamajka N|MX Meksiko N|NI Nikaragva N|PA Panama N|KN Sent Kits i Nevis N|LC Sveta Lucija N|VC Sent Vinsent i Grenadini N|TT Trinidad i Tobago N|US Sjedinjene Američke Države N|AR Argentina S|BO Bolivija S|BR Brazil S|CL Čile S|CO Kolumbija S|EC Ekvador S|GY Gvajana S|PY Paragvaj S|PE Peru S|SR Surinam S|UY Urugvaj S|VE Venecuela S|AU Australija O|FJ Fidži O|KI Kiribati O|MH Maršalska Ostrva O|FM Mikronezija O|NR Nauru O|NZ Novi Zeland O|PW Palau O|PG Papua Nova Gvineja O|WS Samoa O|SB Solomonova Ostrva O|TO Tonga O|TV Tuvalu O|VU Vanuatu O`;
 
@@ -2196,6 +2254,7 @@ function render(){ renderStats(); renderAch(); renderChips(); renderList(); rend
 
 /* ---------- events ---------- */
 initCompare();
+$("themeBtn").addEventListener("click", ()=>{ theme = theme==="auto" ? "light" : theme==="light" ? "dark" : "auto"; try{ if(theme==="auto") localStorage.removeItem("atlas-theme"); else localStorage.setItem("atlas-theme", theme); }catch(e){} applyTheme(); toast(t(theme==="auto" ? "thAuto" : theme==="light" ? "thLight" : "thDark")); });
 $("sort").addEventListener("change", e=>{ ui.sort = e.target.value; try{ localStorage.setItem("atlas-sort", ui.sort); }catch(err){} renderList(); });
 // dugme Na vrh: pojavljuje se kad se Početna odskroluje daleko
 function toTopState(){ $("toTop").hidden = !(ui.page==="home" && scrollY > 1400); }
@@ -2246,6 +2305,7 @@ document.addEventListener("input", e=>{
   });
 });
 function applyLang(){
+  applyTheme();
   document.documentElement.lang = lang==="en" ? "en" : "sr-Latn";
   document.title = t("title");
   Object.assign(C, CONT[lang]);

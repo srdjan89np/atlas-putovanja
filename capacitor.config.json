@@ -2,9 +2,9 @@
   "appId": "rs.atlasputovanja.app",
   "appName": "Atlas putovanja",
   "webDir": "www",
-  "backgroundColor": "#14263A",
+  "backgroundColor": "#0B1220",
   "android": {
-    "backgroundColor": "#14263A"
+    "backgroundColor": "#0B1220"
   },
   "plugins": {
     "SystemBars": {
