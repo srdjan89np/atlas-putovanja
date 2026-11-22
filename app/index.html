@@ -581,6 +581,31 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
 .tide .now{stroke:var(--want);stroke-width:1.5;stroke-dasharray:3 3}
 .tide .dot{fill:var(--want);stroke:var(--bg);stroke-width:2}
 .tide text{font-size:10px;font-weight:700;fill:var(--muted)}
+
+/* ===== Dnevnik kao pečati iz pasoša ===== */
+:root{--st0:#1D4E89;--st1:#0B7A5D;--st2:#C24A2C;--st3:#6B3FA0;--st4:#8A6514}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--st0:#8DB8F2;--st1:#4FD1A5;--st2:#FF8A6B;--st3:#C3A3F0;--st4:#E8C46A}}
+:root[data-theme="dark"]{--st0:#8DB8F2;--st1:#4FD1A5;--st2:#FF8A6B;--st3:#C3A3F0;--st4:#E8C46A}
+.tl.stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;background:none;border:0;border-radius:0;overflow:visible;padding:6px 2px 4px}
+.tl.stamps li + li{border-top:0}
+.tl.stamps li.open{grid-column:1/-1}
+.stamp{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;min-height:150px;padding:16px 10px;
+  color:var(--st);border:2.5px dashed var(--st);border-radius:16px;background:color-mix(in srgb,var(--st) 7%,var(--bg));
+  box-shadow:inset 0 0 0 4px var(--bg),inset 0 0 0 5.5px color-mix(in srgb,var(--st) 45%,transparent);transform:rotate(var(--rot));transition:transform .2s}
+.stamp.round{border-radius:50%;aspect-ratio:1;min-height:0;padding:18px}
+.stamp:hover{transform:rotate(0) scale(1.03)}
+.stamp[aria-expanded="true"]{transform:none;border-radius:16px;aspect-ratio:auto;min-height:0;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;text-align:left;gap:4px 10px;background:color-mix(in srgb,var(--st) 10%,var(--bg))}
+.stamp .scode{font-family:var(--f-display);font-size:34px;font-weight:800;line-height:1;letter-spacing:.02em}
+.stamp .sname{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stamp .scity{font-size:12px;font-weight:600;color:var(--ink);opacity:.8;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stamp .syear{margin-top:4px;font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.1em;padding:2px 8px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor}
+.stamp .sflag{position:absolute;top:8px;right:10px;font-size:15px;opacity:.85}
+.stamp.round .sflag{position:static;font-size:14px;margin-bottom:2px}
+.stamp .tln{display:none}
+.stamp[aria-expanded="true"] .tln{display:block;flex-basis:100%;color:var(--ink);font-size:13px;-webkit-line-clamp:unset}
+.stamp[aria-expanded="true"] .sflag{position:static}
+.stamp:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media (prefers-reduced-motion:reduce){.stamp{transition:none}}
 </style>
 
 <div class="sky" aria-hidden="true"></div>
@@ -1315,6 +1340,7 @@ function gotoCountry(code){
 /* ---------- dnevnik: vremenska linija ---------- */
 let jStart = null;                 // država izabrana u Dnevniku za novo putovanje
 let openJ = null;                  // putovanje otvoreno za izmenu u Dnevniku ("kod:redni broj")
+const stampHash = code => (code.charCodeAt(0)*7 + code.charCodeAt(1)*13) % 97;
 function renderJournal(){
   const box = $("tab-journal"), entries = [], first = {};
   const been = COUNTRIES.filter(c=>isBeen(c.code));
@@ -1334,8 +1360,8 @@ function renderJournal(){
   for(const y of years){
     const es = entries.filter(e=>(e.tr.year||"")===y), fresh = y ? Object.values(first).filter(v=>v===y).length : 0;
     const shareBtn = y && downloads && VB0 ? `<button type="button" class="yshare" data-shareyear="${esc(y)}" aria-label="${t("yShare")}: ${esc(y)}"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg>${t("yShare")}</button>` : "";
-    html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span>${shareBtn}</div><ul class="tl">` +
-      es.map(({c, tr, key})=>`<li><button type="button" class="tli" data-jopen="${key}" aria-expanded="${openJ===key}"><span class="flag" aria-hidden="true">${c.flag}</span><span class="tlt"><strong>${c.name}</strong>${tr.cities ? `<small>${esc(tr.cities)}</small>` : ""}${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</span></button>${openJ===key ? `<div class="more jedit">${journalHTML(c.code, "t")}</div>` : ""}</li>`).join("") + `</ul></section>`;
+    html += `<section class="yblock"><div class="yhead"><b>${y ? esc(y) : t("jNoYear")}</b><span>${fill(t("jTrips"), {n:es.length})}${fresh ? " · " + fill(t("jNew"), {n:fresh}) : ""}</span>${shareBtn}</div><ul class="tl stamps">` +
+      es.map(({c, tr, key})=>{ const h = stampHash(c.code); return `<li class="${openJ===key ? "open" : ""}" style="--st:var(--st${h % 5});--rot:${(h % 9) - 4}deg"><button type="button" class="tli stamp${h % 2 ? " round" : ""}" data-jopen="${key}" aria-expanded="${openJ===key}"><span class="sflag" aria-hidden="true">${c.flag}</span><b class="scode">${c.code}</b><span class="sname">${c.name}</span>${tr.cities ? `<small class="scity">${esc(tr.cities)}</small>` : ""}<span class="syear">${tr.year ? esc(tr.year) : "· · ·"}</span>${tr.note ? `<small class="tln">${esc(tr.note)}</small>` : ""}</button>${openJ===key ? `<div class="more jedit">${journalHTML(c.code, "t")}</div>` : ""}</li>`; }).join("") + `</ul></section>`;
   }
   box.innerHTML = html;
 }
