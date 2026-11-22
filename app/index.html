@@ -2068,7 +2068,7 @@ function paintGlobe(ctx, proj, path, W, H, hs, sel, k){     // k: uvećanje tač
   }
   if(G.byCode.RS){ ctx.globalAlpha = hs && !hs.has("RS") ? .35 : 1; ctx.beginPath(); path(G.byCode.RS.geometry); ctx.fillStyle = gFill("RS", hs); ctx.fill(); ctx.globalAlpha = 1; }
   const center = [-rot[0], -rot[1]], vis = ll => d3.geoDistance(ll, center) < Math.PI/2 - .02;
-  for(const code in SMALL){
+  if(SHOW_SMALL_DOTS) for(const code in SMALL){
     const f = G.byCode[code]; if(f && !f.small) continue;
     const ll = [SMALL[code][1], SMALL[code][0]]; if(!vis(ll)) continue;
     const [px, py] = proj(ll);
@@ -2086,7 +2086,7 @@ function paintGlobe(ctx, proj, path, W, H, hs, sel, k){     // k: uvećanje tač
     const f = G.byCode[sel];
     ctx.lineWidth = 2; ctx.strokeStyle = col.ink;
     if(f && !f.small){ ctx.beginPath(); path(f.geometry); ctx.stroke(); }
-    else if(SMALL[sel]){ const ll = [SMALL[sel][1], SMALL[sel][0]]; if(vis(ll)){ const [px,py] = proj(ll); ctx.beginPath(); ctx.arc(px,py,6,0,2*Math.PI); ctx.stroke(); } }
+    else if(SHOW_SMALL_DOTS && SMALL[sel]){ const ll = [SMALL[sel][1], SMALL[sel][0]]; if(vis(ll)){ const [px,py] = proj(ll); ctx.beginPath(); ctx.arc(px,py,6,0,2*Math.PI); ctx.stroke(); } }
   }
   ctx.beginPath(); path({type:"Sphere"}); ctx.strokeStyle = col.line; ctx.lineWidth = 1; ctx.stroke();
 }
@@ -2118,7 +2118,7 @@ function flyTo(code){
 function gPick(pt){
   const center = [-G.rot[0], -G.rot[1]];
   let best = null, bd = 12;
-  for(const code in SMALL){
+  if(SHOW_SMALL_DOTS) for(const code in SMALL){
     const f = G.byCode[code]; if(f && !f.small) continue;
     const ll = [SMALL[code][1], SMALL[code][0]]; if(d3.geoDistance(ll, center) > Math.PI/2) continue;
     const p = G.proj(ll), dd = Math.hypot(p[0]-pt[0], p[1]-pt[1]);
@@ -2269,6 +2269,7 @@ function mergeKosovo(svg){
 }
 
 /* Male države: tačka na mestu glavnog grada (Millerova projekcija mape) ili u centru oblika */
+const SHOW_SMALL_DOTS = false;
 const SMALL = {VA:[41.90,12.45],MC:[43.73,7.42],SM:[43.94,12.45],LI:[47.14,9.52],AD:[42.51,1.52],MT:[35.90,14.51],LU:[49.61,6.13],
   SG:[1.29,103.85],BH:[26.07,50.55],MV:[3.20,73.22],BN:[4.94,114.95],KM:[-11.70,43.26],MU:[-20.25,57.55],SC:[-4.62,55.45],ST:[0.34,6.73],CV:[15.10,-23.62],
   AG:[17.12,-61.85],BB:[13.10,-59.61],DM:[15.42,-61.35],GD:[12.06,-61.75],KN:[17.30,-62.72],LC:[13.91,-60.98],VC:[13.16,-61.23],TT:[10.65,-61.50],BS:[25.05,-77.35],
@@ -2297,6 +2298,8 @@ function addDots(svg, data){
   }
   mapProj = proj;
   const frag = document.createDocumentFragment();
+  // Najmanje države se više ne crtaju kao tačke na mapi (ostaju u listi i pretrazi).
+  if(!SHOW_SMALL_DOTS) return;
   for(const code in SMALL){
     const el = svg.querySelector(`path[data-key="${code}"]`);
     let bb = null; if(el){ try{ bb = el.getBBox(); }catch(e){} }
