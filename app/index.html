@@ -18,37 +18,37 @@ img{max-width:100%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Dizajn C · Nebo i plima: nebo po dobu dana iza mape, sav sadržaj u listu (sheet) koji se uzdiže odozdo. Tema: sistem / svetla / tamna */
+/* Dizajn F · Liquid Glass na osnovi C, paleta limeta: nebo po dobu dana iza mape, sav sadržaj u listu (sheet) koji se uzdiže odozdo. Tema: sistem / svetla / tamna */
 :root{
-  --bg:#FFFFFF; --surface:#F2F5F9; --line:#E1E7EF; --ink:#0F1B2D; --muted:#52627A;
-  --accent:#1D4E89; --accent-soft:#E3ECF8;
-  --been:#0B7A5D; --been-soft:#DDF3EC;
-  --want:#C24A2C; --want-soft:#FDE7E0;
-  --ocean:#BFD6F2; --ocean-deep:#93B6E0; --land:#F4F7FB;
-  --hero:#E3ECF8; --glass:rgb(255 255 255 / .92); --shadow:0 -10px 40px rgb(15 27 45 / .18);
-  --sky1:#1B2A55; --sky2:#6A3E78; --sky3:#E9846A;
+  --bg:#FBFCF5; --surface:#EEF3DF; --line:#DCE4C6; --ink:#1A2109; --muted:#56604A;
+  --accent:#4A6300; --accent-soft:#D6F28A;
+  --been:#4A7A00; --been-soft:#E1F5B5;
+  --want:#7B2FBE; --want-soft:#F2DCFF;
+  --ocean:#C9DFEA; --ocean-deep:#9FC2D4; --land:#F7F9F0;
+  --hero:#E1F5B5; --glass:rgb(255 255 255 / .92); --shadow:0 -10px 40px rgb(15 27 45 / .18);
+  --sky1:#1F2B3A; --sky2:#4F4A6E; --sky3:#9DB84A;
   --f-display:"Manrope", "Segoe UI", system-ui, sans-serif;
   --f-body:"Manrope", "Segoe UI", system-ui, sans-serif;
   --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
 }
-:root.sky-jutro{--sky1:#3E5F9E;--sky2:#C98A93;--sky3:#F2C9A5}
-:root.sky-dan{--sky1:#1F6FC6;--sky2:#4D97DE;--sky3:#A9D3F3}
-:root.sky-sumrak{--sky1:#1B2A55;--sky2:#6A3E78;--sky3:#E9846A}
-:root.sky-noc{--sky1:#070D1F;--sky2:#13254A;--sky3:#24406E}
+:root.sky-jutro{--sky1:#3F6B5A;--sky2:#A8B86A;--sky3:#EAE3A0}
+:root.sky-dan{--sky1:#2F7FA8;--sky2:#6FB09A;--sky3:#C9E68A}
+:root.sky-sumrak{--sky1:#1F2B3A;--sky2:#4F4A6E;--sky3:#9DB84A}
+:root.sky-noc{--sky1:#05080A;--sky2:#14231A;--sky3:#2E4420}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0E1626; --surface:#18233A; --line:#26334C; --ink:#EAF0F7; --muted:#9AA9BE;
-  --accent:#8DB8F2; --accent-soft:#1D3252;
-  --been:#4FD1A5; --been-soft:#123A33;
-  --want:#FF8A6B; --want-soft:#43231E;
-  --ocean:#1A3157; --ocean-deep:#0E1626; --land:#4C6286;
-  --hero:#1D3252; --glass:rgb(14 22 38 / .9); --shadow:0 -10px 40px rgb(0 0 0 / .4); color-scheme:dark; --sky1:#070D1F; --sky2:#13254A; --sky3:#24406E}}
+  --bg:#12160B; --surface:#1D2414; --line:#2E3722; --ink:#E9F0D8; --muted:#A3AD90;
+  --accent:#B9E35A; --accent-soft:#2E3D10;
+  --been:#A8DB3F; --been-soft:#27340E;
+  --want:#D7A6FF; --want-soft:#35204A;
+  --ocean:#1B2B33; --ocean-deep:#12160B; --land:#4A5638;
+  --hero:#2E3D10; --glass:rgb(14 22 38 / .9); --shadow:0 -10px 40px rgb(0 0 0 / .4); color-scheme:dark ; --sky1:#05080A; --sky2:#14231A; --sky3:#2E4420}}
 :root[data-theme="dark"]{
-  --bg:#0E1626; --surface:#18233A; --line:#26334C; --ink:#EAF0F7; --muted:#9AA9BE;
-  --accent:#8DB8F2; --accent-soft:#1D3252;
-  --been:#4FD1A5; --been-soft:#123A33;
-  --want:#FF8A6B; --want-soft:#43231E;
-  --ocean:#1A3157; --ocean-deep:#0E1626; --land:#4C6286;
-  --hero:#1D3252; --glass:rgb(14 22 38 / .9); --shadow:0 -10px 40px rgb(0 0 0 / .4); color-scheme:dark; --sky1:#070D1F; --sky2:#13254A; --sky3:#24406E}
+  --bg:#12160B; --surface:#1D2414; --line:#2E3722; --ink:#E9F0D8; --muted:#A3AD90;
+  --accent:#B9E35A; --accent-soft:#2E3D10;
+  --been:#A8DB3F; --been-soft:#27340E;
+  --want:#D7A6FF; --want-soft:#35204A;
+  --ocean:#1B2B33; --ocean-deep:#12160B; --land:#4A5638;
+  --hero:#2E3D10; --glass:rgb(14 22 38 / .9); --shadow:0 -10px 40px rgb(0 0 0 / .4); color-scheme:dark ; --sky1:#05080A; --sky2:#14231A; --sky3:#2E4420}
 :root[data-theme="light"]{color-scheme:light}
 
 *{box-sizing:border-box}
@@ -114,8 +114,8 @@ li.c.is-both{background:linear-gradient(90deg,var(--been-soft),var(--want-soft) 
 .btn svg{width:14px;height:14px}
 .btn:hover{border-color:var(--muted)}
 .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.btn.want[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:var(--surface)}
-.btn.been[aria-pressed="true"]{background:var(--been);border-color:var(--been);color:var(--surface)}
+.btn.want[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:var(--on-accent)}
+.btn.been[aria-pressed="true"]{background:var(--been);border-color:var(--been);color:var(--on-accent)}
 @media (max-width:440px){.btn .lbl{display:none}.btn{padding:8px 10px}}
 @media (max-width:370px){li.c{gap:8px;padding:10px}.flag{width:28px;font-size:24px}.acts{gap:4px}li.c .btn{padding:7px 8px}.pick{gap:8px;padding:10px}}
 
@@ -183,7 +183,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-
 .badge b{font-size:13.5px;color:var(--ink);line-height:1.2}
 .badge small{font-size:11.5px;line-height:1.3}
 .badge.on{border:1px solid var(--been);background:var(--been-soft)}
-.badge.on .seal{border:0;background:var(--been);color:var(--surface)}
+.badge.on .seal{border:0;background:var(--been);color:var(--on-accent)}
 .badge.on .seal svg{width:15px;height:15px}
 
 .journal{display:grid;gap:10px;margin:2px 0 8px;padding:12px 14px;border-radius:10px;border:1px solid var(--been);background:var(--been-soft)}
@@ -211,7 +211,7 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .bkask{display:grid;gap:8px;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:13.5px}
 .bkask .row{display:flex;flex-wrap:wrap;gap:8px}
 .bkask button{font:inherit;font-size:13px;font-weight:700;padding:7px 12px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
-.bkask button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.bkask button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .bkask button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #globe{width:100%;height:100%;display:block;cursor:grab}
 #globe.drag{cursor:grabbing}
@@ -241,7 +241,7 @@ label.savebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .jfoot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .jfoot .link{font-weight:700}
 .jsaved{font-size:13px;color:var(--been);font-weight:700}
-.jsave{font:inherit;font-size:14px;font-weight:700;padding:8px 18px;border-radius:8px;border:0;background:var(--been);color:var(--surface);cursor:pointer}
+.jsave{font:inherit;font-size:14px;font-weight:700;padding:8px 18px;border-radius:8px;border:0;background:var(--been);color:var(--on-accent);cursor:pointer}
 .jsave:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .yr{white-space:nowrap}
 
@@ -320,9 +320,9 @@ small .newc{margin-left:0;margin-right:6px}
 
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--ad-h) + var(--nav-h) + 26px + env(safe-area-inset-bottom,0px));z-index:30;max-width:min(92vw,420px);
   display:flex;gap:10px;align-items:center;padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:700;box-shadow:0 10px 30px rgb(0 0 0 / .25)}
-.toast .seal{flex:none;width:26px;height:26px;border-radius:50%;background:var(--been);color:var(--surface);display:grid;place-items:center}
+.toast .seal{flex:none;width:26px;height:26px;border-radius:50%;background:var(--been);color:var(--on-accent);display:grid;place-items:center}
 .toast .seal svg{width:14px;height:14px}
-.toast.err{background:var(--want);color:var(--surface)}
+.toast.err{background:var(--want);color:var(--on-accent)}
 @media (prefers-reduced-motion:no-preference){.toast{animation:toastIn .25s ease-out}@keyframes toastIn{from{transform:translate(-50%,10px);opacity:0}}}
 
 /* Reklama: AdMob baner 320×50 usidren na dnu ekrana */
@@ -359,7 +359,7 @@ html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
 .onb-dots{display:flex;gap:6px}
 .onb-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
 .onb-dots i.on{background:var(--accent);width:18px;border-radius:4px}
-.onb-next{font:inherit;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:0;background:var(--accent);color:var(--surface);cursor:pointer}
+.onb-next{font:inherit;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:0;background:var(--accent);color:var(--on-accent);cursor:pointer}
 .onb-back{font:inherit;font-size:14px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
 .onb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .onb-demo{display:flex;gap:8px;justify-content:center;align-items:center}
@@ -440,7 +440,7 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
 .cmpin{font:inherit;font-size:15px;width:100%;min-height:44px;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
 .cmpin.mono{font-family:var(--f-mono);font-size:12.5px;word-break:break-all}
 .cmpin:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.savebtn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.savebtn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .cmpres{display:grid;gap:10px;margin-top:6px}
 .cmpres h4{margin:0;font-family:var(--f-display);font-size:16px}
 .cmpgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
@@ -534,22 +534,24 @@ header h1{display:none}
 header .stat span{color:rgb(255 255 255 / .85);font-weight:600;font-size:14px}
 header .stat.been b{color:#fff;font-size:64px;font-weight:800;letter-spacing:-.04em}
 header .stat.been small.of195{color:rgb(255 255 255 / .75);font-size:22px;font-weight:700}
-header .stat.want b{color:#FFD2C2;font-size:30px;font-weight:800}
+header .stat.want b{color:#E8C8FF;font-size:30px;font-weight:800}
 header .hlang,header .thbtn{background:rgb(255 255 255 / .14);border:1px solid rgb(255 255 255 / .35);color:#fff;border-radius:999px}
 header .hlang button{color:rgb(255 255 255 / .8);border-radius:999px;background:transparent}
-header .hlang button[aria-pressed="true"]{background:#fff;color:#0F1B2D}
+header .hlang button[aria-pressed="true"]{background:#D6F28A;color:#253300}
 header .thbtn:focus-visible,header .hlang button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{display:grid}
 body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header .stats{display:none}
 body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{padding-bottom:16px}
 /* mapa i globus lebde na nebu */
 .mapbox{background:rgb(255 255 255 / .1);border:1px solid rgb(255 255 255 / .22);border-radius:26px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#map path:not(.been):not(.want):not(.hit){fill:var(--land)}
+#map path{stroke:color-mix(in srgb,var(--land) 60%,#000)}
 .mapbox.globe,.mapbox:has(#globe:not([hidden])){background:transparent;border-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
 #globe{filter:drop-shadow(0 18px 36px rgb(0 0 0 / .35))}
 .map .legend,.map .legend .hint{color:rgb(255 255 255 / .9)}
 .map .seg,.zoom button{background:rgb(15 27 45 / .45);border-color:rgb(255 255 255 / .3);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .map .seg button{color:rgb(255 255 255 / .85)}
-.map .seg button[aria-pressed="true"]{background:#fff;color:#0F1B2D}
+.map .seg button[aria-pressed="true"]{background:#D6F28A;color:#253300}
 .maptools,.maptools .sharelbl,.maptools .savemsg{color:#fff}
 .map .pick{color:var(--ink)}
 /* list (sheet) koji se uzdiže odozdo */
@@ -583,16 +585,16 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
 .tide text{font-size:10px;font-weight:700;fill:var(--muted)}
 
 /* ===== Dnevnik kao pečati iz pasoša ===== */
-:root{--st0:#1D4E89;--st1:#0B7A5D;--st2:#C24A2C;--st3:#6B3FA0;--st4:#8A6514}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--st0:#8DB8F2;--st1:#4FD1A5;--st2:#FF8A6B;--st3:#C3A3F0;--st4:#E8C46A}}
-:root[data-theme="dark"]{--st0:#8DB8F2;--st1:#4FD1A5;--st2:#FF8A6B;--st3:#C3A3F0;--st4:#E8C46A}
+:root{--st0:#4A6300;--st1:#1D6E5A;--st2:#B4462A;--st3:#7B2FBE;--st4:#8A6514}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --st0:#B9E35A;--st1:#5FD3B4;--st2:#FF8A6B;--st3:#D7A6FF;--st4:#E8C46A}}
+:root[data-theme="dark"]{ --st0:#B9E35A;--st1:#5FD3B4;--st2:#FF8A6B;--st3:#D7A6FF;--st4:#E8C46A}
 .tl.stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;background:none;border:0;border-radius:0;overflow:visible;padding:6px 2px 4px}
 .tl.stamps li + li{border-top:0}
 .tl.stamps li.open{grid-column:1/-1}
 .stamp{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;min-height:150px;padding:16px 10px;
   color:var(--st);border:2.5px dashed var(--st);border-radius:16px;background:color-mix(in srgb,var(--st) 7%,var(--bg));
   box-shadow:inset 0 0 0 4px var(--bg),inset 0 0 0 5.5px color-mix(in srgb,var(--st) 45%,transparent);transform:rotate(var(--rot));transition:transform .2s}
-.stamp.round{border-radius:50%;aspect-ratio:1;min-height:0;padding:18px}
+.stamp.round{border-radius:50%;aspect-ratio:1;min-height:0;padding:12px}
 .stamp:hover{transform:rotate(0) scale(1.03)}
 .stamp[aria-expanded="true"]{transform:none;border-radius:16px;aspect-ratio:auto;min-height:0;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;text-align:left;gap:4px 10px;background:color-mix(in srgb,var(--st) 10%,var(--bg))}
 .stamp .scode{font-family:var(--f-display);font-size:34px;font-weight:800;line-height:1;letter-spacing:.02em}
@@ -606,8 +608,150 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
 .stamp[aria-expanded="true"] .sflag{position:static}
 .stamp:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media (prefers-reduced-motion:reduce){.stamp{transition:none}}
+
+/* ===== Dizajn F · Liquid Glass (limeta): fiksno nebo, staklene ploče, plutajući meni-kapsula ===== */
+:root{--gl:rgb(255 255 255 / .74);--gl-b:rgb(255 255 255 / .85);--gl-hi:inset 0 1px 0 rgb(255 255 255 / .9);--surface:rgb(255 255 255 / .62);--line:rgb(26 33 9 / .1)}
+:root.sky-jutro{--sky1:#4E6E3E;--sky2:#22382A;--sky3:#0B130D}
+:root.sky-dan{--sky1:#3E7350;--sky2:#1D3B2A;--sky3:#0A140E}
+:root.sky-sumrak{--sky1:#4A4560;--sky2:#1F2A22;--sky3:#0A0F0B}
+:root.sky-noc{--sky1:#2C4A3A;--sky2:#12201A;--sky3:#070B08}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--gl:rgb(20 26 12 / .72);--gl-b:rgb(255 255 255 / .14);--gl-hi:inset 0 1px 0 rgb(255 255 255 / .12);--surface:rgb(255 255 255 / .06);--line:rgb(255 255 255 / .1);--sky1:#22382A;--sky2:#0E1A12;--sky3:#040705}}
+:root[data-theme="dark"]{--gl:rgb(20 26 12 / .72);--gl-b:rgb(255 255 255 / .14);--gl-hi:inset 0 1px 0 rgb(255 255 255 / .12);--surface:rgb(255 255 255 / .06);--line:rgb(255 255 255 / .1);--sky1:#22382A;--sky2:#0E1A12;--sky3:#040705}
+html,body{background:#070B08}
+.sky{position:fixed;inset:0;height:auto;background:radial-gradient(120% 75% at 50% 28%,var(--sky1) 0%,var(--sky2) 55%,var(--sky3) 100%)}
+/* zaglavlje: staklene kapsule */
+header .stats{gap:8px;align-items:center}
+header .stat{display:inline-flex;align-items:baseline;gap:8px;padding:8px 16px;border-radius:999px;background:rgb(255 255 255 / .14);border:1px solid rgb(255 255 255 / .4);box-shadow:inset 0 1px 0 rgb(255 255 255 / .5);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+header .stat.been b{font-size:30px;letter-spacing:-.03em}
+header .stat.been b::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#B9E35A;box-shadow:0 0 10px #B9E35A;margin-right:10px;vertical-align:middle;position:relative;top:-3px}
+header .stat.been small.of195{font-size:16px}
+header .stat.want b{font-size:22px;color:#F0DDFF}
+header .stat span{font-size:12.5px}
+header .hlang,header .thbtn{-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:inset 0 1px 0 rgb(255 255 255 / .5)}
+/* globus i mapa bez okvira, svetlucavo */
+.mapbox{background:rgb(255 255 255 / .08);border:1px solid rgb(255 255 255 / .2);border-radius:30px;box-shadow:inset 0 1px 0 rgb(255 255 255 / .25)}
+#globe{filter:drop-shadow(0 0 30px rgb(185 227 90 / .18)) drop-shadow(0 20px 40px rgb(0 0 0 / .5))}
+.map .seg,.zoom button{background:rgb(255 255 255 / .14);border-color:rgb(255 255 255 / .4);box-shadow:inset 0 1px 0 rgb(255 255 255 / .5);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+.maptools .savebtn{background:rgb(255 255 255 / .14);border-color:rgb(255 255 255 / .4);color:#fff;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+/* staklene ploče umesto lista */
+#tab-list,#tab-journal,#tab-plan,#tab-quiz,#page-ach{background:var(--gl);border:1px solid var(--gl-b);border-radius:32px;margin-inline:-6px;padding:24px 16px 14px;box-shadow:var(--gl-hi),0 18px 44px rgb(0 0 0 / .35);-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);min-height:0;margin-bottom:12px}
+#tab-list::before,#tab-journal::before,#tab-plan::before,#tab-quiz::before,#page-ach::before{display:none}
+ul.list,.tl:not(.stamps),.backup,.st,.yrs,.qmode,.emptyp,.daily,.cont,.search,.chip,.sortsel,.jadd select,.prow,.badge{-webkit-backdrop-filter:none;backdrop-filter:none}
+.chip,.sortsel,.jadd select,.cmpin{background:var(--surface)}
+.stamp{background:color-mix(in srgb,var(--st) 10%,transparent);box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5.5px color-mix(in srgb,var(--st) 40%,transparent)}
+/* plutajući meni u obliku kapsule */
+.bnav{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px));border:1px solid var(--gl-b);border-radius:999px;background:var(--gl);box-shadow:var(--gl-hi),0 14px 34px rgb(0 0 0 / .4);-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);padding:0 6px}
+.bnav button[aria-current="page"]{color:#253300}
+.bnav button[aria-current="page"] svg{background:#D6F28A}
+body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 30px + env(safe-area-inset-bottom,0px))}
+html.native body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 30px)}
+html.native .bnav{bottom:calc(var(--ad-h) + 12px)}
+html.native .toast,html.native .totop{bottom:calc(var(--ad-h) + var(--nav-h) + 26px)}
+html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 22px)}
+.adbar{background:#070B08}
+@media (prefers-reduced-transparency:reduce){#tab-list,#tab-journal,#tab-plan,#tab-quiz,#page-ach,.bnav{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}
+
+:root{--on-accent:#FFFFFF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--on-accent:#12160B}}
+:root[data-theme="dark"]{--on-accent:#12160B}
+.bnav button[aria-current="page"]{color:var(--accent)}
+.bnav button[aria-current="page"] svg{color:#253300}
+
+/* ===== Preglednije: pune ploče, narandžasta umesto ružičaste, 3 pečata u redu ===== */
+:root{--want:#B45309;--want-soft:#FDEBD3;--gl:rgb(250 251 245 / .96);--surface:#FFFFFF;--line:#E1E7D3;--st3:#2F6DB5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--want:#FFB054;--want-soft:#3D2810;--gl:rgb(18 22 11 / .95);--surface:#1F2716;--line:#2F3923;--st3:#8CC0FF}}
+:root[data-theme="dark"]{--want:#FFB054;--want-soft:#3D2810;--gl:rgb(18 22 11 / .95);--surface:#1F2716;--line:#2F3923;--st3:#8CC0FF}
+header .stat.want b{color:#FFD59A}
+ul.list,.st,.yrs,.backup,.qmode,.daily,.emptyp{border:1px solid var(--line)}
+.tl.stamps{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stamp{min-height:108px;padding:10px 6px;border-width:2px;border-radius:12px;gap:1px;box-shadow:inset 0 0 0 3px transparent,inset 0 0 0 4px color-mix(in srgb,var(--st) 40%,transparent)}
+.stamp.round{padding:10px 6px;border-radius:30px;aspect-ratio:auto;min-height:108px}
+.stamp.round .sflag{position:absolute;top:6px;right:auto;left:50%;transform:translateX(-50%)}
+.stamp.round .scode{margin-top:8px}
+.stamp .scode{font-size:24px}
+.stamp .sname{font-size:8.5px;letter-spacing:.08em}
+.stamp .scity{font-size:10.5px}
+.stamp .syear{font-size:9.5px;padding:1px 6px;margin-top:3px}
+.stamp .sflag{font-size:12px;top:5px;right:6px}
+.stamp.round .sflag{font-size:11px;margin-bottom:0}
+
+/* kontrole mape iznad mape, ne preko nje */
+.mapbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+#viewsw{position:static}
+.zoom{position:static;flex-direction:row;gap:6px}
+.zoom button{width:44px;height:44px}
+
+/* ===== Moderne liste kartica ===== */
+ul.list{display:grid;gap:8px;background:none!important;border:0!important;border-radius:0;overflow:visible;padding:0}
+li.c,li.prow,li.grp{border:1px solid var(--line)!important;border-radius:18px;background:var(--surface);box-shadow:0 1px 2px rgb(0 0 0 / .04),0 4px 14px rgb(0 0 0 / .04);overflow:hidden}
+li.c{padding:10px 12px 10px 10px;gap:12px}
+li.c .flag,li.prow .flag{width:46px;height:46px;font-size:26px;display:grid;place-items:center;border-radius:14px;background:var(--bg);flex:none}
+li.c.is-been{background:var(--surface);box-shadow:inset 4px 0 0 var(--been),0 4px 14px rgb(0 0 0 / .04)}
+li.c.is-want{background:var(--surface);box-shadow:inset 4px 0 0 var(--want),0 4px 14px rgb(0 0 0 / .04)}
+li.c.is-both{background:var(--surface);box-shadow:inset 4px 0 0 var(--been),inset 8px 0 0 var(--want),0 4px 14px rgb(0 0 0 / .04)}
+li.c.is-been .flag{background:var(--been-soft)} li.c.is-want .flag{background:var(--want-soft)}
+li.c.is-both .flag{background:linear-gradient(135deg,var(--been-soft) 50%,var(--want-soft) 50%)}
+.name strong{font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+.btn{border-radius:999px;padding:8px 12px}
+li.prow{padding-right:12px}
+li.prow .pname{padding:10px 12px}
+li.prow.top{background:var(--surface);box-shadow:inset 4px 0 0 var(--want),0 4px 14px rgb(0 0 0 / .04)}
+li.grp{margin-top:4px}
+.grpb{min-height:60px;padding:12px 16px}
+.grpb[aria-expanded="true"]{background:var(--accent-soft);color:var(--ink)}
+.grpb .gbar{width:72px;height:8px;border-radius:8px}
+li.grp + li.c{margin-top:2px}
+/* dostignuća: 2 u redu */
+.badges{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.badge{grid-template-columns:auto minmax(0,1fr);gap:2px 12px;align-items:center;padding:12px;border-radius:18px;border:1px solid var(--line);background:var(--surface);box-shadow:0 1px 2px rgb(0 0 0 / .04),0 4px 14px rgb(0 0 0 / .04);color:var(--muted)}
+.badge .seal{grid-row:1/3;width:46px;height:46px;font-size:12px}
+.badge b{font-size:14.5px;font-weight:800}
+.badge.on{background:var(--surface)!important;border:1px solid var(--line)!important;color:var(--muted);box-shadow:inset 4px 0 0 var(--been),0 4px 14px rgb(0 0 0 / .04)}
+.badge{gap:2px 10px;padding:12px 10px 12px 12px}
+.badge .seal{width:40px;height:40px}
+.badge{align-content:center;grid-template-rows:auto auto}
+.badge b{align-self:end}
+.badge small{align-self:start}
+.badge b{font-size:14px}
+.badge small{font-size:12px}
+.badge:not(.on) b{color:var(--muted)}
+
+.name strong{overflow-wrap:normal;word-break:normal;hyphens:auto}
+li.c{gap:10px;padding-right:10px}
+li.c .acts{gap:4px}
+li.c .btn{width:40px;height:40px;padding:0;justify-content:center}
+li.c .btn .lbl{display:none}
+li.prow{grid-template-columns:minmax(0,1fr) auto;gap:4px;padding-right:10px;align-items:center}
+li.prow .pname{padding:8px 4px 8px 8px;gap:10px}
+li.prow .flag{width:40px;height:40px;font-size:22px;border-radius:12px}
+li.prow .pname strong{font-size:15px}
+li.prow .pname small{font-size:12px;line-height:1.35}
+li.prow .prio{gap:0;padding:0}
+li.prow .pdot{width:26px;height:34px;min-width:0;min-height:0}
+li.prow .pdot svg{width:17px;height:17px}
+.pdot[aria-pressed="false"]{color:color-mix(in srgb,var(--muted) 45%,transparent)}
+li.prow > .btn{width:38px;height:38px;padding:0;justify-content:center}
+li.prow > .btn .lbl{display:none}
+li.prow .onwish{font-size:11px;font-weight:800;padding:5px 9px;border-radius:999px;background:var(--want-soft);color:var(--want);white-space:nowrap}
+ul.plist{gap:6px}
+
+.journal .jfoot:last-child{justify-content:space-between}
+.jclose{margin-left:auto}
+
+/* demo prikaz */
+.demobar{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 8px);z-index:40;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:999px;background:#D6F28A;color:#253300;font-size:13px;box-shadow:0 8px 24px rgb(0 0 0 / .3);max-width:calc(100vw - 24px)}
+.demobar span{white-space:normal;line-height:1.3}
+.demobar{border-radius:20px;width:max-content;padding:8px 8px 8px 14px}
+.demobar > span{min-width:0}
+body.demo .wrap{padding-top:calc(max(20px,env(safe-area-inset-top,0px)) + 60px)}
+.demobar button{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:#253300;color:#D6F28A;font:inherit;font-weight:800;cursor:pointer}
+body.demo .wrap{padding-top:calc(max(20px,env(safe-area-inset-top,0px)) + 44px)}
+.demobtn{justify-self:start}
+.demohint{font-size:12px;color:var(--muted)}
+.demochip{margin-left:8px;min-height:32px;padding:0 12px;border-radius:999px;border:1px solid rgb(255 255 255 / .5);background:rgb(255 255 255 / .16);color:#fff;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
 </style>
 
+<div class="demobar" id="demobar" role="status" hidden><span><b data-i18n="demoT">Demo prikaz</b> · <span data-i18n="demoS">primer podataka, ništa se ne čuva</span></span><button type="button" data-demoexit data-i18n="demoExit">Izađi</button></div>
 <div class="sky" aria-hidden="true"></div>
 <div class="wrap">
   <header>
@@ -622,21 +766,25 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
 
   <div id="page-home">
   <section class="map" data-i18n-aria="worldMap" aria-label="Mapa sveta">
-    <div class="mapbox" id="mapbox">
-      <svg id="map" role="img" data-i18n-aria="mapAria" aria-label="Mapa sveta sa označenim državama"></svg>
-      <canvas id="globe" role="img" data-i18n-aria="mapAria" aria-label="Mapa sveta sa označenim državama" hidden></canvas>
-      <div class="seg" id="viewsw" role="group" data-i18n-aria="viewAria" aria-label="Prikaz mape"><button type="button" data-view="flat" aria-pressed="true" data-i18n="viewFlat">Mapa</button><button type="button" data-view="globe" aria-pressed="false" data-i18n="viewGlobe">Globus</button></div>
-      <div class="tip" id="tip" hidden></div>
-      <div class="mapmsg" id="mapmsg">Učitavanje mape…</div>
-      <div class="zoom">
+    <div class="mapbar">
+<div class="seg" id="viewsw" role="group" data-i18n-aria="viewAria" aria-label="Prikaz mape"><button type="button" data-view="flat" aria-pressed="true" data-i18n="viewFlat">Mapa</button><button type="button" data-view="globe" aria-pressed="false" data-i18n="viewGlobe">Globus</button></div>
+<div class="zoom" role="group" aria-label="Zum">
         <button type="button" id="zin" data-i18n-aria="zoomIn" aria-label="Uvećaj">+</button>
         <button type="button" id="zout" data-i18n-aria="zoomOut" aria-label="Umanji">−</button>
         <button type="button" id="zreset" data-i18n-aria="zoomAll" aria-label="Cela mapa">⤢</button>
       </div>
     </div>
+    <div class="mapbox" id="mapbox">
+      <svg id="map" role="img" data-i18n-aria="mapAria" aria-label="Mapa sveta sa označenim državama"></svg>
+      <canvas id="globe" role="img" data-i18n-aria="mapAria" aria-label="Mapa sveta sa označenim državama" hidden></canvas>
+
+      <div class="tip" id="tip" hidden></div>
+      <div class="mapmsg" id="mapmsg">Učitavanje mape…</div>
+
+    </div>
     <div class="legend">
       <span><i class="lg b"></i><span data-i18n="been">Obišao</span></span><span><i class="lg w"></i><span data-i18n="want">Želim</span></span>
-      <span class="hint" id="maphint" data-i18n="hint">Dodirni državu na mapi da je označiš</span>
+      <span class="hint" id="maphint" data-i18n="hint">Dodirni državu na mapi da je označiš</span><button type="button" class="demochip" id="demochip" data-demo hidden data-i18n="demoChip">Pogledaj demo</button>
     </div>
     <div class="pick" id="pick" hidden></div>
     <div class="maptools" id="maptools" hidden><span class="savemsg" id="savemsg"></span><span class="sharelbl" data-i18n="shareLbl">Podeli:</span><button class="savebtn" type="button" data-share="flat" data-i18n-aria="shareFlatAria" aria-label="Podeli ravnu mapu"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg><span data-i18n="viewFlat">Mapa</span></button><button class="savebtn" type="button" data-share="globe" data-i18n-aria="shareGlobeAria" aria-label="Podeli globus"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10V2.5m-3 3L8 2.5l3 3M4 7.5H3v6h10v-6h-1"/></svg><span data-i18n="viewGlobe">Globus</span></button></div>
@@ -682,6 +830,9 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
       <div class="seg wide" id="themeSeg" role="group" data-i18n-aria="setTheme" aria-label="Tema"><button type="button" data-themeset="auto" aria-pressed="true" data-i18n="thAutoS">Kao telefon</button><button type="button" data-themeset="light" aria-pressed="false" data-i18n="thLightS">Svetla</button><button type="button" data-themeset="dark" aria-pressed="false" data-i18n="thDarkS">Tamna</button></div></div>
     <div class="setrow"><span data-i18n="setLang">Jezik</span>
       <div class="seg wide langs" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">Srpski</button><button type="button" data-lang="en" aria-pressed="false">English</button></div></div>
+      <div class="setrow"><span data-i18n="demoT">Demo prikaz</span>
+      <button type="button" class="savebtn demobtn" data-demo><span data-i18n="demoBtn">Prikaži primer sa 30 država</span></button>
+      <small class="demohint" data-i18n="demoHint">Za upoznavanje aplikacije. Tvoji podaci ostaju netaknuti.</small></div>
   </section>
 
   <hr class="sep">
@@ -797,7 +948,7 @@ const T = {
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dBest:"Najduži niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
   rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju", supLink:"Podrška autoru: pogledaj reklamu", supLoading:"Učitavam reklamu…", supThanks:"Hvala na podršci! Ovo ti je {n}. put.", supThanks1:"Hvala na podršci!", supFail:"Reklama trenutno nije dostupna. Probaj malo kasnije.", supSkip:"Reklama je prekinuta pre kraja, pa se ne računa.", supTimes:" · hvala, {n}×",
-  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", navMap:"Mapa", tideT:"Kada je najlepše", tideNow:"sada: idealno", tideNot:"sada: van sezone", navMe:"Ja", setTitle:"Podešavanja", setTheme:"Tema", setLang:"Jezik", thAutoS:"Kao telefon", thLightS:"Svetla", thDarkS:"Tamna", planTitle:"Plan puta", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
+  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", navMap:"Mapa", demoT:"Demo prikaz", demoS:"primer podataka, ništa se ne čuva", demoExit:"Izađi", demoBtn:"Prikaži primer sa 30 država", demoHint:"Za upoznavanje aplikacije. Tvoji podaci ostaju netaknuti.", demoChip:"Pogledaj demo", jClose:"Zatvori", tideT:"Kada je najlepše", tideNow:"sada: idealno", tideNot:"sada: van sezone", navMe:"Ja", setTitle:"Podešavanja", setTheme:"Tema", setLang:"Jezik", thAutoS:"Kao telefon", thLightS:"Svetla", thDarkS:"Tamna", planTitle:"Plan puta", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
   cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
@@ -855,7 +1006,7 @@ const T = {
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dBest:"Longest streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
   rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app", supLink:"Support the author: watch an ad", supLoading:"Loading the ad…", supThanks:"Thanks for your support! That's time number {n}.", supThanks1:"Thanks for your support!", supFail:"No ad is available right now. Try again a bit later.", supSkip:"The ad was closed before the end, so it doesn't count.", supTimes:" · thanks, {n}×",
-  jAddTitle:"Add a trip", jPickPh:"Choose a country", navMap:"Map", tideT:"Best time to go", tideNow:"now: ideal", tideNot:"now: off season", navMe:"Me", setTitle:"Settings", setTheme:"Theme", setLang:"Language", thAutoS:"Like phone", thLightS:"Light", thDarkS:"Dark", planTitle:"Trip plan", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
+  jAddTitle:"Add a trip", jPickPh:"Choose a country", navMap:"Map", demoT:"Demo", demoS:"sample data, nothing is saved", demoExit:"Exit", demoBtn:"Show a sample with 30 countries", demoHint:"To get to know the app. Your own data stays untouched.", demoChip:"See a demo", jClose:"Close", tideT:"Best time to go", tideNow:"now: ideal", tideNot:"now: off season", navMe:"Me", setTitle:"Settings", setTheme:"Theme", setLang:"Language", thAutoS:"Like phone", thLightS:"Light", thDarkS:"Dark", planTitle:"Trip plan", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
   cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
@@ -896,6 +1047,7 @@ function skyTick(){
   const c = document.documentElement.classList; ["jutro","dan","sumrak","noc"].forEach(x=>c.toggle("sky-"+x, x===k));
 }
 skyTick(); setInterval(skyTick, 600000);
+let DEMO_URL = false; try{ DEMO_URL = new URLSearchParams(location.search).has("demo"); }catch(e){}
 const C = {...CONT[lang]};
 const RAW = `AL Albanija E|AD Andora E|AT Austrija E|BY Belorusija E|BE Belgija E|BA Bosna i Hercegovina E|BG Bugarska E|HR Hrvatska E|CY Kipar E|CZ Češka E|DK Danska E|EE Estonija E|FI Finska E|FR Francuska E|DE Nemačka E|GR Grčka E|HU Mađarska E|IS Island E|IE Irska E|IT Italija E|LV Letonija E|LI Lihtenštajn E|LT Litvanija E|LU Luksemburg E|MT Malta E|MD Moldavija E|MC Monako E|ME Crna Gora E|NL Holandija E|MK Severna Makedonija E|NO Norveška E|PL Poljska E|PT Portugalija E|RO Rumunija E|RU Rusija E|SM San Marino E|RS Srbija E|SK Slovačka E|SI Slovenija E|ES Španija E|SE Švedska E|CH Švajcarska E|UA Ukrajina E|GB Ujedinjeno Kraljevstvo E|VA Vatikan E|AF Avganistan A|AM Jermenija A|AZ Azerbejdžan A|BH Bahrein A|BD Bangladeš A|BT Butan A|BN Brunej A|KH Kambodža A|CN Kina A|GE Gruzija A|IN Indija A|ID Indonezija A|IR Iran A|IQ Irak A|IL Izrael A|JP Japan A|JO Jordan A|KZ Kazahstan A|KW Kuvajt A|KG Kirgistan A|LA Laos A|LB Liban A|MY Malezija A|MV Maldivi A|MN Mongolija A|MM Mjanmar A|NP Nepal A|KP Severna Koreja A|OM Oman A|PK Pakistan A|PS Palestina A|PH Filipini A|QA Katar A|SA Saudijska Arabija A|SG Singapur A|KR Južna Koreja A|LK Šri Lanka A|SY Sirija A|TJ Tadžikistan A|TH Tajland A|TL Istočni Timor A|TR Turska A|TM Turkmenistan A|AE Ujedinjeni Arapski Emirati A|UZ Uzbekistan A|VN Vijetnam A|YE Jemen A|DZ Alžir F|AO Angola F|BJ Benin F|BW Bocvana F|BF Burkina Faso F|BI Burundi F|CV Zelenortska Ostrva F|CM Kamerun F|CF Centralnoafrička Republika F|TD Čad F|KM Komori F|CG Kongo F|CD DR Kongo F|CI Obala Slonovače F|DJ Džibuti F|EG Egipat F|GQ Ekvatorijalna Gvineja F|ER Eritreja F|SZ Esvatini F|ET Etiopija F|GA Gabon F|GM Gambija F|GH Gana F|GN Gvineja F|GW Gvineja Bisao F|KE Kenija F|LS Lesoto F|LR Liberija F|LY Libija F|MG Madagaskar F|MW Malavi F|ML Mali F|MR Mauritanija F|MU Mauricijus F|MA Maroko F|MZ Mozambik F|NA Namibija F|NE Niger F|NG Nigerija F|RW Ruanda F|ST Sao Tome i Principe F|SN Senegal F|SC Sejšeli F|SL Sijera Leone F|SO Somalija F|ZA Južnoafrička Republika F|SS Južni Sudan F|SD Sudan F|TZ Tanzanija F|TG Togo F|TN Tunis F|UG Uganda F|ZM Zambija F|ZW Zimbabve F|AG Antigva i Barbuda N|BS Bahami N|BB Barbados N|BZ Beliz N|CA Kanada N|CR Kostarika N|CU Kuba N|DM Dominika N|DO Dominikanska Republika N|SV Salvador N|GD Grenada N|GT Gvatemala N|HT Haiti N|HN Honduras N|JM Jamajka N|MX Meksiko N|NI Nikaragva N|PA Panama N|KN Sent Kits i Nevis N|LC Sveta Lucija N|VC Sent Vinsent i Grenadini N|TT Trinidad i Tobago N|US Sjedinjene Američke Države N|AR Argentina S|BO Bolivija S|BR Brazil S|CL Čile S|CO Kolumbija S|EC Ekvador S|GY Gvajana S|PY Paragvaj S|PE Peru S|SR Surinam S|UY Urugvaj S|VE Venecuela S|AU Australija O|FJ Fidži O|KI Kiribati O|MH Maršalska Ostrva O|FM Mikronezija O|NR Nauru O|NZ Novi Zeland O|PW Palau O|PG Papua Nova Gvineja O|WS Samoa O|SB Solomonova Ostrva O|TO Tonga O|TV Tuvalu O|VU Vanuatu O`;
 
@@ -1285,7 +1437,7 @@ function journalHTML(code, where){
     <div class="jfoot"><span class="jsaved" role="status">${savedFlash===key ? "✓ " + t("tripSaved") : ""}</span>
       <button class="jsave" type="button" data-savetrip="${code}" data-i="${i}" ${saved ? "hidden" : ""}>${t("saveTrip")}</button>
       <button class="jdel" type="button" data-deltrip="${code}" data-i="${i}" ${saved ? "" : "hidden"}>${t("delTrip")}</button></div>
-  </div>`; }).join("")}<div class="jfoot"><button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button></div></div>`;
+  </div>`; }).join("")}<div class="jfoot"><button class="link" type="button" data-addtrip="${code}">+ ${t("addTrip")}</button>${where==="n"||where==="t" ? `<button class="link jclose" type="button" data-jclose="${code}">${t("jClose")}</button>` : ""}</div></div>`;
 }
 function moreHTML(code, where){ return (isBeen(code) ? journalHTML(code, where) : "") + (isWant(code) ? prioHTML(code) : "") + infoHTML(code); }
 
@@ -1825,11 +1977,12 @@ const LS = "atlas-putovanja-v1";
 const $ = id => document.getElementById(id);
 
 function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k||LS)||"null"); }catch(e){ return null; } }
-function lsSet(){ try{ localStorage.setItem(LS, JSON.stringify(marks)); localStorage.setItem(LS+"-notes", JSON.stringify(cleanNotes())); localStorage.setItem(LS+"-prio", JSON.stringify(prio)); }catch(e){} }
+function lsSet(){ if(DEMO) return; try{ localStorage.setItem(LS, JSON.stringify(marks)); localStorage.setItem(LS+"-notes", JSON.stringify(cleanNotes())); localStorage.setItem(LS+"-prio", JSON.stringify(prio)); }catch(e){} }
 const esc = v => String(v==null?"":v).replace(/[&<>"]/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
 
 /* ---------- render ---------- */
 function renderStats(){
+  const dc = $("demochip"); if(dc) dc.hidden = DEMO || Object.keys(marks).length > 0;
   let b=0,w=0; const per={};
   for(const k in C) per[k]={t:0,b:0,w:0};
   for(const c of COUNTRIES){
@@ -2404,6 +2557,44 @@ function showTip(e){
   svg.addEventListener("wheel", e=>{ if(!vb) return; e.preventDefault(); zoom(e.deltaY<0?1.25:0.8); }, {passive:false});
 })();
 
+// ---------- Demo prikaz: primer podataka samo u memoriji, ništa se ne čuva ----------
+let DEMO = false, demoBackup = null, demoPending = null;
+const DEMO_DATA = {
+  marks: {RS:"been",ME:"been",BA:"been",HR:"been",SI:"been",HU:"been",AT:"been",CZ:"been",SK:"been",DE:"been",NL:"been",BE:"been",FR:"been",ES:"been",PT:"been",IT:"both",GR:"been",MK:"been",BG:"been",RO:"been",TR:"been",GB:"been",CH:"been",EG:"been",AE:"been",TH:"been",US:"been",SE:"been",DK:"been",PL:"been",
+    JP:"want",IS:"want",NO:"want",MA:"want",PE:"want",AU:"want",NZ:"want",CA:"want",VN:"want"},
+  notes: {IT:{trips:[{year:"2025",cities:"Rim, Firenca",note:"Prvo veliko putovanje sa prijateljima."},{year:"2019",cities:"Venecija",note:"Gondola u sumrak."}]},
+    ES:{trips:[{year:"2024",cities:"Barselona, Madrid",note:"Sunce, plaže i tapas."}]},
+    PT:{trips:[{year:"2024",cities:"Lisabon, Porto",note:"Tramvaj 28 i pasteis de nata."}]},
+    GR:{trips:[{year:"2023",cities:"Atina, Santorini",note:"Najlepše more do sada."}]},
+    FR:{trips:[{year:"2023",cities:"Pariz",note:"Ajfelov toranj noću."}]},
+    HR:{trips:[{year:"2022",cities:"Split, Dubrovnik"}]},
+    ME:{trips:[{year:"2022",cities:"Kotor, Budva"}]},
+    AT:{trips:[{year:"2021",cities:"Beč",note:"Božićni vašar."}]},
+    CZ:{trips:[{year:"2021",cities:"Prag"}]},
+    DE:{trips:[{year:"2020",cities:"Berlin, Minhen"}]},
+    GB:{trips:[{year:"2019",cities:"London"}]},
+    TR:{trips:[{year:"2018",cities:"Istanbul",note:"Bosfor i čaj na svakom ćošku."}]},
+    TH:{trips:[{year:"2025",cities:"Bangkok, Puket",note:"Hrana za pamćenje."}]},
+    US:{trips:[{year:"2026",cities:"Njujork",note:"Central park u jesen."}]},
+    EG:{trips:[{year:"2017",cities:"Kairo, Hurgada"}]}},
+  prio: {JP:3,IS:3,NO:2,MA:2,PE:1,AU:1}
+};
+function enterDemo(){
+  if(DEMO) return;
+  demoBackup = {marks:{...marks}, notes:cloneNotes(savedNotes), prio:{...prio}};
+  DEMO = true; openJ = null; jStart = null;
+  marks = {...DEMO_DATA.marks}; setNotes(DEMO_DATA.notes); prio = {...DEMO_DATA.prio};
+  document.body.classList.add("demo"); $("demobar").hidden = false;
+  render(); setPage("home");
+}
+function exitDemo(){
+  if(!DEMO) return;
+  DEMO = false; openJ = null; jStart = null;
+  marks = demoBackup.marks; setNotes(demoBackup.notes); prio = demoBackup.prio; demoBackup = null;
+  document.body.classList.remove("demo"); $("demobar").hidden = true;
+  if(demoPending){ const snap = demoPending; demoPending = null; if(snap.exists){ const d = snap.data(); marks={...(d.marks||{})}; setNotes(d.notes); prio=normPrio(d.prio); lsSet(); } }
+  render(); setPage("home");
+}
 function render(){ renderStats(); renderAch(); renderChips(); renderList(); renderMap(); renderTab(); }
 
 /* ---------- events ---------- */
@@ -2495,6 +2686,9 @@ document.addEventListener("click", e=>{
   if(b.dataset.shareyear){ exportYear(b.dataset.shareyear, b); return; }
   if(b.hasAttribute("data-daily")){ startDaily(); return; }
   if(b.dataset.view){ if(b.dataset.view!==view) setView(b.dataset.view); return; }
+  if(b.hasAttribute("data-demo")){ enterDemo(); return; }
+  if(b.hasAttribute("data-demoexit")){ exitDemo(); return; }
+  if(b.dataset.jclose){ openJ = null; jStart = null; discardDrafts(); renderJournal(); renderMap(); return; }
   if(b.dataset.jopen){ openJ = openJ===b.dataset.jopen ? null : b.dataset.jopen; discardDrafts(); renderJournal(); renderMap(); return; }
   if(b.dataset.goto){ gotoCountry(b.dataset.goto); return; }
   if(b.dataset.savetrip){
@@ -2777,7 +2971,7 @@ function changed(){
   dirty=true; clearTimeout(timer); timer=setTimeout(flush, 900);
 }
 async function flush(){
-  if(saving || !docRef) return;
+  if(DEMO || saving || !docRef) return;
   saving=true;
   while(dirty){
     dirty=false;
@@ -2996,6 +3190,7 @@ $("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.
     let first=true;
     const t=setTimeout(()=>setSync(false,"syncOff"),10000);
     docRef.onSnapshot(snap=>{
+      if(DEMO){ demoPending = snap; return; }
       if(snap.metadata.hasPendingWrites || saving || dirty) return;
       if(!snap.metadata.fromCache) clearTimeout(t);
       if(snap.exists){
@@ -3009,6 +3204,7 @@ $("adPrivacyBtn").addEventListener("click", ()=>{ if(window.__adPrivacy) window.
     }, ()=>{ clearTimeout(t); docRef=null; setSync(false,"syncLocal"); });
   })();
 })();
+if(DEMO_URL) setTimeout(enterDemo, 300);
 </script>
 
 </body>
