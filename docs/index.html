@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atlas putovanja – tvoja mapa obiđenog sveta</title>
 <meta name="description" content="Označi države koje si obišao i one koje želiš da posetiš. Mapa i globus, dnevnik putovanja, plan, dostignuća i kviz. Android aplikacija u pripremi.">
-<meta name="theme-color" content="#14263A">
+<meta name="theme-color" content="#12201A">
 <link rel="icon" href="img/icon-64.png">
 <link rel="apple-touch-icon" href="img/icon-192.png">
 <meta property="og:title" content="Atlas putovanja – tvoja mapa obiđenog sveta">
@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 :root{
-  --bg:#EDF1F3; --surface:#FFFFFF; --line:#D3DCE2; --ink:#14263A; --muted:#55677A;
-  --accent:#2340B0; --been:#17734F; --been-soft:#DDF0E7; --want:#B5650B; --want-soft:#FBEBD6; --ocean:#C3D5E6;
+  --bg:#F4F6EC; --surface:#FFFFFF; --line:#DCE4C6; --ink:#1A2109; --muted:#56604A;
+  --accent:#4A6300; --been:#4A7A00; --been-soft:#E1F5B5; --want:#B45309; --want-soft:#FDEBD3; --ocean:#C9DFEA;
   --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -57,7 +57,7 @@ h1 em{font-style:normal;color:var(--been)}
 .btn.soon svg{width:20px;height:20px}
 .btn.ghost{border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
 .small{font-size:14px;color:var(--muted);margin:16px 0 0}
-.phone{justify-self:center;width:min(300px,78vw);padding:10px;border-radius:38px;background:var(--ink);box-shadow:0 30px 60px rgb(20 38 58 / .22);transform:rotate(2deg)}
+.phone{justify-self:center;width:min(300px,78vw);padding:10px;border-radius:38px;background:#12201A;box-shadow:0 30px 60px rgb(20 38 58 / .22);transform:rotate(2deg)}
 .phone img{border-radius:28px;width:100%}
 @media (max-width:820px){.phone{transform:none}}
 
@@ -74,17 +74,17 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,4.4vw,40px)
 .f{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
 .f .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--been-soft);color:var(--been);margin-bottom:14px}
 .f:nth-child(3n+2) .ic{background:var(--want-soft);color:var(--want)}
-.f:nth-child(3n) .ic{background:#E3E8F9;color:var(--accent)}
+.f:nth-child(3n) .ic{background:#D6F28A;color:#253300}
 .f .ic svg{width:22px;height:22px}
 .f h3{font-family:var(--f-display);font-size:19px;margin:0 0 6px}
 .f p{margin:0;color:var(--muted);font-size:15.5px}
 
-.screens{background:var(--ink);color:var(--bg)}
-.screens .sub{color:#A9B8C6}
+.screens{background:radial-gradient(120% 80% at 50% 0%,#2C4A3A 0%,#12201A 60%,#070B08 100%);color:#F4F6EC}
+.screens .sub{color:#B9C7A8}
 .strip{display:flex;gap:18px;overflow-x:auto;padding:6px 20px 18px;scroll-snap-type:x mandatory;max-width:calc(var(--max) + 40px);margin:0 auto}
 .strip figure{flex:0 0 min(250px,64vw);margin:0;scroll-snap-align:center}
-.strip img{border-radius:20px;border:1px solid #2B4058;width:100%}
-.strip figcaption{font-size:14px;color:#A9B8C6;margin-top:10px;text-align:center}
+.strip img{border-radius:20px;border:1px solid rgb(255 255 255 / .25);width:100%}
+.strip figcaption{font-size:14px;color:#B9C7A8;margin-top:10px;text-align:center}
 
 .faq{display:grid;gap:10px;max-width:760px}
 details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 18px}
@@ -152,36 +152,36 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <p data-l="en">Mark any of the 195 countries with one tap, from the list or right on the map.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.800 0 18M12 3c-3 3.200-3 14.800 0 18"/></svg></div>
         <h3 data-l="sr">Mapa i globus</h3><h3 data-l="en">Map and globe</h3>
-        <p data-l="sr">Ravna mapa ili globus koji okrećeš prstom. Male države su tačke koje možeš da dodirneš.</p>
-        <p data-l="en">A flat map or a globe you spin with your finger. Small countries are dots you can tap.</p></div>
+        <p data-l="sr">Ravna mapa ili globus koji okrećeš prstom, na nebu koje menja boju sa dobom dana.</p>
+        <p data-l="en">A flat map or a globe you spin with your finger, under a sky that changes with the time of day.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h11a2 2 0 0 1 2 2v16l-4-2.500L11 21l-4-2.500V5"/><path d="M10 8h5M10 12h5"/></svg></div>
         <h3 data-l="sr">Dnevnik putovanja</h3><h3 data-l="en">Travel journal</h3>
-        <p data-l="sr">Za svako putovanje godina, gradovi i beleška. Sve poređano po godinama.</p>
-        <p data-l="en">Year, cities and a note for every trip, laid out year by year.</p></div>
+        <p data-l="sr">Svako putovanje je pečat kao u pasošu: država, gradovi, godina i beleška, poređani po godinama.</p>
+        <p data-l="en">Every trip is a passport stamp: country, cities, year and a note, laid out year by year.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.500l2.900 6 6.600.800-4.900 4.500 1.300 6.500L12 17l-5.900 3.300 1.300-6.500L2.500 9.300l6.600-.800z"/></svg></div>
         <h3 data-l="sr">Plan</h3><h3 data-l="en">Plan</h3>
         <p data-l="sr">Lista želja po prioritetu, najbolje vreme za posetu i predlozi država blizu onih u kojima si bio.</p>
         <p data-l="en">A wish list sorted by priority, the best time to visit, and suggestions near places you've been.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.500v.010"/></svg></div>
         <h3 data-l="sr">Podaci o državama</h3><h3 data-l="en">Country facts</h3>
-        <p data-l="sr">Glavni grad, stanovništvo, površina, valuta, jezik, pozivni broj i strana kojom se vozi.</p>
-        <p data-l="en">Capital, population, area, currency, language, calling code and which side they drive on.</p></div>
+        <p data-l="sr">Glavni grad, stanovništvo, površina, valuta, jezik, pozivni broj, strana vožnje i kriva najboljeg vremena za posetu.</p>
+        <p data-l="en">Capital, population, area, currency, language, calling code, driving side and a best-time-to-visit curve.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.500 14L7 21l5-2.500L17 21l-1.500-7"/></svg></div>
         <h3 data-l="sr">Dostignuća</h3><h3 data-l="en">Achievements</h3>
         <p data-l="sr">Od prvog pečata do Kluba 100, plus pečati za gradove, prestonice, kviz bez greške i munjevite odgovore. Uporedi mapu sa prijateljem i vidi gde ste bili oboje. Napredak po kontinentima vidiš u svakom trenutku.</p>
         <p data-l="en">From your first stamp to Club 100, plus stamps for cities, capitals, a flawless quiz and lightning-fast answers. Compare maps with a friend and see where you have both been. Progress for every continent is always in view.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></div>
         <h3 data-l="sr">Kviz</h3><h3 data-l="en">Quiz</h3>
-        <p data-l="sr">Deset pitanja o zastavama i glavnim gradovima, na vreme. Poene donose tačnost i brzina.</p>
-        <p data-l="en">Ten timed questions on flags and capitals. You score for accuracy and speed.</p></div>
+        <p data-l="sr">Zastave, glavni gradovi i oblici država, na vreme. Dnevni izazov je isti za sve, a niz dana pokazuje koliko si uporan.</p>
+        <p data-l="en">Flags, capitals and country shapes against the clock. The daily challenge is the same for everyone, and your streak shows how often you play.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg></div>
         <h3 data-l="sr">Podeli svoju mapu</h3><h3 data-l="en">Share your map</h3>
         <p data-l="sr">Slika mape ili globusa sa tvojom statistikom, spremna za objavu na mrežama.</p>
         <p data-l="en">An image of your map or globe with your stats, ready to post.</p></div>
       <div class="f"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M8 11l4 4 4-4M5 19h14"/></svg></div>
-        <h3 data-l="sr">Rezervna kopija</h3><h3 data-l="en">Backup</h3>
-        <p data-l="sr">Oznake i beleške izvezeš u datoteku i vratiš ih na drugom telefonu.</p>
-        <p data-l="en">Export your marks and notes to a file and restore them on another phone.</p></div>
+        <h3 data-l="sr">Rezervna kopija i teme</h3><h3 data-l="en">Backup and themes</h3>
+        <p data-l="sr">Oznake i beleške izvezeš u datoteku i vratiš ih na drugom telefonu. Svetla ili tamna tema, srpski ili engleski.</p>
+        <p data-l="en">Export your marks and notes to a file and restore them on another phone. Light or dark theme, English or Serbian.</p></div>
     </div>
   </div>
 </section>
@@ -193,12 +193,12 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <p class="sub" data-l="en">Six screens from the app, shown with sample data.</p>
   </div>
   <div class="strip" tabindex="0" aria-label="Ekrani aplikacije / App screens">
-    <figure><img class="shot" data-n="1" src="img/shots/sr/1.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Mapa i lista država</span><span data-l="en">Map and country list</span></figcaption></figure>
-    <figure><img class="shot" data-n="2" src="img/shots/sr/2.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Globus</span><span data-l="en">Globe</span></figcaption></figure>
-    <figure><img class="shot" data-n="3" src="img/shots/sr/3.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Dnevnik putovanja</span><span data-l="en">Travel journal</span></figcaption></figure>
+    <figure><img class="shot" data-n="1" src="img/shots/sr/1.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Početna i globus</span><span data-l="en">Home and globe</span></figcaption></figure>
+    <figure><img class="shot" data-n="2" src="img/shots/sr/2.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Države kao kartice</span><span data-l="en">Countries as cards</span></figcaption></figure>
+    <figure><img class="shot" data-n="3" src="img/shots/sr/3.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Dnevnik sa pečatima</span><span data-l="en">Stamp journal</span></figcaption></figure>
     <figure><img class="shot" data-n="4" src="img/shots/sr/4.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Plan i lista želja</span><span data-l="en">Plan and wish list</span></figcaption></figure>
     <figure><img class="shot" data-n="5" src="img/shots/sr/5.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Kviz</span><span data-l="en">Quiz</span></figcaption></figure>
-    <figure><img class="shot" data-n="6" src="img/shots/sr/6.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Dostignuća</span><span data-l="en">Achievements</span></figcaption></figure>
+    <figure><img class="shot" data-n="6" src="img/shots/sr/6.webp" alt="" width="540" height="960" loading="lazy"><figcaption><span data-l="sr">Statistika i dostignuća</span><span data-l="en">Stats and achievements</span></figcaption></figure>
   </div>
 </section>
 
