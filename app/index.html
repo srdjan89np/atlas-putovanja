@@ -16,34 +16,39 @@ img{max-width:100%}
 <script>try{var th=localStorage.getItem("atlas-theme");if(th==="light"||th==="dark")document.documentElement.setAttribute("data-theme",th)}catch(e){}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Dizajn B · Noćni let: tamni globus i sjajni akcenti, uz svetlu varijantu. Tema: sistem / svetla / tamna (data-theme) */
+/* Dizajn C · Nebo i plima: nebo po dobu dana iza mape, sav sadržaj u listu (sheet) koji se uzdiže odozdo. Tema: sistem / svetla / tamna */
 :root{
-  --bg:#F3F6FA; --surface:#FFFFFF; --line:#DAE1EA; --ink:#0B1220; --muted:#55657A;
-  --accent:#2457D6; --accent-soft:#E4ECFC;
-  --been:#087A52; --been-soft:#DCF3E8;
-  --want:#A85C00; --want-soft:#FCEFD9;
-  --ocean:#CADCF0; --ocean-deep:#A7C2E2; --land:#EEF2F7;
-  --hero:#E1EAFB; --glass:rgb(255 255 255 / .86); --shadow:0 10px 30px rgb(11 18 32 / .10);
-  --f-display:"Sora", "Segoe UI", system-ui, sans-serif;
-  --f-body:"Inter", "Segoe UI", system-ui, sans-serif;
+  --bg:#FFFFFF; --surface:#F2F5F9; --line:#E1E7EF; --ink:#0F1B2D; --muted:#52627A;
+  --accent:#1D4E89; --accent-soft:#E3ECF8;
+  --been:#0B7A5D; --been-soft:#DDF3EC;
+  --want:#C24A2C; --want-soft:#FDE7E0;
+  --ocean:#BFD6F2; --ocean-deep:#93B6E0; --land:#F4F7FB;
+  --hero:#E3ECF8; --glass:rgb(255 255 255 / .92); --shadow:0 -10px 40px rgb(15 27 45 / .18);
+  --sky1:#1B2A55; --sky2:#6A3E78; --sky3:#E9846A;
+  --f-display:"Manrope", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Manrope", "Segoe UI", system-ui, sans-serif;
   --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
 }
+:root.sky-jutro{--sky1:#3E5F9E;--sky2:#C98A93;--sky3:#F2C9A5}
+:root.sky-dan{--sky1:#1F6FC6;--sky2:#4D97DE;--sky3:#A9D3F3}
+:root.sky-sumrak{--sky1:#1B2A55;--sky2:#6A3E78;--sky3:#E9846A}
+:root.sky-noc{--sky1:#070D1F;--sky2:#13254A;--sky3:#24406E}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0B1220; --surface:#121B2E; --line:#22304A; --ink:#EAF0F7; --muted:#94A3B8;
-  --accent:#6FB2FF; --accent-soft:#16294A;
-  --been:#3DDC97; --been-soft:#11352A;
-  --want:#F5A524; --want-soft:#3A2A0E;
-  --ocean:#16264A; --ocean-deep:#0B1220; --land:#2A3A55;
-  --hero:#1A2D55; --glass:rgb(18 27 46 / .86); --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}}
+  --bg:#0E1626; --surface:#18233A; --line:#26334C; --ink:#EAF0F7; --muted:#9AA9BE;
+  --accent:#8DB8F2; --accent-soft:#1D3252;
+  --been:#4FD1A5; --been-soft:#123A33;
+  --want:#FF8A6B; --want-soft:#43231E;
+  --ocean:#1A3157; --ocean-deep:#0E1626; --land:#4C6286;
+  --hero:#1D3252; --glass:rgb(14 22 38 / .9); --shadow:0 -10px 40px rgb(0 0 0 / .4); color-scheme:dark; --sky1:#070D1F; --sky2:#13254A; --sky3:#24406E}}
 :root[data-theme="dark"]{
-  --bg:#0B1220; --surface:#121B2E; --line:#22304A; --ink:#EAF0F7; --muted:#94A3B8;
-  --accent:#6FB2FF; --accent-soft:#16294A;
-  --been:#3DDC97; --been-soft:#11352A;
-  --want:#F5A524; --want-soft:#3A2A0E;
-  --ocean:#16264A; --ocean-deep:#0B1220; --land:#2A3A55;
-  --hero:#1A2D55; --glass:rgb(18 27 46 / .86); --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}
+  --bg:#0E1626; --surface:#18233A; --line:#26334C; --ink:#EAF0F7; --muted:#9AA9BE;
+  --accent:#8DB8F2; --accent-soft:#1D3252;
+  --been:#4FD1A5; --been-soft:#123A33;
+  --want:#FF8A6B; --want-soft:#43231E;
+  --ocean:#1A3157; --ocean-deep:#0E1626; --land:#4C6286;
+  --hero:#1D3252; --glass:rgb(14 22 38 / .9); --shadow:0 -10px 40px rgb(0 0 0 / .4); color-scheme:dark; --sky1:#070D1F; --sky2:#13254A; --sky3:#24406E}
 :root[data-theme="light"]{color-scheme:light}
 
 *{box-sizing:border-box}
@@ -375,10 +380,7 @@ html.native .toast{bottom:calc(var(--ad-h) + var(--nav-h) + 16px)}
 footer .link{padding:10px 0}
 .qmode{min-height:64px}
 /* Kviz i Dostignuća: usko zaglavlje, bez velikih brojki */
-body:is([data-page="quiz"],[data-page="ach"]) header{gap:6px;padding-block:0 12px}
-body:is([data-page="quiz"],[data-page="ach"]) header .stats,body:is([data-page="quiz"],[data-page="ach"]) header .eyebrow{display:none}
 body:is([data-page="quiz"],[data-page="ach"]) h1{font-size:24px}
-body:is([data-page="quiz"],[data-page="ach"]) header .topline{position:absolute;right:max(16px,env(safe-area-inset-right,0px));margin-top:-4px}
 body:is([data-page="quiz"],[data-page="ach"]) .wrap{position:relative}
 
 /* Lista po kontinentima */
@@ -470,8 +472,6 @@ h1{font-weight:700;letter-spacing:-.03em}
 header{margin-bottom:16px;padding:18px;border-radius:26px;border:1px solid var(--line);background:radial-gradient(120% 110% at 90% -10%,var(--hero) 0%,transparent 60%),var(--surface)}
 .stat.been b{font-size:48px;letter-spacing:-.03em}
 .stat.want b{font-size:34px}
-body:is([data-page="quiz"],[data-page="ach"]) header{background:none;border:0;padding:0 0 12px;margin-bottom:0}
-body:is([data-page="quiz"],[data-page="ach"]) header .topline{margin-top:0}
 .mapbox{border-radius:24px;background:radial-gradient(90% 90% at 50% 35%,var(--hero),var(--surface) 75%)}
 ul.list,.tl,.backup,.st,.yrs,.pick,.qmode,.emptyp,.daily{border-radius:20px}
 .tabs{border-radius:18px;padding:5px}
@@ -502,7 +502,6 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 20px)}
 
 /* ===== Stranice: Mapa, Dnevnik, Plan, Kviz, Ja ===== */
 .tabs{display:none!important}
-body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{display:none}
 body[data-page="journal"] .map,body[data-page="plan"] .map{display:none}
 .ptitle,#tab-journal > .sech:first-child,#tab-quiz > .sech:first-child,#tab-plan > .ptitle{font-family:var(--f-display);font-weight:700;font-size:30px;letter-spacing:-.03em;line-height:1.1;margin:6px 0 14px}
 .wrap{padding-top:max(20px,env(safe-area-inset-top,0px))}
@@ -522,11 +521,72 @@ header > *{min-width:0}
 .stat.been #sBeen{font-size:inherit;color:inherit}
 .hlang{height:44px;align-items:center;padding:3px}
 .hlang button{padding:0 13px;height:36px;border-radius:11px}
+
+/* ===== Dizajn C · Nebo i plima ===== */
+body{position:relative}
+.sky{position:absolute;left:0;right:0;top:0;height:min(100vh,1000px);z-index:0;pointer-events:none;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 50%,var(--sky3) 100%)}
+.wrap{position:relative;z-index:1}
+h1,h2,h3{font-weight:800;letter-spacing:-.03em}
+/* zaglavlje preko neba */
+header{background:none;border:0;padding:4px 0 10px;margin-bottom:0;color:#fff}
+header .eyebrow{font-family:var(--f-body);font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:rgb(255 255 255 / .85)}
+header h1{display:none}
+header .stat span{color:rgb(255 255 255 / .85);font-weight:600;font-size:14px}
+header .stat.been b{color:#fff;font-size:64px;font-weight:800;letter-spacing:-.04em}
+header .stat.been small.of195{color:rgb(255 255 255 / .75);font-size:22px;font-weight:700}
+header .stat.want b{color:#FFD2C2;font-size:30px;font-weight:800}
+header .hlang,header .thbtn{background:rgb(255 255 255 / .14);border:1px solid rgb(255 255 255 / .35);color:#fff;border-radius:999px}
+header .hlang button{color:rgb(255 255 255 / .8);border-radius:999px;background:transparent}
+header .hlang button[aria-pressed="true"]{background:#fff;color:#0F1B2D}
+header .thbtn:focus-visible,header .hlang button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{display:grid}
+body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header .stats{display:none}
+body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{padding-bottom:16px}
+/* mapa i globus lebde na nebu */
+.mapbox{background:rgb(255 255 255 / .1);border:1px solid rgb(255 255 255 / .22);border-radius:26px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.mapbox.globe,.mapbox:has(#globe:not([hidden])){background:transparent;border-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+#globe{filter:drop-shadow(0 18px 36px rgb(0 0 0 / .35))}
+.map .legend,.map .legend .hint{color:rgb(255 255 255 / .9)}
+.map .seg,.zoom button{background:rgb(15 27 45 / .45);border-color:rgb(255 255 255 / .3);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.map .seg button{color:rgb(255 255 255 / .85)}
+.map .seg button[aria-pressed="true"]{background:#fff;color:#0F1B2D}
+.maptools,.maptools .sharelbl,.maptools .savemsg{color:#fff}
+.map .pick{color:var(--ink)}
+/* list (sheet) koji se uzdiže odozdo */
+#tab-list,#tab-journal,#tab-plan,#tab-quiz,#page-ach{position:relative;background:var(--bg);border-radius:30px 30px 0 0;margin-inline:-16px;padding:22px 16px 8px;min-height:calc(100vh - 120px);box-shadow:var(--shadow)}
+#tab-list::before,#tab-journal::before,#tab-plan::before,#tab-quiz::before,#page-ach::before{content:"";position:absolute;left:50%;top:9px;width:40px;height:5px;margin-left:-20px;border-radius:5px;background:var(--line)}
+#tab-list{margin-top:14px}
+@media (min-width:792px){#tab-list,#tab-journal,#tab-plan,#tab-quiz,#page-ach{margin-inline:0;padding-inline:20px}}
+.search{background:var(--surface);border-color:transparent;font-weight:600}
+ul.list,.tl,.backup,.st,.yrs,.qmode,.emptyp,.daily,.continents > *{border-radius:20px}
+/* donji meni kao u listu: puna širina, pilula za aktivnu stranicu */
+.bnav{left:0;right:0;bottom:calc(var(--ad-h) + env(safe-area-inset-bottom,0px));border:0;border-top:1px solid var(--line);border-radius:0;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;padding:0 4px}
+.bnav button{margin:0;border-radius:0;background:transparent!important;gap:3px;font-size:11px}
+:root{--nav-h:66px}
+.bnav button svg{width:46px;height:26px;padding:3px 12px;border-radius:999px;box-sizing:border-box;overflow:visible}
+.bnav button[aria-current="page"]{color:var(--accent)}
+.bnav button[aria-current="page"] svg{background:var(--accent-soft)}
+body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 8px + env(safe-area-inset-bottom,0px))}
+html.native body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 8px)}
+html.native .bnav{bottom:var(--ad-h)}
+html.native .toast,html.native .totop{bottom:calc(var(--ad-h) + var(--nav-h) + 14px)}
+html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 12px)}
+/* kriva „kada je najlepše“ u podacima o državi */
+.tide{margin-top:12px;border-radius:18px;background:var(--surface);padding:12px 12px 6px}
+.tide .th{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;font-weight:700}
+.tide .th em{font-style:normal;color:var(--want)}
+.tide svg{display:block;width:100%;height:96px}
+.tide .ln{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round}
+.tide .ar{fill:var(--accent);opacity:.16}
+.tide .now{stroke:var(--want);stroke-width:1.5;stroke-dasharray:3 3}
+.tide .dot{fill:var(--want);stroke:var(--bg);stroke-width:2}
+.tide text{font-size:10px;font-weight:700;fill:var(--muted)}
 </style>
 
+<div class="sky" aria-hidden="true"></div>
 <div class="wrap">
   <header>
-    <div class="topline"><div class="eyebrow" data-i18n="eyebrow">195 država · ISO 3166</div>
+    <div class="topline"><div class="eyebrow" id="today">195 država · ISO 3166</div>
       <div class="tright"><div class="langs hlang" role="group" aria-label="Jezik / Language"><button type="button" data-lang="sr" aria-pressed="true">SR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="thbtn" data-page="ach" data-goset data-i18n-aria="setTitle" aria-label="Podešavanja"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div></div>
     <h1 data-i18n="title">Atlas putovanja</h1>
     <div class="stats">
@@ -712,7 +772,7 @@ const T = {
   yShare:"Podeli godinu", yEyebrow:"MOJA GODINA PUTOVANJA", yCountries:"država", yTrips:"putovanja", yCities:"gradova", yNew:"novih država", yFile:"moja-godina", yMore:"i još {n}",
   dTitle:"Dnevni izazov", dText:"Ista pitanja za sve danas: zastave, glavni gradovi i oblici.", dPlay:"Igraj", dDone:"Danas: {s} poena", dStreak:"Niz: {n}", dBest:"Najduži niz: {n}", dTomorrow:"Novi izazov sutra.", dDays1:"dan", dDays:"dana",
   rateT:"Sviđa ti se Atlas putovanja?", rateP:"Oceni aplikaciju na Google Play-u. Tako je lakše pronalaze i drugi putnici.", rateYes:"Oceni", rateLater:"Kasnije", rateLink:"Oceni aplikaciju", supLink:"Podrška autoru: pogledaj reklamu", supLoading:"Učitavam reklamu…", supThanks:"Hvala na podršci! Ovo ti je {n}. put.", supThanks1:"Hvala na podršci!", supFail:"Reklama trenutno nije dostupna. Probaj malo kasnije.", supSkip:"Reklama je prekinuta pre kraja, pa se ne računa.", supTimes:" · hvala, {n}×",
-  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", navMap:"Mapa", navMe:"Ja", setTitle:"Podešavanja", setTheme:"Tema", setLang:"Jezik", thAutoS:"Kao telefon", thLightS:"Svetla", thDarkS:"Tamna", planTitle:"Plan puta", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
+  jAddTitle:"Dodaj putovanje", jPickPh:"Izaberi državu", navMap:"Mapa", tideT:"Kada je najlepše", tideNow:"sada: idealno", tideNot:"sada: van sezone", navMe:"Ja", setTitle:"Podešavanja", setTheme:"Tema", setLang:"Jezik", thAutoS:"Kao telefon", thLightS:"Svetla", thDarkS:"Tamna", planTitle:"Plan puta", jEmpty2:"Prvo označi države koje si obišao, pa ovde upiši putovanja.", jGoList:"Označi obiđene države",
   cmpTitle:"Uporedi sa prijateljem", cmpText:"Pošalji svoj kod prijatelju, a njegov kod nalepi ovde i vidi gde ste bili oboje.", cmpName:"Tvoje ime (neobavezno)", cmpNamePh:"npr. Marko",
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
@@ -770,7 +830,7 @@ const T = {
   yShare:"Share this year", yEyebrow:"MY YEAR OF TRAVEL", yCountries:"countries", yTrips:"trips", yCities:"cities", yNew:"new countries", yFile:"my-travel-year", yMore:"and {n} more",
   dTitle:"Daily challenge", dText:"The same questions for everyone today: flags, capitals and shapes.", dPlay:"Play", dDone:"Today: {s} points", dStreak:"Streak: {n}", dBest:"Longest streak: {n}", dTomorrow:"New challenge tomorrow.", dDays1:"day", dDays:"days",
   rateT:"Enjoying Travel Atlas?", rateP:"Rate the app on Google Play. It helps other travellers find it.", rateYes:"Rate", rateLater:"Later", rateLink:"Rate the app", supLink:"Support the author: watch an ad", supLoading:"Loading the ad…", supThanks:"Thanks for your support! That's time number {n}.", supThanks1:"Thanks for your support!", supFail:"No ad is available right now. Try again a bit later.", supSkip:"The ad was closed before the end, so it doesn't count.", supTimes:" · thanks, {n}×",
-  jAddTitle:"Add a trip", jPickPh:"Choose a country", navMap:"Map", navMe:"Me", setTitle:"Settings", setTheme:"Theme", setLang:"Language", thAutoS:"Like phone", thLightS:"Light", thDarkS:"Dark", planTitle:"Trip plan", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
+  jAddTitle:"Add a trip", jPickPh:"Choose a country", navMap:"Map", tideT:"Best time to go", tideNow:"now: ideal", tideNot:"now: off season", navMe:"Me", setTitle:"Settings", setTheme:"Theme", setLang:"Language", thAutoS:"Like phone", thLightS:"Light", thDarkS:"Dark", planTitle:"Trip plan", jEmpty2:"First mark the countries you've visited, then add your trips here.", jGoList:"Mark visited countries",
   cmpTitle:"Compare with a friend", cmpText:"Send your code to a friend, paste theirs here, and see where you've both been.", cmpName:"Your name (optional)", cmpNamePh:"e.g. Mark",
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
@@ -805,6 +865,12 @@ function applyTheme(){
   document.querySelectorAll("[data-themeset]").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.themeset===theme)));
 }
 applyTheme();
+// Nebo prati doba dana (u svetloj temi); u tamnoj je uvek noć.
+function skyTick(){
+  const h = new Date().getHours(), k = h>=5 && h<9 ? "jutro" : h>=9 && h<17 ? "dan" : h>=17 && h<21 ? "sumrak" : "noc";
+  const c = document.documentElement.classList; ["jutro","dan","sumrak","noc"].forEach(x=>c.toggle("sky-"+x, x===k));
+}
+skyTick(); setInterval(skyTick, 600000);
 const C = {...CONT[lang]};
 const RAW = `AL Albanija E|AD Andora E|AT Austrija E|BY Belorusija E|BE Belgija E|BA Bosna i Hercegovina E|BG Bugarska E|HR Hrvatska E|CY Kipar E|CZ Češka E|DK Danska E|EE Estonija E|FI Finska E|FR Francuska E|DE Nemačka E|GR Grčka E|HU Mađarska E|IS Island E|IE Irska E|IT Italija E|LV Letonija E|LI Lihtenštajn E|LT Litvanija E|LU Luksemburg E|MT Malta E|MD Moldavija E|MC Monako E|ME Crna Gora E|NL Holandija E|MK Severna Makedonija E|NO Norveška E|PL Poljska E|PT Portugalija E|RO Rumunija E|RU Rusija E|SM San Marino E|RS Srbija E|SK Slovačka E|SI Slovenija E|ES Španija E|SE Švedska E|CH Švajcarska E|UA Ukrajina E|GB Ujedinjeno Kraljevstvo E|VA Vatikan E|AF Avganistan A|AM Jermenija A|AZ Azerbejdžan A|BH Bahrein A|BD Bangladeš A|BT Butan A|BN Brunej A|KH Kambodža A|CN Kina A|GE Gruzija A|IN Indija A|ID Indonezija A|IR Iran A|IQ Irak A|IL Izrael A|JP Japan A|JO Jordan A|KZ Kazahstan A|KW Kuvajt A|KG Kirgistan A|LA Laos A|LB Liban A|MY Malezija A|MV Maldivi A|MN Mongolija A|MM Mjanmar A|NP Nepal A|KP Severna Koreja A|OM Oman A|PK Pakistan A|PS Palestina A|PH Filipini A|QA Katar A|SA Saudijska Arabija A|SG Singapur A|KR Južna Koreja A|LK Šri Lanka A|SY Sirija A|TJ Tadžikistan A|TH Tajland A|TL Istočni Timor A|TR Turska A|TM Turkmenistan A|AE Ujedinjeni Arapski Emirati A|UZ Uzbekistan A|VN Vijetnam A|YE Jemen A|DZ Alžir F|AO Angola F|BJ Benin F|BW Bocvana F|BF Burkina Faso F|BI Burundi F|CV Zelenortska Ostrva F|CM Kamerun F|CF Centralnoafrička Republika F|TD Čad F|KM Komori F|CG Kongo F|CD DR Kongo F|CI Obala Slonovače F|DJ Džibuti F|EG Egipat F|GQ Ekvatorijalna Gvineja F|ER Eritreja F|SZ Esvatini F|ET Etiopija F|GA Gabon F|GM Gambija F|GH Gana F|GN Gvineja F|GW Gvineja Bisao F|KE Kenija F|LS Lesoto F|LR Liberija F|LY Libija F|MG Madagaskar F|MW Malavi F|ML Mali F|MR Mauritanija F|MU Mauricijus F|MA Maroko F|MZ Mozambik F|NA Namibija F|NE Niger F|NG Nigerija F|RW Ruanda F|ST Sao Tome i Principe F|SN Senegal F|SC Sejšeli F|SL Sijera Leone F|SO Somalija F|ZA Južnoafrička Republika F|SS Južni Sudan F|SD Sudan F|TZ Tanzanija F|TG Togo F|TN Tunis F|UG Uganda F|ZM Zambija F|ZW Zimbabve F|AG Antigva i Barbuda N|BS Bahami N|BB Barbados N|BZ Beliz N|CA Kanada N|CR Kostarika N|CU Kuba N|DM Dominika N|DO Dominikanska Republika N|SV Salvador N|GD Grenada N|GT Gvatemala N|HT Haiti N|HN Honduras N|JM Jamajka N|MX Meksiko N|NI Nikaragva N|PA Panama N|KN Sent Kits i Nevis N|LC Sveta Lucija N|VC Sent Vinsent i Grenadini N|TT Trinidad i Tobago N|US Sjedinjene Američke Države N|AR Argentina S|BO Bolivija S|BR Brazil S|CL Čile S|CO Kolumbija S|EC Ekvador S|GY Gvajana S|PY Paragvaj S|PE Peru S|SR Surinam S|UY Urugvaj S|VE Venecuela S|AU Australija O|FJ Fidži O|KI Kiribati O|MH Maršalska Ostrva O|FM Mikronezija O|NR Nauru O|NZ Novi Zeland O|PW Palau O|PG Papua Nova Gvineja O|WS Samoa O|SB Solomonova Ostrva O|TO Tonga O|TV Tuvalu O|VU Vanuatu O`;
 
@@ -1159,7 +1225,23 @@ function infoHTML(code){
     [t("fSide"), i.side==="L" ? t("left") : t("right")],
     [t("fBest"), bestTxt(code)],
   ];
-  return `<dl class="facts">${rows.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>`;
+  return `<dl class="facts">${rows.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>` + tideHTML(code);
+}
+// „Kada je najlepše“: glatka kriva po mesecima (kao grafikon plime), tačka označava ovaj mesec.
+function tideHTML(code){
+  if(!BEST[code]) return "";
+  const raw = Array.from({length:12}, (_,i)=> bestIn(code, i+1) ? 1 : 0);
+  const v = raw.map((x,i)=> (raw[(i+11)%12] + 2*x + raw[(i+1)%12]) / 4);
+  const W = 330, X = i => 12 + i*(W-24)/11, Y = s => 74 - s*58;
+  let d = `M${X(0)},${Y(v[0])}`;
+  for(let i=1;i<12;i++){ const cx = (X(i-1)+X(i))/2; d += ` C${cx},${Y(v[i-1])} ${cx},${Y(v[i])} ${X(i)},${Y(v[i])}`; }
+  const m = new Date().getMonth(), loc = lang==="en" ? "en-GB" : "sr-Latn";
+  const ml = Array.from({length:12}, (_,i)=> new Intl.DateTimeFormat(loc, {month:"narrow", timeZone:"UTC"}).format(new Date(Date.UTC(2024, i, 15))));
+  const lbl = t("fBest") + ": " + bestTxt(code);
+  return `<div class="tide"><div class="th"><span>${t("tideT")}</span><em>${raw[m] ? t("tideNow") : t("tideNot")}</em></div>
+  <svg viewBox="0 0 ${W} 96" role="img" aria-label="${esc(lbl)}"><path class="ar" d="${d} L${X(11)},76 L${X(0)},76 Z"/><path class="ln" d="${d}"/>
+  <line class="now" x1="${X(m)}" x2="${X(m)}" y1="6" y2="76"/><circle class="dot" cx="${X(m)}" cy="${Y(v[m])}" r="5"/>
+  ${ml.map((l,i)=>`<text x="${X(i)}" y="92" text-anchor="middle">${l}</text>`).join("")}</svg></div>`;
 }
 let openInfo = null;
 
@@ -2348,7 +2430,8 @@ document.addEventListener("input", e=>{
   });
 });
 function applyLang(){
-  applyTheme();
+  applyTheme(); skyTick();
+  try{ const d = new Intl.DateTimeFormat(lang==="en" ? "en-GB" : "sr-Latn", {weekday:"long", day:"numeric", month:"long"}).format(new Date()); $("today").textContent = d.charAt(0).toUpperCase() + d.slice(1); }catch(e){}
   document.documentElement.lang = lang==="en" ? "en" : "sr-Latn";
   document.title = t("title");
   Object.assign(C, CONT[lang]);
