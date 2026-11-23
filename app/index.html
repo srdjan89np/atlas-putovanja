@@ -21,7 +21,7 @@ img{max-width:100%}
 /* Dizajn F · Liquid Glass na osnovi C, paleta limeta: nebo po dobu dana iza mape, sav sadržaj u listu (sheet) koji se uzdiže odozdo. Tema: sistem / svetla / tamna */
 :root{
   --bg:#FBFCF5; --surface:#EEF3DF; --line:#DCE4C6; --ink:#1A2109; --muted:#56604A;
-  --accent:#4A6300; --accent-soft:#D6F28A;
+  --accent:#4A6300; --accent-soft:#D6F28A; --pop:#D6F28A; --pop-ink:#253300; --pop-glow:#B9E35A; --pop-halo:rgb(185 227 90 / .18);
   --been:#4A7A00; --been-soft:#E1F5B5;
   --want:#7B2FBE; --want-soft:#F2DCFF;
   --ocean:#C9DFEA; --ocean-deep:#9FC2D4; --land:#F7F9F0;
@@ -537,7 +537,7 @@ header .stat.been small.of195{color:rgb(255 255 255 / .75);font-size:22px;font-w
 header .stat.want b{color:#E8C8FF;font-size:30px;font-weight:800}
 header .hlang,header .thbtn{background:rgb(255 255 255 / .14);border:1px solid rgb(255 255 255 / .35);color:#fff;border-radius:999px}
 header .hlang button{color:rgb(255 255 255 / .8);border-radius:999px;background:transparent}
-header .hlang button[aria-pressed="true"]{background:#D6F28A;color:#253300}
+header .hlang button[aria-pressed="true"]{background:var(--pop);color:var(--pop-ink)}
 header .thbtn:focus-visible,header .hlang button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header{display:grid}
 body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="ach"]) header .stats{display:none}
@@ -551,7 +551,7 @@ body:is([data-page="journal"],[data-page="plan"],[data-page="quiz"],[data-page="
 .map .legend,.map .legend .hint{color:rgb(255 255 255 / .9)}
 .map .seg,.zoom button{background:rgb(15 27 45 / .45);border-color:rgb(255 255 255 / .3);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .map .seg button{color:rgb(255 255 255 / .85)}
-.map .seg button[aria-pressed="true"]{background:#D6F28A;color:#253300}
+.map .seg button[aria-pressed="true"]{background:var(--pop);color:var(--pop-ink)}
 .maptools,.maptools .sharelbl,.maptools .savemsg{color:#fff}
 .map .pick{color:var(--ink)}
 /* list (sheet) koji se uzdiže odozdo */
@@ -623,14 +623,14 @@ html,body{background:#070B08}
 header .stats{gap:8px;align-items:center}
 header .stat{display:inline-flex;align-items:baseline;gap:8px;padding:8px 16px;border-radius:999px;background:rgb(255 255 255 / .14);border:1px solid rgb(255 255 255 / .4);box-shadow:inset 0 1px 0 rgb(255 255 255 / .5);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
 header .stat.been b{font-size:30px;letter-spacing:-.03em}
-header .stat.been b::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#B9E35A;box-shadow:0 0 10px #B9E35A;margin-right:10px;vertical-align:middle;position:relative;top:-3px}
+header .stat.been b::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--pop-glow);box-shadow:0 0 10px var(--pop-glow);margin-right:10px;vertical-align:middle;position:relative;top:-3px}
 header .stat.been small.of195{font-size:16px}
 header .stat.want b{font-size:22px;color:#F0DDFF}
 header .stat span{font-size:12.5px}
 header .hlang,header .thbtn{-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:inset 0 1px 0 rgb(255 255 255 / .5)}
 /* globus i mapa bez okvira, svetlucavo */
 .mapbox{background:rgb(255 255 255 / .08);border:1px solid rgb(255 255 255 / .2);border-radius:30px;box-shadow:inset 0 1px 0 rgb(255 255 255 / .25)}
-#globe{filter:drop-shadow(0 0 30px rgb(185 227 90 / .18)) drop-shadow(0 20px 40px rgb(0 0 0 / .5))}
+#globe{filter:drop-shadow(0 0 30px var(--pop-halo)) drop-shadow(0 20px 40px rgb(0 0 0 / .5))}
 .map .seg,.zoom button{background:rgb(255 255 255 / .14);border-color:rgb(255 255 255 / .4);box-shadow:inset 0 1px 0 rgb(255 255 255 / .5);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
 .maptools .savebtn{background:rgb(255 255 255 / .14);border-color:rgb(255 255 255 / .4);color:#fff;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
 /* staklene ploče umesto lista */
@@ -641,8 +641,8 @@ ul.list,.tl:not(.stamps),.backup,.st,.yrs,.qmode,.emptyp,.daily,.cont,.search,.c
 .stamp{background:color-mix(in srgb,var(--st) 10%,transparent);box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5.5px color-mix(in srgb,var(--st) 40%,transparent)}
 /* plutajući meni u obliku kapsule */
 .bnav{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--ad-h) + 12px + env(safe-area-inset-bottom,0px));border:1px solid var(--gl-b);border-radius:999px;background:var(--gl);box-shadow:var(--gl-hi),0 14px 34px rgb(0 0 0 / .4);-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);padding:0 6px}
-.bnav button[aria-current="page"]{color:#253300}
-.bnav button[aria-current="page"] svg{background:#D6F28A}
+.bnav button[aria-current="page"]{color:var(--pop-ink)}
+.bnav button[aria-current="page"] svg{background:var(--pop)}
 body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 30px + env(safe-area-inset-bottom,0px))}
 html.native body{padding-bottom:calc(var(--ad-h) + var(--nav-h) + 30px)}
 html.native .bnav{bottom:calc(var(--ad-h) + 12px)}
@@ -655,13 +655,13 @@ html.native .rate{bottom:calc(var(--ad-h) + var(--nav-h) + 22px)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--on-accent:#12160B}}
 :root[data-theme="dark"]{--on-accent:#12160B}
 .bnav button[aria-current="page"]{color:var(--accent)}
-.bnav button[aria-current="page"] svg{color:#253300}
+.bnav button[aria-current="page"] svg{color:var(--pop-ink)}
 
 /* ===== Preglednije: pune ploče, narandžasta umesto ružičaste, 3 pečata u redu ===== */
 :root{--want:#B45309;--want-soft:#FDEBD3;--gl:rgb(250 251 245 / .96);--surface:#FFFFFF;--line:#E1E7D3;--st3:#2F6DB5}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--want:#FFB054;--want-soft:#3D2810;--gl:rgb(18 22 11 / .95);--surface:#1F2716;--line:#2F3923;--st3:#8CC0FF}}
 :root[data-theme="dark"]{--want:#FFB054;--want-soft:#3D2810;--gl:rgb(18 22 11 / .95);--surface:#1F2716;--line:#2F3923;--st3:#8CC0FF}
-header .stat.want b{color:#FFD59A}
+header .stat.want b{color:var(--pop-want,#FFD59A)}
 ul.list,.st,.yrs,.backup,.qmode,.daily,.emptyp{border:1px solid var(--line)}
 .tl.stamps{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .stamp{min-height:108px;padding:10px 6px;border-width:2px;border-radius:12px;gap:1px;box-shadow:inset 0 0 0 3px transparent,inset 0 0 0 4px color-mix(in srgb,var(--st) 40%,transparent)}
@@ -739,12 +739,12 @@ ul.plist{gap:6px}
 .jclose{margin-left:auto}
 
 /* demo prikaz */
-.demobar{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 8px);z-index:40;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:999px;background:#D6F28A;color:#253300;font-size:13px;box-shadow:0 8px 24px rgb(0 0 0 / .3);max-width:calc(100vw - 24px)}
+.demobar{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 8px);z-index:40;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:999px;background:var(--pop);color:var(--pop-ink);font-size:13px;box-shadow:0 8px 24px rgb(0 0 0 / .3);max-width:calc(100vw - 24px)}
 .demobar span{white-space:normal;line-height:1.3}
 .demobar{border-radius:20px;width:max-content;padding:8px 8px 8px 14px}
 .demobar > span{min-width:0}
 body.demo .wrap{padding-top:calc(max(20px,env(safe-area-inset-top,0px)) + 60px)}
-.demobar button{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:#253300;color:#D6F28A;font:inherit;font-weight:800;cursor:pointer}
+.demobar button{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:var(--pop-ink);color:var(--pop);font:inherit;font-weight:800;cursor:pointer}
 body.demo .wrap{padding-top:calc(max(20px,env(safe-area-inset-top,0px)) + 44px)}
 .demobtn{justify-self:start}
 .demohint{font-size:12px;color:var(--muted)}
@@ -2221,22 +2221,31 @@ function loadEarth(){
 }
 function paintEarth(ctx, proj, q){
   const [tx, ty] = proj.translate(), r = proj.scale(), rot = proj.rotate();
-  const D = Math.max(8, Math.min(1400, Math.round(2*r*q)));
+  const D = Math.max(8, Math.min(1600, Math.round(2*r*q)));
   const off = paintEarth.c || (paintEarth.c = document.createElement("canvas"));
   if(off.width!==D){ off.width = D; off.height = D; }
   const oc = off.getContext("2d"), img = oc.createImageData(D, D), out = img.data;
   const L = rot[0]*Math.PI/180, P = rot[1]*Math.PI/180, cp = Math.cos(P), sp = Math.sin(P);
   const W = EARTH.w, H = EARTH.h, T = EARTH.d, TAU = Math.PI*2;
+  // Bilinearno uzorkovanje teksture + meka ivica diska (bez stepenica i mutnih blokova).
+  const half = D/2;
   for(let j=0;j<D;j++){
     const sy = 1 - (j+0.5)/D*2;
     for(let i=0;i<D;i++){
       const sx = (i+0.5)/D*2 - 1, rr = sx*sx + sy*sy; if(rr>1) continue;
       const X = Math.sqrt(1-rr);
-      let lon = Math.atan2(sx, X*cp + sy*sp) - L; const lat = Math.asin(sy*cp - X*sp);
+      const lon = Math.atan2(sx, X*cp + sy*sp) - L, lat = Math.asin(sy*cp - X*sp);
       let u = (lon/TAU + 0.5) % 1; if(u<0) u += 1;
-      const ti = ((Math.min(H-1, ((0.5 - lat/Math.PI)*H)|0))*W + ((u*W)|0))*4, o = (j*D+i)*4;
-      const sh = 0.62 + 0.38*X;
-      out[o] = T[ti]*sh; out[o+1] = T[ti+1]*sh; out[o+2] = T[ti+2]*sh; out[o+3] = 255;
+      const fx = u*W - 0.5, fy = Math.max(0, Math.min(H-1.001, (0.5 - lat/Math.PI)*H - 0.5));
+      let x0 = Math.floor(fx); const ax = fx - x0; if(x0<0) x0 += W; const x1 = x0+1 >= W ? 0 : x0+1;
+      const y0 = fy|0, ay = fy - y0, y1 = y0+1;
+      const a = (y0*W+x0)*4, b = (y0*W+x1)*4, c = (y1*W+x0)*4, d = (y1*W+x1)*4;
+      const w00 = (1-ax)*(1-ay), w10 = ax*(1-ay), w01 = (1-ax)*ay, w11 = ax*ay;
+      const sh = 0.62 + 0.38*X, o = (j*D+i)*4;
+      out[o]   = (T[a]*w00 + T[b]*w10 + T[c]*w01 + T[d]*w11)*sh;
+      out[o+1] = (T[a+1]*w00 + T[b+1]*w10 + T[c+1]*w01 + T[d+1]*w11)*sh;
+      out[o+2] = (T[a+2]*w00 + T[b+2]*w10 + T[c+2]*w01 + T[d+2]*w11)*sh;
+      out[o+3] = Math.min(255, (1 - Math.sqrt(rr))*half*255*1.2);
     }
   }
   oc.putImageData(img, 0, 0);
@@ -2247,7 +2256,8 @@ function drawGlobe(){
   G.proj.rotate(G.rot);
   // Dok se globus pomera, satelitska slika se crta u nižoj rezoluciji; kad stane, ponovo u punoj.
   const now = performance.now(), moving = now - (G.lastDraw||0) < 120; G.lastDraw = now;
-  G.earthQ = moving ? 0.6 : null;
+  // Ceo ekran u punoj oštrini kad miruje; pri samookretanju 1 piksel po CSS pikselu, pri prevlačenju malo manje.
+  G.earthQ = moving ? (G.drag ? 0.75 : 1) : null;
   paintGlobe(G.ctx, G.proj, G.path, G.W, G.H, G.hs, picked, 1);
   G.earthQ = null;
   clearTimeout(G.fullT); if(moving && globeStyle==="sat") G.fullT = setTimeout(()=>{ G.lastDraw = 0; drawGlobe(); }, 160);
@@ -2265,7 +2275,7 @@ function paintGlobe(ctx, proj, path, W, H, hs, sel, k){     // k: uvećanje tač
     const glow = ctx.createRadialGradient(cx, cy, r*0.96, cx, cy, r*1.1);
     glow.addColorStop(0, "rgba(150,205,255,.55)"); glow.addColorStop(1, "rgba(150,205,255,0)");
     ctx.beginPath(); ctx.arc(cx, cy, r*1.1, 0, 2*Math.PI); ctx.fillStyle = glow; ctx.fill();
-    paintEarth(ctx, proj, (G && G.earthQ && ctx===G.ctx) ? G.earthQ : Math.min(1.5, t));
+    paintEarth(ctx, proj, (G && G.earthQ && ctx===G.ctx) ? G.earthQ : Math.min(2.5, t));
     // Obojene države se crtaju u poseban sloj (puna boja + ivica iste boje koja popunjava praznine između
     // poligona, npr. Srbija–Kosovo), pa se sloj prelije preko satelitske slike odjednom.
     const cv = ctx.canvas, L = paintGlobe.layer || (paintGlobe.layer = document.createElement("canvas"));
