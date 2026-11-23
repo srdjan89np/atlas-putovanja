@@ -2954,21 +2954,6 @@ async function exportMap(kind){
       if(h){ g.fillStyle = col.been; g.beginPath(); g.roundRect(x, yy + 44, Math.max(10, half*h/all.length), 10, 5); g.fill(); }
     });
     g.textAlign = "left";
-    // otključana dostignuća
-    const won = achState().filter(x=>x.done).map(x=>lang==="en" ? x.a.te : x.a.t);
-    if(won.length){
-      y += 3*78 + 50;
-      g.fillStyle = col.ink; g.font = F(700, 30, "d"); g.fillText(t("ach"), PAD, y);
-      y += 24; let x = PAD; g.font = F(700, 22);
-      for(const t of won){
-        const tw = g.measureText(t).width + 36;
-        if(x + tw > PAD + W){ x = PAD; y += 56; }
-        if(y + 44 > CH - 20) break;
-        g.fillStyle = col.been; g.beginPath(); g.roundRect(x, y, tw, 44, 22); g.fill();
-        g.fillStyle = col.surface; g.fillText(t, x + 18, y + 30);
-        x += tw + 10;
-      }
-    }
     const blob = await new Promise(ok => cv.toBlob(ok, "image/png"));
     await downloads.save({filename:t("file"), data:blob});
     msg.textContent = window.__nativeShareImage ? t("shareSent") : t("saved");
