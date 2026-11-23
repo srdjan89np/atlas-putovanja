@@ -2210,7 +2210,7 @@ function resizeGlobe(){
   if(!r.width || !r.height) return;
   G.W = r.width; G.H = r.height; c.width = Math.round(G.W*dpr); c.height = Math.round(G.H*dpr);
   G.ctx.setTransform(dpr,0,0,dpr,0,0);
-  G.R0 = Math.min(G.W, G.H)/2 - 8; G.proj.translate([G.W/2, G.H/2]).scale(G.R0*G.zoom);
+  G.R0 = Math.min(G.W, G.H)/2/1.12; G.proj.translate([G.W/2, G.H/2]).scale(G.R0*G.zoom);
   drawGlobe();
 }
 function gFill(code, hs){ return isBeen(code) ? G.col.been : isWant(code) ? G.col.want : (hs && hs.has(code) ? G.col.accent : G.col.land); }
@@ -2903,7 +2903,7 @@ async function exportMap(kind){
     let img, url = null;
     if(globeMode){            // globus u položaju u kome ga trenutno gledaš
       const S = MH*2; img = document.createElement("canvas"); img.width = img.height = S;
-      const gx = img.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(shareRot()).translate([S/2, S/2]).scale(S/2 - 6);
+      const gx = img.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(shareRot()).translate([S/2, S/2]).scale(S/2/1.12);
       paintGlobe(gx, pr, d3.geoPath(pr, gx), S, S, null, null, S / Math.max(300, G.W));
     } else {
       let body = "";
