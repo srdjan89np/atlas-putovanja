@@ -10,6 +10,10 @@
     "SystemBars": {
       "insetsHandling": "native",
       "style": "DEFAULT"
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_atlas",
+      "iconColor": "#38E1F2"
     }
   }
 }

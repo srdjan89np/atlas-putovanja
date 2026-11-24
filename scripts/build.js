@@ -53,6 +53,46 @@ const bridge = `<script>
   var AD = P.AdMob || (reg ? reg("AdMob") : null);
   var FS = P.Filesystem || (reg ? reg("Filesystem") : null);
   var SH = P.Share || (reg ? reg("Share") : null);
+  var LN = P.LocalNotifications || (reg ? reg("LocalNotifications") : null);
+  var PR = P.Preferences || (reg ? reg("Preferences") : null);
+  var RV = P.InAppReview || (reg ? reg("InAppReview") : null);
+  var ready = function (fn) { if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn); else setTimeout(fn, 0); };
+
+  // Podsetnik za dnevni kviz (lokalna obaveštenja, bez servera)
+  if (LN) {
+    window.__nativeNotify = {
+      perm: function () {
+        return LN.checkPermissions().then(function (p) {
+          if (p && p.display === "granted") return true;
+          return LN.requestPermissions().then(function (r) { return !!(r && r.display === "granted"); });
+        });
+      },
+      set: function (list) {
+        var ids = [7101, 7102, 7103, 7104, 7105, 7106, 7107].map(function (id) { return { id: id }; });
+        return LN.cancel({ notifications: ids }).catch(function () {}).then(function () {
+          if (!list || !list.length) return null;
+          return LN.checkPermissions().then(function (p) {
+            if (!p || p.display !== "granted") return null;
+            return LN.schedule({ notifications: list.map(function (n) {
+              return { id: n.id, title: n.title, body: n.body, schedule: { at: new Date(n.at), allowWhileIdle: true }, smallIcon: "ic_stat_atlas", iconColor: "#38E1F2", extra: { open: "quiz" } };
+            }) });
+          });
+        });
+      }
+    };
+    LN.addListener("localNotificationActionPerformed", function () {
+      ready(function () { if (window.setPage) try { window.setPage("quiz"); } catch (e) {} });
+    });
+  }
+  // Automatska rezervna kopija: Preferences (SharedPreferences) ulazi u Android Auto Backup na Google nalogu
+  if (PR) {
+    window.__nativeKV = {
+      get: function (k) { return PR.get({ key: k }).then(function (r) { return r ? r.value : null; }); },
+      set: function (k, v) { return PR.set({ key: k, value: v }); }
+    };
+  }
+  // Ocena aplikacije u Google Play (prozor prikazuje Google, najviše par puta godišnje)
+  if (RV) window.__nativeReview = function () { return RV.requestReview(); };
 
   // Rezervna kopija i slika mape: datoteka se upiše u keš aplikacije i otvori se Android „Deli“.
   if (FS && SH) {
@@ -125,6 +165,14 @@ const bridge = `<script>
       .catch(function () { setH(0); });
   }
 
+  // Link prijatelja (atlasputovanja://c/<kod> ili https://…/c/#<kod>) otvara poređenje
+  if (APP) {
+    var openUrl = function (u) { if (!u) return; ready(function () { setTimeout(function () { if (window.__atlasOpenUrl) window.__atlasOpenUrl(u); }, 500); }); };
+    APP.addListener("appUrlOpen", function (e) { openUrl(e && e.url); });
+    if (APP.getLaunchUrl) APP.getLaunchUrl().then(function (r) { openUrl(r && r.url); }).catch(function () {});
+  }
+  ready(function () { window.dispatchEvent(new Event("nativeready")); });
+
   // Dugme Nazad: prvo zatvara ono što je otvoreno u aplikaciji, pa tek onda izlazi.
   if (APP) APP.addListener("backButton", function () {
     if (window.__atlasBack && window.__atlasBack()) return;
@@ -140,6 +188,13 @@ html = swap(html, "https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/worl
 html = swap(html, "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js", "d3.min.js");
 // Android (Capacitor 8, SystemBars "native"): bez viewport-fit=cover sadržaj ne ulazi pod sistemske trake.
 html = html.replace(",viewport-fit=cover", "").replace(", viewport-fit=cover", "");
+// Fontovi su u paketu (rade bez interneta): Manrope i JetBrains Mono, OFL licenca
+html = html.replace(/<link rel="preconnect" href="https:\/\/fonts\.(googleapis|gstatic)\.com"[^>]*>\s*/g, "");
+html = html.replace(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com\/css2[^"]*">/g, `<style>
+@font-face{font-family:"Manrope";src:url(fonts/manrope.woff) format("woff");font-weight:200 800;font-display:swap}
+@font-face{font-family:"JetBrains Mono";src:url(fonts/jetbrainsmono.woff) format("woff");font-weight:100 800;font-display:swap}
+</style>`);
+if (html.includes("fonts.googleapis.com/css2")) throw new Error("Google Fonts link nije zamenjen lokalnim fontovima");
 const scripts = inline("@capacitor/core/dist/capacitor.js", true) + inline("@capacitor/app/dist/plugin.js", false) + bridge;
 if (!html.includes("</head>")) throw new Error("app/index.html: nema </head>");
 html = html.replace("</head>", scripts + "</head>");
@@ -149,4 +204,6 @@ fs.mkdirSync(WWW, { recursive: true });
 fs.writeFileSync(path.join(WWW, "index.html"), html);
 fs.copyFileSync(need(nm("jsvectormap/dist/maps/world.js"), "mape sveta"), path.join(WWW, "world.js"));
 fs.copyFileSync(need(nm("d3/dist/d3.min.js"), "d3"), path.join(WWW, "d3.min.js"));
+fs.mkdirSync(path.join(WWW, "fonts"), { recursive: true });
+for (const f of ["manrope.woff", "jetbrainsmono.woff", "OFL-Manrope.txt", "OFL-JetBrainsMono.txt"]) fs.copyFileSync(path.join(ROOT, "fonts", f), path.join(WWW, "fonts", f));
 console.log(`www/ spreman: index.html ${(html.length / 1024).toFixed(0)} KB, AdMob baner: ${TESTING ? "probni (Google test)" : "pravi"}, nagrada: ${REAL_REWARD && !TESTING ? "prava" : TESTING ? "probna" : "isključena (nema rewardId)"}`);
