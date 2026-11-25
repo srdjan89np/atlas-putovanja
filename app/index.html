@@ -2918,7 +2918,10 @@ document.addEventListener("input", e=>{
 });
 function applyLang(){
   applyTheme(); skyTick();
-  try{ const d = new Intl.DateTimeFormat(lang==="en" ? "en-GB" : "sr-Latn", {weekday:"long", day:"numeric", month:"long"}).format(new Date()); $("today").textContent = d.charAt(0).toUpperCase() + d.slice(1); }catch(e){}
+  // kratak datum (npr. „Sre, 25. nov“ / „Wed, 25 Nov“) da stane u zaglavlje i na uskim ekranima
+  try{ const now = new Date(), loc = lang==="en" ? "en-GB" : "sr-Latn";
+    const wd = new Intl.DateTimeFormat(loc, {weekday:"short"}).format(now).replace(/\.$/, ""), dm = new Intl.DateTimeFormat(loc, {day:"numeric", month:"short"}).format(now);
+    $("today").textContent = wd.charAt(0).toUpperCase() + wd.slice(1) + ", " + dm; }catch(e){}
   document.documentElement.lang = lang==="en" ? "en" : "sr-Latn";
   document.title = t("title");
   Object.assign(C, CONT[lang]);
