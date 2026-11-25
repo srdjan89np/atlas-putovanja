@@ -2044,7 +2044,7 @@ function renderStatsPage(){
   const vc = visitedCities();
   const tiles = [[pctTxt(been.length)+"%", t("ofWorld")], [pct(a/A), t("stArea")], [pct(p/P), t("stPop")], [new Set(been.map(c=>c.cont)).size + "/6", t("stConts")], [nf.format(trips.length), t("stTrips")],
     [nf.format(vc.length), t("stCities")], [nf.format(vc.filter(x=>x.cap).length), t("stCaps")], [ys[0] || "–", t("stFirst")]];
-  const shown = ys.slice(-8).reverse(), mx = Math.max(1, ...shown.map(y=>perY[y]));
+  const shown = ys.slice().reverse(), mx = Math.max(1, ...shown.map(y=>perY[y]));
   box.innerHTML = `<h2><span>${t("stTitle")}</span></h2><div class="stgrid">${tiles.map(([n,l])=>`<div class="st"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>
     <div class="yrs"><h3>${t("stByYear")}</h3>${shown.length ? shown.map(y=>`<div class="yr2"><b>${esc(y)}</b><span class="yb"><i style="width:${perY[y]/mx*100}%"></i></span><em>${perY[y]}</em></div>`).join("") : `<small class="secp" style="margin:0">${t("stNoTrips")}</small>`}</div>
     <div class="yrs"><h3>${t("stCityList")}${vc.length ? ` (${vc.length})` : ""}</h3>${vc.length ? `<div class="cities">${vc.slice().sort((x,y)=>(y.cap-x.cap) || x.name.localeCompare(y.name, lang==="en" ? "en" : "sr")).map(x=>`<span class="${x.cap ? "cap" : ""}" title="${esc(BY_CODE[x.code].name)}">${BY_CODE[x.code].flag} ${esc(x.name)}</span>`).join("")}</div>` : `<small class="secp" style="margin:0">${t("stCityNone")}</small>`}</div>`;
