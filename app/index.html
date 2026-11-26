@@ -787,6 +787,27 @@ html.has-native p.nat-only{display:flex!important}
 .cmpmap{width:100%;height:auto;display:block;margin:10px 0 6px;border-radius:14px;background:var(--surface)}
 .cmpleg{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px}
 .cmpleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* Brzo označavanje država */
+.qp{position:fixed;inset:0;z-index:90;background:rgb(3 6 15 / .55);display:flex;align-items:flex-end;justify-content:center}
+.qp[hidden]{display:none}
+.qp-card{width:min(560px,100%);height:min(92svh,860px);background:var(--bg);color:var(--ink);border-radius:28px 28px 0 0;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -20px 60px rgb(0 0 0 / .35)}
+.qp-head{padding:20px 16px 10px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+.qp-head h2{margin:0;font-size:24px;letter-spacing:-.02em}
+.qp-head p{margin:4px 0 0;color:var(--muted);font-size:14px;line-height:1.4}
+.qp-conts{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.qp-conts button{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:13px}
+.qp-conts button[aria-pressed="true"]{background:var(--pop);color:var(--pop-ink);border-color:transparent}
+.qp-grid{flex:1;overflow-y:auto;padding:12px 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;align-content:start}
+.qpc{display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 12px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:14px;text-align:left;line-height:1.2}
+.qpc .fl{font-size:22px;flex:none}
+.qpc .nm{overflow-wrap:anywhere}
+.qpc[aria-pressed="true"]{background:var(--been-soft);border-color:var(--been);box-shadow:inset 0 0 0 1px var(--been)}
+.qpc[aria-pressed="true"]::after{content:"✓";margin-left:auto;color:var(--been);font-weight:800}
+.qp-none{color:var(--muted);grid-column:1/-1;text-align:center;margin:24px 0}
+.qp-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);font-weight:800}
+.qpopen{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px dashed var(--accent);background:transparent;color:var(--accent);font:inherit;font-weight:800;font-size:14px;margin-top:8px}
+.qpopen svg{width:16px;height:16px}
 </style>
 <script>/*! qrcode-generator (c) 2009 Kazuhiko Arase, MIT License — https://github.com/kazuhikoarase/qrcode-generator */
 var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,h=null,i=[],v={},_=function(a,f){r=n*4+17,t=(function(e){for(var u=new Array(e),o=0;o<e;o+=1){u[o]=new Array(e);for(var d=0;d<e;d+=1)u[o][d]=null}return u})(r),B(0,0),B(r-7,0),B(0,r-7),E(),T(),m(a,f),n>=7&&N(a),h==null&&(h=nr(n,s,i)),U(h,f)},B=function(a,f){for(var e=-1;e<=7;e+=1)if(!(a+e<=-1||r<=a+e))for(var u=-1;u<=7;u+=1)f+u<=-1||r<=f+u||(0<=e&&e<=6&&(u==0||u==6)||0<=u&&u<=6&&(e==0||e==6)||2<=e&&e<=4&&2<=u&&u<=4?t[a+e][f+u]=!0:t[a+e][f+u]=!1)},y=function(){for(var a=0,f=0,e=0;e<8;e+=1){_(!0,e);var u=k.getLostPoint(v);(e==0||a>u)&&(a=u,f=e)}return f},T=function(){for(var a=8;a<r-8;a+=1)t[a][6]==null&&(t[a][6]=a%2==0);for(var f=8;f<r-8;f+=1)t[6][f]==null&&(t[6][f]=f%2==0)},E=function(){for(var a=k.getPatternPosition(n),f=0;f<a.length;f+=1)for(var e=0;e<a.length;e+=1){var u=a[f],o=a[e];if(t[u][o]==null)for(var d=-2;d<=2;d+=1)for(var c=-2;c<=2;c+=1)d==-2||d==2||c==-2||c==2||d==0&&c==0?t[u+d][o+c]=!0:t[u+d][o+c]=!1}},N=function(a){for(var f=k.getBCHTypeNumber(n),e=0;e<18;e+=1){var u=!a&&(f>>e&1)==1;t[Math.floor(e/3)][e%3+r-8-3]=u}for(var e=0;e<18;e+=1){var u=!a&&(f>>e&1)==1;t[e%3+r-8-3][Math.floor(e/3)]=u}},m=function(a,f){for(var e=s<<3|f,u=k.getBCHTypeInfo(e),o=0;o<15;o+=1){var d=!a&&(u>>o&1)==1;o<6?t[o][8]=d:o<8?t[o+1][8]=d:t[r-15+o][8]=d}for(var o=0;o<15;o+=1){var d=!a&&(u>>o&1)==1;o<8?t[8][r-o-1]=d:o<9?t[8][15-o-1+1]=d:t[8][15-o-1]=d}t[r-8][8]=!a},U=function(a,f){for(var e=-1,u=r-1,o=7,d=0,c=k.getMaskFunction(f),p=r-1;p>0;p-=2)for(p==6&&(p-=1);;){for(var b=0;b<2;b+=1)if(t[u][p-b]==null){var C=!1;d<a.length&&(C=(a[d]>>>o&1)==1);var A=c(u,p-b);A&&(C=!C),t[u][p-b]=C,o-=1,o==-1&&(d+=1,o=7)}if(u+=e,u<0||r<=u){u-=e,e=-e;break}}},H=function(a,f){for(var e=0,u=0,o=0,d=new Array(f.length),c=new Array(f.length),p=0;p<f.length;p+=1){var b=f[p].dataCount,C=f[p].totalCount-b;u=Math.max(u,b),o=Math.max(o,C),d[p]=new Array(b);for(var A=0;A<d[p].length;A+=1)d[p][A]=255&a.getBuffer()[A+e];e+=b;var R=k.getErrorCorrectPolynomial(C),I=K(d[p],R.getLength()-1),S=I.mod(R);c[p]=new Array(R.getLength()-1);for(var A=0;A<c[p].length;A+=1){var X=A+S.getLength()-c[p].length;c[p][A]=X>=0?S.getAt(X):0}}for(var Z=0,A=0;A<f.length;A+=1)Z+=f[A].totalCount;for(var J=new Array(Z),Q=0,A=0;A<u;A+=1)for(var p=0;p<f.length;p+=1)A<d[p].length&&(J[Q]=d[p][A],Q+=1);for(var A=0;A<o;A+=1)for(var p=0;p<f.length;p+=1)A<c[p].length&&(J[Q]=c[p][A],Q+=1);return J},nr=function(a,f,e){for(var u=Y.getRSBlocks(a,f),o=G(),d=0;d<e.length;d+=1){var c=e[d];o.put(c.getMode(),4),o.put(c.getLength(),k.getLengthInBits(c.getMode(),a)),c.write(o)}for(var p=0,d=0;d<u.length;d+=1)p+=u[d].dataCount;if(o.getLengthInBits()>p*8)throw"code length overflow. ("+o.getLengthInBits()+">"+p*8+")";for(o.getLengthInBits()+4<=p*8&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=p*8||(o.put(g,8),o.getLengthInBits()>=p*8));)o.put(l,8);return H(o,u)};v.addData=function(a,f){f=f||"Byte";var e=null;switch(f){case"Numeric":e=$(a);break;case"Alphanumeric":e=W(a);break;case"Byte":e=V(a);break;case"Kanji":e=q(a);break;default:throw"mode:"+f}i.push(e),h=null},v.isDark=function(a,f){if(a<0||r<=a||f<0||r<=f)throw a+","+f;return t[a][f]},v.getModuleCount=function(){return r},v.make=function(){if(n<1){for(var a=1;a<40;a++){for(var f=Y.getRSBlocks(a,s),e=G(),u=0;u<i.length;u++){var o=i[u];e.put(o.getMode(),4),e.put(o.getLength(),k.getLengthInBits(o.getMode(),a)),o.write(e)}for(var d=0,u=0;u<f.length;u++)d+=f[u].dataCount;if(e.getLengthInBits()<=d*8)break}n=a}_(!1,y())},v.createTableTag=function(a,f){a=a||2,f=typeof f>"u"?a*4:f;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+f+"px;",e+='">',e+="<tbody>";for(var u=0;u<v.getModuleCount();u+=1){e+="<tr>";for(var o=0;o<v.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+a+"px;",e+=" height: "+a+"px;",e+=" background-color: ",e+=v.isDark(u,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>",e},v.createSvgTag=function(a,f,e,u){var o={};typeof arguments[0]=="object"&&(o=arguments[0],a=o.cellSize,f=o.margin,e=o.alt,u=o.title),a=a||2,f=typeof f>"u"?a*4:f,e=typeof e=="string"?{text:e}:e||{},e.text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,u=typeof u=="string"?{text:u}:u||{},u.text=u.text||null,u.id=u.text?u.id||"qrcode-title":null;var d=v.getModuleCount()*a+f*2,c,p,b,C,A="",R;for(R="l"+a+",0 0,"+a+" -"+a+",0 0,-"+a+"z ",A+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',A+=o.scalable?"":' width="'+d+'px" height="'+d+'px"',A+=' viewBox="0 0 '+d+" "+d+'" ',A+=' preserveAspectRatio="xMinYMin meet"',A+=u.text||e.text?' role="img" aria-labelledby="'+F([u.id,e.id].join(" ").trim())+'"':"",A+=">",A+=u.text?'<title id="'+F(u.id)+'">'+F(u.text)+"</title>":"",A+=e.text?'<description id="'+F(e.id)+'">'+F(e.text)+"</description>":"",A+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',A+='<path d="',b=0;b<v.getModuleCount();b+=1)for(C=b*a+f,c=0;c<v.getModuleCount();c+=1)v.isDark(b,c)&&(p=c*a+f,A+="M"+p+","+C+R);return A+='" stroke="transparent" fill="black"/>',A+="</svg>",A},v.createDataURL=function(a,f){a=a||2,f=typeof f>"u"?a*4:f;var e=v.getModuleCount()*a+f*2,u=f,o=e-f;return er(e,e,function(d,c){if(u<=d&&d<o&&u<=c&&c<o){var p=Math.floor((d-u)/a),b=Math.floor((c-u)/a);return v.isDark(b,p)?0:1}else return 1})},v.createImgTag=function(a,f,e){a=a||2,f=typeof f>"u"?a*4:f;var u=v.getModuleCount()*a+f*2,o="";return o+="<img",o+=' src="',o+=v.createDataURL(a,f),o+='"',o+=' width="',o+=u,o+='"',o+=' height="',o+=u,o+='"',e&&(o+=' alt="',o+=F(e),o+='"'),o+="/>",o};var F=function(a){for(var f="",e=0;e<a.length;e+=1){var u=a.charAt(e);switch(u){case"<":f+="&lt;";break;case">":f+="&gt;";break;case"&":f+="&amp;";break;case'"':f+="&quot;";break;default:f+=u;break}}return f},ar=function(a){var f=1;a=typeof a>"u"?f*2:a;var e=v.getModuleCount()*f+a*2,u=a,o=e-a,d,c,p,b,C,A={"\u2588\u2588":"\u2588","\u2588 ":"\u2580"," \u2588":"\u2584","  ":" "},R={"\u2588\u2588":"\u2580","\u2588 ":"\u2580"," \u2588":" ","  ":" "},I="";for(d=0;d<e;d+=2){for(p=Math.floor((d-u)/f),b=Math.floor((d+1-u)/f),c=0;c<e;c+=1)C="\u2588",u<=c&&c<o&&u<=d&&d<o&&v.isDark(p,Math.floor((c-u)/f))&&(C=" "),u<=c&&c<o&&u<=d+1&&d+1<o&&v.isDark(b,Math.floor((c-u)/f))?C+=" ":C+="\u2588",I+=a<1&&d+1>=o?R[C]:A[C];I+=`
@@ -847,6 +868,7 @@ var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,
   <div class="filters">
     <input class="search" id="q" type="search" data-i18n-ph="searchPh" placeholder="Pretraži državu ili kod (npr. JP)" autocomplete="off" data-i18n-aria="searchAria" aria-label="Pretraga država">
     <div class="chips" id="status" role="group" data-i18n-aria="filterAria" aria-label="Filter po statusu"></div>
+    <button class="qpopen" type="button" id="qpOpen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="qpOpen">Brzo označi države</span></button>
   </div>
 
   <div id="listarea">
@@ -938,6 +960,18 @@ var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,
   <div class="adslot" id="admob-banner" data-ad-unit="ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX" data-ad-size="BANNER_320x50" data-i18n="adLabel">Reklama · 320×50</div>
 </div>
 
+<div class="qp" id="qp" role="dialog" aria-modal="true" aria-labelledby="qpTitle" hidden>
+  <div class="qp-card">
+    <div class="qp-head">
+      <div><h2 id="qpTitle" data-i18n="qpT">Gde si sve bio?</h2><p data-i18n="qpP">Dodirni države koje si posetio. Uvek možeš da dodaš još kasnije.</p></div>
+      <input class="search" id="qpQ" type="search" autocomplete="off" data-i18n-ph="qpSearch" placeholder="Pretraži državu" data-i18n-aria="qpSearch" aria-label="Pretraži državu">
+      <div class="qp-conts" id="qpConts" role="group" data-i18n-aria="contsAria" aria-label="Kontinenti"></div>
+    </div>
+    <div class="qp-grid" id="qpGrid"></div>
+    <div class="qp-foot"><span id="qpCount" aria-live="polite"></span><button class="onb-next" type="button" id="qpDone" data-i18n="qpDone">Gotovo</button></div>
+  </div>
+</div>
+
 <div class="onb" id="onb" role="dialog" aria-modal="true" aria-labelledby="onbTitle" hidden>
   <div class="onb-card">
     <div class="onb-top">
@@ -1005,7 +1039,7 @@ const T = {
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
   cmpMsg:"Uporedi svoja putovanja sa mnom u aplikaciji Atlas putovanja! Otvori link: {l}",
-  cmpQr:"QR kod", cmpQrHint:"Neka prijatelj skenira kod kamerom telefona.", cmpOpened:"Prijateljeva mapa je otvorena — pogledaj poređenje.", cmpMapAria:"Mapa poređenja", cmpLegBoth:"oboje", cmpLegMe:"samo ti", cmpLegThem:"samo {f}",
+  cmpQr:"QR kod", qpT:"Gde si sve bio?", qpP:"Dodirni države koje si posetio. Uvek možeš da dodaš još kasnije.", qpSearch:"Pretraži državu", qpDone:"Gotovo", qpOpen:"Brzo označi države", qpCount:"Obiđeno: {n}", qpNone:"Nema takve države.", cmpQrHint:"Neka prijatelj skenira kod kamerom telefona.", cmpOpened:"Prijateljeva mapa je otvorena — pogledaj poređenje.", cmpMapAria:"Mapa poređenja", cmpLegBoth:"oboje", cmpLegMe:"samo ti", cmpLegThem:"samo {f}",
   remT:"Podsetnik za dnevni kviz", remOff:"Isključen", remOn:"Uključen", remAt:"u", remHint:"Svakog dana te podseti na novi izazov i da ne prekineš niz.", remDenied:"Obaveštenja su isključena za aplikaciju. Uključi ih u podešavanjima telefona.", remSet:"Podsetnik je uključen u {t}.", remTitle:"Dnevni izazov te čeka", remStreak:"Niz od {n} dana je u opasnosti — odigraj današnji kviz!", remNew:"10 pitanja, 15 sekundi za svako. Koliko znaš danas?",
   autoBk:"Automatska rezervna kopija je uključena: Android je čuva na tvom Google nalogu i vraća je kad instaliraš aplikaciju na novom telefonu.", autoRestored:"Podaci su vraćeni iz automatske rezervne kopije.", cmpClear:"Ukloni poređenje",
   stCaps:"prestonica", stCityList:"Gradovi", stCityNone:"Upiši gradove u Dnevnik i ovde će se pojaviti.",
@@ -1067,7 +1101,7 @@ const T = {
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
   cmpMsg:"Compare your travels with me in the Travel Atlas app! Open the link: {l}",
-  cmpQr:"QR code", cmpQrHint:"Let your friend scan it with their phone camera.", cmpOpened:"Your friend's map is open — see the comparison.", cmpMapAria:"Comparison map", cmpLegBoth:"both", cmpLegMe:"only you", cmpLegThem:"only {f}",
+  cmpQr:"QR code", qpT:"Where have you been?", qpP:"Tap the countries you\'ve visited. You can always add more later.", qpSearch:"Search for a country", qpDone:"Done", qpOpen:"Quick-mark countries", qpCount:"Visited: {n}", qpNone:"No such country.", cmpQrHint:"Let your friend scan it with their phone camera.", cmpOpened:"Your friend's map is open — see the comparison.", cmpMapAria:"Comparison map", cmpLegBoth:"both", cmpLegMe:"only you", cmpLegThem:"only {f}",
   remT:"Daily quiz reminder", remOff:"Off", remOn:"On", remAt:"at", remHint:"A daily nudge for the new challenge so your streak doesn't break.", remDenied:"Notifications are off for the app. Turn them on in your phone settings.", remSet:"Reminder set for {t}.", remTitle:"Your daily challenge is waiting", remStreak:"Your {n}-day streak is at risk — play today's quiz!", remNew:"10 questions, 15 seconds each. How much do you know today?",
   autoBk:"Automatic backup is on: Android keeps it in your Google account and restores it when you install the app on a new phone.", autoRestored:"Your data was restored from the automatic backup.", cmpClear:"Clear comparison",
   stCaps:"capitals", stCityList:"Cities", stCityNone:"Add cities to your Journal and they'll show up here.",
@@ -2447,11 +2481,22 @@ function gLoop(ts){
     const k = Math.min(1, (ts - G.anim.t0)/900), e = k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k+2, 3)/2;
     G.rot = G.anim.from.map((v,i) => v + (G.anim.to[i]-v)*e);
     if(k >= 1) G.anim = null; else again = true;
-  } else if(G.spin && !G.drag){ G.rot[0] += (G.last ? Math.min(50, ts - G.last) : 16) * 0.006; again = true; }
+  } else if(G.spin && !G.drag && spinAllowed()){ G.rot[0] += (G.last ? Math.min(50, ts - G.last) : 16) * 0.006; again = true; }
   G.last = ts; drawGlobe();
-  if(again || G.spin) gKick();
+  if(again) gKick();
 }
 function gKick(){ if(G && !G.raf) G.raf = requestAnimationFrame(gLoop); }
+// Štednja baterije: globus se sam okreće samo kad je na ekranu (Početna, aplikacija u prvom planu),
+// najviše 20 s posle poslednjeg dodira, i ne kad je baterija slaba ili je uključeno „manje pokreta“.
+let lastTouch = Date.now(), lowBattery = false;
+const reduceMotion = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : null;
+function spinAllowed(){
+  return (document.body.dataset.page || "home")==="home" && !document.hidden && !lowBattery && !(reduceMotion && reduceMotion.matches) && Date.now() - lastTouch < 20000;
+}
+function wakeSpin(){ lastTouch = Date.now(); if(G && G.spin && view==="globe") gKick(); }
+["pointerdown","keydown","wheel"].forEach(ev=>document.addEventListener(ev, wakeSpin, {passive:true, capture:true}));
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) wakeSpin(); });
+try{ if(navigator.getBattery) navigator.getBattery().then(b=>{ const upd = ()=>{ lowBattery = !b.charging && b.level <= 0.2; if(!lowBattery) wakeSpin(); }; upd(); b.addEventListener("levelchange", upd); b.addEventListener("chargingchange", upd); }).catch(()=>{}); }catch(e){}
 function gZoom(f){ if(!G) return; G.zoom = Math.max(1, Math.min(5, G.zoom*f)); G.proj.scale(G.R0*G.zoom); drawGlobe(); }
 function flyTo(code){
   if(!G) return;
@@ -3293,6 +3338,7 @@ function closeOnb(){
   $("onb").hidden = true;
   try{ localStorage.setItem("atlas-onboarded", "1"); }catch(e){}
   if(onbReturn && onbReturn.focus) onbReturn.focus();
+  if(!DEMO && !Object.keys(marks).length) openQp();
 }
 $("onbNext").addEventListener("click", ()=>{ if(onbStep < ONB_ART.length-1){ onbStep++; renderOnb(); $("onbNext").focus(); } else closeOnb(); });
 $("onbBack").addEventListener("click", ()=>{ if(onbStep>0){ onbStep--; renderOnb(); } });
@@ -3310,6 +3356,37 @@ document.addEventListener("keydown", e=>{
     else if(!e.shiftKey && i===f.length-1){ e.preventDefault(); f[0].focus(); }
   }
 });
+
+
+/* ---------- brzo označavanje (prvi put i iz liste) ---------- */
+let qpCont = "E", qpReturn = null, qpChanged = false;
+function renderQp(){
+  const L = lang==="en" ? "en" : "sr", q = fold($("qpQ").value.trim());
+  $("qpConts").innerHTML = Object.entries(CONT[L]).map(([k,n])=>`<button type="button" data-qpc="${k}" aria-pressed="${!q && k===qpCont}">${esc(n)}</button>`).join("");
+  const list = COUNTRIES.filter(c => q ? (fold(c.name).includes(q) || c.code.toLowerCase()===q) : c.cont===qpCont)
+    .sort((a,b)=>a.name.localeCompare(b.name, L==="en" ? "en" : "sr"));
+  $("qpGrid").innerHTML = list.length ? list.map(c=>`<button type="button" class="qpc" data-qp="${c.code}" aria-pressed="${isBeen(c.code)}"><span class="fl" aria-hidden="true">${c.flag}</span><span class="nm">${esc(c.name)}</span></button>`).join("") : `<p class="qp-none">${t("qpNone")}</p>`;
+  const n = COUNTRIES.filter(c=>isBeen(c.code)).length;
+  $("qpCount").textContent = fill(t("qpCount"), {n});
+}
+function openQp(){ if(DEMO) return; qpReturn = document.activeElement; qpChanged = false; $("qpQ").value = ""; renderQp(); $("qp").hidden = false; $("qpQ").focus({preventScroll:true}); }
+function closeQp(){
+  $("qp").hidden = true;
+  if(qpChanged){ announce = true; changed(); render(); }
+  if(qpReturn && qpReturn.focus) qpReturn.focus();
+}
+$("qpConts").addEventListener("click", e=>{ const b = e.target.closest("[data-qpc]"); if(!b) return; qpCont = b.dataset.qpc; $("qpQ").value = ""; renderQp(); $("qpGrid").scrollTop = 0; });
+$("qpQ").addEventListener("input", renderQp);
+$("qpGrid").addEventListener("click", e=>{
+  const b = e.target.closest("[data-qp]"); if(!b) return;
+  const code = b.dataset.qp, w = isWant(code), on = !isBeen(code);
+  if(on) marks[code] = w ? "both" : "been"; else if(w) marks[code] = "want"; else delete marks[code];
+  b.setAttribute("aria-pressed", String(on)); qpChanged = true; lsSet();
+  $("qpCount").textContent = fill(t("qpCount"), {n:COUNTRIES.filter(c=>isBeen(c.code)).length});
+});
+$("qpDone").addEventListener("click", closeQp);
+$("qpOpen").addEventListener("click", openQp);
+document.addEventListener("keydown", e=>{ if(!$("qp").hidden && e.key==="Escape") closeQp(); });
 
 /* ---------- rezervna kopija ---------- */
 const fill = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
