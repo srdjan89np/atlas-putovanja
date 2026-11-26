@@ -812,6 +812,39 @@ html.has-native p.nat-only{display:flex!important}
 /* Globus: van kugle prst pomera stranicu, unutar kugle okreće globus */
 .mapbox:has(#globe:not([hidden])){touch-action:pan-x pan-y!important}
 #globe{touch-action:pan-x pan-y}
+
+/* Godišnji pregled */
+.yrbtn{display:flex;align-items:center;gap:14px;width:100%;margin:4px 0 14px;padding:14px 16px;border:0;border-radius:22px;background:linear-gradient(120deg,#1B2E5C,#0A1430 60%,#3B1F5C);color:#fff;font:inherit;text-align:left;box-shadow:0 10px 30px rgb(10 20 48 / .25)}
+.yrbtn .yrb-k{font-size:28px}
+.yrbtn b{display:block;font-size:18px}
+.yrbtn small{display:block;color:rgb(255 255 255 / .75);font-size:13px;margin-top:2px}
+.yrbtn svg{width:18px;height:18px;margin-left:auto;flex:none}
+.yr{position:fixed;inset:0;z-index:95;color:#fff;font-family:Manrope,system-ui,sans-serif;white-space:normal;background:radial-gradient(120% 80% at 50% 30%,var(--sky1,#1B2E5C),var(--sky2,#0A1430) 55%,var(--sky3,#03060F));display:flex;flex-direction:column}
+.yr[hidden]{display:none}
+.yr-bars{display:flex;gap:4px;padding:calc(12px + env(safe-area-inset-top)) 14px 0}
+.yr-bars i{flex:1;height:4px;border-radius:4px;background:rgb(255 255 255 / .25);overflow:hidden;position:relative}
+.yr-bars i.done{background:#fff}
+.yr-bars i.on::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:left;animation:yrbar 6s linear forwards}
+@keyframes yrbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.yr-x{position:absolute;right:10px;top:calc(22px + env(safe-area-inset-top));z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:rgb(255 255 255 / .14);color:#fff;font-size:18px}
+.yr-slide{flex:1;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:30px 24px 60px;text-align:center;animation:yrin .45s ease}
+@keyframes yrin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.yr-k{margin:0;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:rgb(255 255 255 / .75)}
+.yr-big{margin:0;font-size:min(34vw,150px);font-weight:800;letter-spacing:-.05em;line-height:.9;color:var(--pop,#7FEAF5)}
+.yr-num{font-size:min(30vw,130px);font-weight:800;letter-spacing:-.05em;line-height:.9;color:var(--pop,#7FEAF5)}
+.yr-num small{font-size:.35em;color:rgb(255 255 255 / .6)}
+.yr-sub{margin:0;font-size:18px;font-weight:600;max-width:320px;line-height:1.35}
+.yr-flags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;font-size:30px;max-width:340px}
+.yr-flags em{font-size:16px;font-style:normal;font-weight:800;align-self:center}
+.yr-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:360px}
+.yr-chips span{padding:8px 12px;border-radius:999px;background:rgb(255 255 255 / .12);font-weight:700;font-size:14px}
+.yr-slide canvas{width:min(78vw,340px);height:auto}
+.yr-share{position:relative;z-index:3}
+.yr-msg{color:rgb(255 255 255 / .75)}
+.yr-nav{position:absolute;top:80px;bottom:120px;width:35%;border:0;background:transparent;z-index:1}
+.yr-prev{left:0}.yr-next{right:0;width:65%}
+.yr .s6 ~ .yr-nav{bottom:200px}
+body.noscroll{overflow:hidden}
 </style>
 <script>/*! qrcode-generator (c) 2009 Kazuhiko Arase, MIT License — https://github.com/kazuhikoarase/qrcode-generator */
 var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,h=null,i=[],v={},_=function(a,f){r=n*4+17,t=(function(e){for(var u=new Array(e),o=0;o<e;o+=1){u[o]=new Array(e);for(var d=0;d<e;d+=1)u[o][d]=null}return u})(r),B(0,0),B(r-7,0),B(0,r-7),E(),T(),m(a,f),n>=7&&N(a),h==null&&(h=nr(n,s,i)),U(h,f)},B=function(a,f){for(var e=-1;e<=7;e+=1)if(!(a+e<=-1||r<=a+e))for(var u=-1;u<=7;u+=1)f+u<=-1||r<=f+u||(0<=e&&e<=6&&(u==0||u==6)||0<=u&&u<=6&&(e==0||e==6)||2<=e&&e<=4&&2<=u&&u<=4?t[a+e][f+u]=!0:t[a+e][f+u]=!1)},y=function(){for(var a=0,f=0,e=0;e<8;e+=1){_(!0,e);var u=k.getLostPoint(v);(e==0||a>u)&&(a=u,f=e)}return f},T=function(){for(var a=8;a<r-8;a+=1)t[a][6]==null&&(t[a][6]=a%2==0);for(var f=8;f<r-8;f+=1)t[6][f]==null&&(t[6][f]=f%2==0)},E=function(){for(var a=k.getPatternPosition(n),f=0;f<a.length;f+=1)for(var e=0;e<a.length;e+=1){var u=a[f],o=a[e];if(t[u][o]==null)for(var d=-2;d<=2;d+=1)for(var c=-2;c<=2;c+=1)d==-2||d==2||c==-2||c==2||d==0&&c==0?t[u+d][o+c]=!0:t[u+d][o+c]=!1}},N=function(a){for(var f=k.getBCHTypeNumber(n),e=0;e<18;e+=1){var u=!a&&(f>>e&1)==1;t[Math.floor(e/3)][e%3+r-8-3]=u}for(var e=0;e<18;e+=1){var u=!a&&(f>>e&1)==1;t[e%3+r-8-3][Math.floor(e/3)]=u}},m=function(a,f){for(var e=s<<3|f,u=k.getBCHTypeInfo(e),o=0;o<15;o+=1){var d=!a&&(u>>o&1)==1;o<6?t[o][8]=d:o<8?t[o+1][8]=d:t[r-15+o][8]=d}for(var o=0;o<15;o+=1){var d=!a&&(u>>o&1)==1;o<8?t[8][r-o-1]=d:o<9?t[8][15-o-1+1]=d:t[8][15-o-1]=d}t[r-8][8]=!a},U=function(a,f){for(var e=-1,u=r-1,o=7,d=0,c=k.getMaskFunction(f),p=r-1;p>0;p-=2)for(p==6&&(p-=1);;){for(var b=0;b<2;b+=1)if(t[u][p-b]==null){var C=!1;d<a.length&&(C=(a[d]>>>o&1)==1);var A=c(u,p-b);A&&(C=!C),t[u][p-b]=C,o-=1,o==-1&&(d+=1,o=7)}if(u+=e,u<0||r<=u){u-=e,e=-e;break}}},H=function(a,f){for(var e=0,u=0,o=0,d=new Array(f.length),c=new Array(f.length),p=0;p<f.length;p+=1){var b=f[p].dataCount,C=f[p].totalCount-b;u=Math.max(u,b),o=Math.max(o,C),d[p]=new Array(b);for(var A=0;A<d[p].length;A+=1)d[p][A]=255&a.getBuffer()[A+e];e+=b;var R=k.getErrorCorrectPolynomial(C),I=K(d[p],R.getLength()-1),S=I.mod(R);c[p]=new Array(R.getLength()-1);for(var A=0;A<c[p].length;A+=1){var X=A+S.getLength()-c[p].length;c[p][A]=X>=0?S.getAt(X):0}}for(var Z=0,A=0;A<f.length;A+=1)Z+=f[A].totalCount;for(var J=new Array(Z),Q=0,A=0;A<u;A+=1)for(var p=0;p<f.length;p+=1)A<d[p].length&&(J[Q]=d[p][A],Q+=1);for(var A=0;A<o;A+=1)for(var p=0;p<f.length;p+=1)A<c[p].length&&(J[Q]=c[p][A],Q+=1);return J},nr=function(a,f,e){for(var u=Y.getRSBlocks(a,f),o=G(),d=0;d<e.length;d+=1){var c=e[d];o.put(c.getMode(),4),o.put(c.getLength(),k.getLengthInBits(c.getMode(),a)),c.write(o)}for(var p=0,d=0;d<u.length;d+=1)p+=u[d].dataCount;if(o.getLengthInBits()>p*8)throw"code length overflow. ("+o.getLengthInBits()+">"+p*8+")";for(o.getLengthInBits()+4<=p*8&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=p*8||(o.put(g,8),o.getLengthInBits()>=p*8));)o.put(l,8);return H(o,u)};v.addData=function(a,f){f=f||"Byte";var e=null;switch(f){case"Numeric":e=$(a);break;case"Alphanumeric":e=W(a);break;case"Byte":e=V(a);break;case"Kanji":e=q(a);break;default:throw"mode:"+f}i.push(e),h=null},v.isDark=function(a,f){if(a<0||r<=a||f<0||r<=f)throw a+","+f;return t[a][f]},v.getModuleCount=function(){return r},v.make=function(){if(n<1){for(var a=1;a<40;a++){for(var f=Y.getRSBlocks(a,s),e=G(),u=0;u<i.length;u++){var o=i[u];e.put(o.getMode(),4),e.put(o.getLength(),k.getLengthInBits(o.getMode(),a)),o.write(e)}for(var d=0,u=0;u<f.length;u++)d+=f[u].dataCount;if(e.getLengthInBits()<=d*8)break}n=a}_(!1,y())},v.createTableTag=function(a,f){a=a||2,f=typeof f>"u"?a*4:f;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+f+"px;",e+='">',e+="<tbody>";for(var u=0;u<v.getModuleCount();u+=1){e+="<tr>";for(var o=0;o<v.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+a+"px;",e+=" height: "+a+"px;",e+=" background-color: ",e+=v.isDark(u,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>",e},v.createSvgTag=function(a,f,e,u){var o={};typeof arguments[0]=="object"&&(o=arguments[0],a=o.cellSize,f=o.margin,e=o.alt,u=o.title),a=a||2,f=typeof f>"u"?a*4:f,e=typeof e=="string"?{text:e}:e||{},e.text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,u=typeof u=="string"?{text:u}:u||{},u.text=u.text||null,u.id=u.text?u.id||"qrcode-title":null;var d=v.getModuleCount()*a+f*2,c,p,b,C,A="",R;for(R="l"+a+",0 0,"+a+" -"+a+",0 0,-"+a+"z ",A+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',A+=o.scalable?"":' width="'+d+'px" height="'+d+'px"',A+=' viewBox="0 0 '+d+" "+d+'" ',A+=' preserveAspectRatio="xMinYMin meet"',A+=u.text||e.text?' role="img" aria-labelledby="'+F([u.id,e.id].join(" ").trim())+'"':"",A+=">",A+=u.text?'<title id="'+F(u.id)+'">'+F(u.text)+"</title>":"",A+=e.text?'<description id="'+F(e.id)+'">'+F(e.text)+"</description>":"",A+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',A+='<path d="',b=0;b<v.getModuleCount();b+=1)for(C=b*a+f,c=0;c<v.getModuleCount();c+=1)v.isDark(b,c)&&(p=c*a+f,A+="M"+p+","+C+R);return A+='" stroke="transparent" fill="black"/>',A+="</svg>",A},v.createDataURL=function(a,f){a=a||2,f=typeof f>"u"?a*4:f;var e=v.getModuleCount()*a+f*2,u=f,o=e-f;return er(e,e,function(d,c){if(u<=d&&d<o&&u<=c&&c<o){var p=Math.floor((d-u)/a),b=Math.floor((c-u)/a);return v.isDark(b,p)?0:1}else return 1})},v.createImgTag=function(a,f,e){a=a||2,f=typeof f>"u"?a*4:f;var u=v.getModuleCount()*a+f*2,o="";return o+="<img",o+=' src="',o+=v.createDataURL(a,f),o+='"',o+=' width="',o+=u,o+='"',o+=' height="',o+=u,o+='"',e&&(o+=' alt="',o+=F(e),o+='"'),o+="/>",o};var F=function(a){for(var f="",e=0;e<a.length;e+=1){var u=a.charAt(e);switch(u){case"<":f+="&lt;";break;case">":f+="&gt;";break;case"&":f+="&amp;";break;case'"':f+="&quot;";break;default:f+=u;break}}return f},ar=function(a){var f=1;a=typeof a>"u"?f*2:a;var e=v.getModuleCount()*f+a*2,u=a,o=e-a,d,c,p,b,C,A={"\u2588\u2588":"\u2588","\u2588 ":"\u2580"," \u2588":"\u2584","  ":" "},R={"\u2588\u2588":"\u2580","\u2588 ":"\u2580"," \u2588":" ","  ":" "},I="";for(d=0;d<e;d+=2){for(p=Math.floor((d-u)/f),b=Math.floor((d+1-u)/f),c=0;c<e;c+=1)C="\u2588",u<=c&&c<o&&u<=d&&d<o&&v.isDark(p,Math.floor((c-u)/f))&&(C=" "),u<=c&&c<o&&u<=d+1&&d+1<o&&v.isDark(b,Math.floor((c-u)/f))?C+=" ":C+="\u2588",I+=a<1&&d+1>=o?R[C]:A[C];I+=`
@@ -886,6 +919,7 @@ var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,
   <div id="page-quiz" hidden><div id="tab-quiz"></div></div>
   <div id="page-ach" hidden>
   <h1 class="ptitle" data-i18n="navMe">Ja</h1>
+  <button type="button" class="yrbtn" id="yrOpen" hidden><span class="yrb-k">✨</span><span><b id="yrOpenT"></b><small data-i18n="yrOpenS">Godišnji pregled tvojih putovanja</small></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <section class="ach" id="statsec" data-i18n-aria="stTitle" aria-label="Statistika"></section>
   <section class="ach" data-i18n-aria="ach" aria-label="Dostignuća">
     <h2><span data-i18n="ach">Dostignuća</span> <em id="achCount"></em></h2>
@@ -905,6 +939,9 @@ var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,
       <div class="remrow"><div class="seg wide" id="remSeg" role="group" data-i18n-aria="remT" aria-label="Podsetnik za dnevni kviz"><button type="button" data-rem="off" aria-pressed="true" data-i18n="remOff">Isključen</button><button type="button" data-rem="on" aria-pressed="false" data-i18n="remOn">Uključen</button></div>
       <label class="remtime"><span data-i18n="remAt">u</span> <select id="remTime" aria-label="Vreme podsetnika"><option>09:00</option><option>12:00</option><option>17:00</option><option selected>19:00</option><option>20:00</option><option>21:00</option></select></label></div>
       <small class="demohint" data-i18n="remHint">Svakog dana te podseti na novi izazov i da ne prekineš niz.</small></div>
+    <div class="setrow nat-only"><span data-i18n="wishT">Predlog sa liste želja</span>
+      <div class="seg wide" id="wishSeg" role="group" data-i18n-aria="wishT" aria-label="Predlog sa liste želja"><button type="button" data-wish="off" aria-pressed="true" data-i18n="remOff">Isključen</button><button type="button" data-wish="on" aria-pressed="false" data-i18n="remOn">Uključen</button></div>
+      <small class="demohint" data-i18n="wishHint">Prvog u mesecu javi koje države sa liste želja je tada najlepše posetiti.</small></div>
   </section>
 
   <hr class="sep">
@@ -959,6 +996,14 @@ var qrcode=(function(){var P=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,
 
 <div class="adbar" role="complementary" data-i18n-aria="adAria" aria-label="Reklama">
   <div class="adslot" id="admob-banner" data-ad-unit="ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX" data-ad-size="BANNER_320x50" data-i18n="adLabel">Reklama · 320×50</div>
+</div>
+
+<div class="yr" id="yr" role="dialog" aria-modal="true" aria-labelledby="yrTitle" hidden>
+  <div class="yr-bars" id="yrBars"></div>
+  <button type="button" class="yr-x" id="yrClose" data-i18n-aria="jClose" aria-label="Zatvori">✕</button>
+  <div class="yr-slide" id="yrSlide" aria-live="polite"></div>
+  <button type="button" class="yr-nav yr-prev" id="yrPrev" data-i18n-aria="back" aria-label="Nazad"></button>
+  <button type="button" class="yr-nav yr-next" id="yrNext" data-i18n-aria="next" aria-label="Dalje"></button>
 </div>
 
 <div class="qp" id="qp" role="dialog" aria-modal="true" aria-labelledby="qpTitle" hidden>
@@ -1040,7 +1085,7 @@ const T = {
   cmpMine:"Moj kod", cmpShare:"Podeli", cmpCopy:"Kopiraj", cmpCopied:"Kod je kopiran. Nalepi ga u poruku prijatelju.", cmpPaste:"Prijateljev kod", cmpPastePh:"Nalepi kod ili celu poruku", cmpGo:"Uporedi",
   cmpBad:"Ovo nije ispravan kod iz Atlasa putovanja.", cmpFriend:"prijatelj", cmpBoth:"obišli ste oboje", cmpMe:"samo ti", cmpThem:"samo {f}", cmpWish:"Želite oboje", cmpVs:"Ti i {f}",
   cmpMsg:"Uporedi svoja putovanja sa mnom u aplikaciji Atlas putovanja! Otvori link: {l}",
-  cmpQr:"QR kod", qpT:"Gde si sve bio?", qpP:"Dodirni države koje si posetio. Uvek možeš da dodaš još kasnije.", qpSearch:"Pretraži državu", qpDone:"Gotovo", qpOpen:"Brzo označi države", qpCount:"Obiđeno: {n}", qpNone:"Nema takve države.", cmpQrHint:"Neka prijatelj skenira kod kamerom telefona.", cmpOpened:"Prijateljeva mapa je otvorena — pogledaj poređenje.", cmpMapAria:"Mapa poređenja", cmpLegBoth:"oboje", cmpLegMe:"samo ti", cmpLegThem:"samo {f}",
+  cmpQr:"QR kod", qpT:"Gde si sve bio?", yrOpenT:"Tvoja {y}", yrOpenS:"Godišnji pregled tvojih putovanja", yrHello:"Godišnji pregled", yrIntro:"Ovako je izgledala tvoja godina na putu. Dodirni desno za dalje.", yrCountriesK:"Države koje si obišao", yrFresh:"od toga {n} prvi put", yrNoFresh:"sve su ti već bile poznate", yrTripsK:"Putovanja", yrCities:"i {n} gradova", yrContsK:"Kontinenti", yrTotal:"Ukupno si obišao {n} država, {p}% sveta.", yrQuizK:"Dana u kvizu", yrQuizS:"Znanje o svetu raste.", yrMapK:"Tvoja mapa {y}.", yrShare:"Podeli kao priču", yrStoryK:"MOJA GODINA NA PUTU", yrStC:"država", yrStN:"novih", yrStT:"putovanja", yrStG:"gradova", yrFile:"moja-{y}-putovanja.png", wishT:"Predlog sa liste želja", wishHint:"Prvog u mesecu javi koje države sa liste želja je tada najlepše posetiti.", wishTitle:"Gde ovog meseca? 🌍", wishBody:"Sada je idealno vreme za: {c}.", wishMore:" i još {n}", wishSet:"Predlog sa liste želja je uključen.", qpP:"Dodirni države koje si posetio. Uvek možeš da dodaš još kasnije.", qpSearch:"Pretraži državu", qpDone:"Gotovo", qpOpen:"Brzo označi države", qpCount:"Obiđeno: {n}", qpNone:"Nema takve države.", cmpQrHint:"Neka prijatelj skenira kod kamerom telefona.", cmpOpened:"Prijateljeva mapa je otvorena — pogledaj poređenje.", cmpMapAria:"Mapa poređenja", cmpLegBoth:"oboje", cmpLegMe:"samo ti", cmpLegThem:"samo {f}",
   remT:"Podsetnik za dnevni kviz", remOff:"Isključen", remOn:"Uključen", remAt:"u", remHint:"Svakog dana te podseti na novi izazov i da ne prekineš niz.", remDenied:"Obaveštenja su isključena za aplikaciju. Uključi ih u podešavanjima telefona.", remSet:"Podsetnik je uključen u {t}.", remTitle:"Dnevni izazov te čeka", remStreak:"Niz od {n} dana je u opasnosti — odigraj današnji kviz!", remNew:"10 pitanja, 15 sekundi za svako. Koliko znaš danas?",
   autoBk:"Automatska rezervna kopija je uključena: Android je čuva na tvom Google nalogu i vraća je kad instaliraš aplikaciju na novom telefonu.", autoRestored:"Podaci su vraćeni iz automatske rezervne kopije.", cmpClear:"Ukloni poređenje",
   stCaps:"prestonica", stCityList:"Gradovi", stCityNone:"Upiši gradove u Dnevnik i ovde će se pojaviti.",
@@ -1102,7 +1147,7 @@ const T = {
   cmpMine:"My code", cmpShare:"Share", cmpCopy:"Copy", cmpCopied:"Code copied. Paste it in a message to your friend.", cmpPaste:"Friend's code", cmpPastePh:"Paste the code or the whole message", cmpGo:"Compare",
   cmpBad:"This isn't a valid Travel Atlas code.", cmpFriend:"your friend", cmpBoth:"you've both visited", cmpMe:"only you", cmpThem:"only {f}", cmpWish:"You both want to visit", cmpVs:"You and {f}",
   cmpMsg:"Compare your travels with me in the Travel Atlas app! Open the link: {l}",
-  cmpQr:"QR code", qpT:"Where have you been?", qpP:"Tap the countries you\'ve visited. You can always add more later.", qpSearch:"Search for a country", qpDone:"Done", qpOpen:"Quick-mark countries", qpCount:"Visited: {n}", qpNone:"No such country.", cmpQrHint:"Let your friend scan it with their phone camera.", cmpOpened:"Your friend's map is open — see the comparison.", cmpMapAria:"Comparison map", cmpLegBoth:"both", cmpLegMe:"only you", cmpLegThem:"only {f}",
+  cmpQr:"QR code", qpT:"Where have you been?", yrOpenT:"Your {y}", yrOpenS:"Your year of travel in review", yrHello:"Year in review", yrIntro:"Here is what your year on the road looked like. Tap right to continue.", yrCountriesK:"Countries you visited", yrFresh:"{n} of them for the first time", yrNoFresh:"you had been to all of them before", yrTripsK:"Trips", yrCities:"and {n} cities", yrContsK:"Continents", yrTotal:"In total you have visited {n} countries, {p}% of the world.", yrQuizK:"Days of quiz", yrQuizS:"Your world knowledge is growing.", yrMapK:"Your {y} map", yrShare:"Share as a story", yrStoryK:"MY YEAR OF TRAVEL", yrStC:"countries", yrStN:"new", yrStT:"trips", yrStG:"cities", yrFile:"my-{y}-travels.png", wishT:"Wish-list suggestion", wishHint:"On the 1st of each month, see which wish-list countries are best to visit then.", wishTitle:"Where to this month? 🌍", wishBody:"Now is a great time for: {c}.", wishMore:" and {n} more", wishSet:"Wish-list suggestion is on.", qpP:"Tap the countries you\'ve visited. You can always add more later.", qpSearch:"Search for a country", qpDone:"Done", qpOpen:"Quick-mark countries", qpCount:"Visited: {n}", qpNone:"No such country.", cmpQrHint:"Let your friend scan it with their phone camera.", cmpOpened:"Your friend's map is open — see the comparison.", cmpMapAria:"Comparison map", cmpLegBoth:"both", cmpLegMe:"only you", cmpLegThem:"only {f}",
   remT:"Daily quiz reminder", remOff:"Off", remOn:"On", remAt:"at", remHint:"A daily nudge for the new challenge so your streak doesn't break.", remDenied:"Notifications are off for the app. Turn them on in your phone settings.", remSet:"Reminder set for {t}.", remTitle:"Your daily challenge is waiting", remStreak:"Your {n}-day streak is at risk — play today's quiz!", remNew:"10 questions, 15 seconds each. How much do you know today?",
   autoBk:"Automatic backup is on: Android keeps it in your Google account and restores it when you install the app on a new phone.", autoRestored:"Your data was restored from the automatic backup.", cmpClear:"Clear comparison",
   stCaps:"capitals", stCityList:"Cities", stCityNone:"Add cities to your Journal and they'll show up here.",
@@ -2085,7 +2130,7 @@ function renderStatsPage(){
     <div class="yrs"><h3>${t("stCityList")}${vc.length ? ` (${vc.length})` : ""}</h3>${vc.length ? `<div class="cities">${vc.slice().sort((x,y)=>(y.cap-x.cap) || x.name.localeCompare(y.name, lang==="en" ? "en" : "sr")).map(x=>`<span class="${x.cap ? "cap" : ""}" title="${esc(BY_CODE[x.code].name)}">${BY_CODE[x.code].flag} ${esc(x.name)}</span>`).join("")}</div>` : `<small class="secp" style="margin:0">${t("stCityNone")}</small>`}</div>`;
 }
 function renderAch(){
-  renderStatsPage(); if(document.getElementById("cmpRes") && typeof $ === "function") renderCompare();
+  renderStatsPage(); if(typeof yrUpdateEntry==="function") yrUpdateEntry(); if(document.getElementById("cmpRes") && typeof $ === "function") renderCompare();
   const st = achState(); let on = 0;
   const now = new Set(st.filter(x=>x.done).map(x=>x.a.t));
   if(announce && achKnown){ const fresh = st.filter(x=>x.done && !achKnown.has(x.a.t)); if(fresh.length) toast(t("achToast") + ": " + fresh.map(x=>lang==="en" ? x.a.te : x.a.t).join(", ")); }
@@ -2348,7 +2393,7 @@ const EARTH_SRC = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQ
 var EARTH = null, earthLoading = false;
 var globeStyle = "sat";
 try{ if(localStorage.getItem("atlas-globe-style")==="flat") globeStyle = "flat"; }catch(e){}
-let earthP = null;
+let earthP = null, onlyHs = false;   // onlyHs: boji samo izdvojene države (godišnji pregled)
 function loadEarth(){
   if(EARTH) return Promise.resolve(EARTH);
   if(earthP) return earthP;
@@ -2427,7 +2472,7 @@ function paintGlobe(ctx, proj, path, W, H, hs, sel, k){     // k: uvećanje tač
     lc.setTransform(ctx.getTransform()); lc.lineJoin = "round";
     const lpath = d3.geoPath(proj, lc), gap = Math.max(1, 0.55*r/(G.R0||r))*k;
     for(const pass of [0,1]) for(const f of G.features){
-      if(!(f.code && (marks[f.code] || (hs && hs.has(f.code))))) continue;
+      if(!(f.code && ((marks[f.code] && !onlyHs) || (hs && hs.has(f.code))))) continue;
       if(!!(hs && !hs.has(f.code)) !== !!pass) continue;
       lc.globalAlpha = pass ? .4 : 1; lc.beginPath(); lpath(f.geometry);
       lc.fillStyle = lc.strokeStyle = gFill(f.code, hs); lc.fill(); lc.lineWidth = f.code==="RS" ? gap*3.2 : gap; lc.stroke();
@@ -3106,10 +3151,10 @@ function restoreReset(){ $("resetBox").innerHTML=`<button class="link" id="reset
 /* ---------- map image ---------- */
 let downloads = null;
 // Položaj globusa za sliku: onako kako ga gledaš, a ako globus nije otvoren, okrenut ka državama koje si obišao.
-function shareRot(){
-  if(view==="globe") return G.rot.slice();
+function shareRot(only){
+  if(view==="globe" && !only) return G.rot.slice();
   let x = 0, y = 0, z = 0, n = 0; const rd = Math.PI/180;
-  for(const code in marks){ if(!isBeen(code)) continue;
+  for(const code in marks){ if(!isBeen(code) || (only && !only.has(code))) continue;
     const f = G.byCode[code], ll = f && !f.small ? d3.geoCentroid(f.geometry) : SMALL[code] ? [SMALL[code][1], SMALL[code][0]] : null; if(!ll) continue;
     x += Math.cos(ll[1]*rd)*Math.cos(ll[0]*rd); y += Math.cos(ll[1]*rd)*Math.sin(ll[0]*rd); z += Math.sin(ll[1]*rd); n++; }
   if(!n || Math.hypot(x,y,z) < 1e-6) return [-20,-38,0];
@@ -3279,7 +3324,7 @@ let syncState = [false, "loading"];
 function setSync(ok, key){ syncState = [ok, key]; $("sync").innerHTML=`<span class="dot ${ok?"ok":""}"></span>${t(key)}`; }
 
 function changed(){
-  lsSet(); autoBackup(); maybeReview(); clearTimeout(remT); remT = setTimeout(scheduleRemind, 2000);
+  lsSet(); autoBackup(); maybeReview(); clearTimeout(remT); remT = setTimeout(()=>{ scheduleRemind(); scheduleWish(); yrUpdateEntry(); }, 2000);
   if(!docRef) return;
   dirty=true; clearTimeout(timer); timer=setTimeout(flush, 900);
 }
@@ -3364,6 +3409,124 @@ document.addEventListener("keydown", e=>{
   }
 });
 
+
+/* ---------- godišnji pregled („Tvoja 2026“) ---------- */
+// srpska množina: 1 grad, 2–4 grada, 5+ gradova (11–14 gradova)
+function srPl(n, one, few, many){ const a = n % 10, b = n % 100; return a===1 && b!==11 ? one : a>=2 && a<=4 && (b<12 || b>14) ? few : many; }
+function yearOf(){
+  const sn = cleanNotes(), ys = new Set(), cy = String(new Date().getFullYear());
+  for(const code in sn){ if(!isBeen(code)) continue; for(const tr of sn[code].trips) if(tr.year) ys.add(String(tr.year)); }
+  if(ys.has(cy)) return cy;
+  const all = [...ys].sort(); return all.length ? all[all.length-1] : null;
+}
+function yearData(y){
+  const sn = cleanNotes(), codes = new Set(), first = {}, cities = new Set(), cityNames = [];
+  let trips = 0;
+  for(const code in sn){ if(!isBeen(code) || !BY_CODE[code]) continue;
+    for(const tr of sn[code].trips){ const ty = String(tr.year||""); if(ty && (!first[code] || ty < first[code])) first[code] = ty;
+      if(ty!==y) continue; trips++; codes.add(code);
+      for(const part of String(tr.cities||"").split(/[,;]/)){ const x = part.trim(), k = code+":"+fold(x); if(x && !cities.has(k)){ cities.add(k); cityNames.push({code, x}); } } } }
+  const list = [...codes].map(c=>BY_CODE[c]);
+  const fresh = list.filter(c=>first[c.code]===y);
+  const conts = new Set(list.map(c=>c.cont));
+  const quizDays = Object.keys(dailyData()).filter(k=>k.startsWith(y)).length;
+  return {y, codes, list, fresh, conts, trips, cityNames, quizDays, total: COUNTRIES.filter(c=>isBeen(c.code)).length};
+}
+let yrI = 0, yrSlides = [], yrT = null, yrD = null;
+function yrRender(){
+  const d = yrD, s = yrSlides[yrI];
+  $("yrBars").innerHTML = yrSlides.map((_,i)=>`<i class="${i<yrI?"done":i===yrI?"on":""}"></i>`).join("");
+  $("yrSlide").className = "yr-slide " + s.cls; $("yrSlide").innerHTML = s.html;
+  $("yrPrev").disabled = yrI===0;
+  clearTimeout(yrT); if(yrI < yrSlides.length-1) yrT = setTimeout(()=>{ yrI++; yrRender(); }, 6000);
+  if(s.globe) yrGlobe($("yrGlobe"));
+}
+function yrBuild(d){
+  const L = lang==="en" ? "en" : "sr", flags = arr => arr.slice(0,18).map(c=>`<span title="${esc(c.name)}">${c.flag}</span>`).join("") + (arr.length>18 ? `<em>+${arr.length-18}</em>` : "");
+  const S = [];
+  S.push({cls:"s1", html:`<p class="yr-k">${t("yrHello")}</p><h2 id="yrTitle" class="yr-big">${esc(d.y)}</h2><p class="yr-sub">${t("yrIntro")}</p>`});
+  S.push({cls:"s2", html:`<p class="yr-k">${t("yrCountriesK")}</p><div class="yr-num">${d.list.length}</div><p class="yr-sub">${fill(t(d.fresh.length ? "yrFresh" : "yrNoFresh"), {n:d.fresh.length})}</p><div class="yr-flags">${flags(d.list)}</div>`});
+  S.push({cls:"s3", html:`<p class="yr-k">${t("yrTripsK")}</p><div class="yr-num">${d.trips}</div><p class="yr-sub">${fill(t("yrCities"), {n:d.cityNames.length}).replace(/gradova$/, srPl(d.cityNames.length, "grad", "grada", "gradova")).replace(/cities$/, d.cityNames.length===1 ? "city" : "cities")}</p><div class="yr-chips">${d.cityNames.slice(0,10).map(x=>`<span>${BY_CODE[x.code].flag} ${esc(x.x)}</span>`).join("")}</div>`});
+  S.push({cls:"s4", html:`<p class="yr-k">${t("yrContsK")}</p><div class="yr-num">${d.conts.size}<small>/6</small></div><div class="yr-chips">${[...d.conts].map(k=>`<span>${esc(CONT[L][k])}</span>`).join("")}</div><p class="yr-sub">${fill(t("yrTotal"), {n:d.total, p:pctTxt(d.total)})}</p>`});
+  if(d.quizDays) S.push({cls:"s5", html:`<p class="yr-k">${t("yrQuizK")}</p><div class="yr-num">${d.quizDays}</div><p class="yr-sub">${t("yrQuizS")}</p>`});
+  S.push({cls:"s6", globe:true, html:`<p class="yr-k">${fill(t("yrMapK"), {y:d.y})}</p><canvas id="yrGlobe" width="600" height="600" aria-hidden="true"></canvas><button type="button" class="onb-next yr-share" id="yrShare" data-i18n="yrShare">${t("yrShare")}</button><small class="yr-msg" id="yrMsg" aria-live="polite"></small>`});
+  return S;
+}
+async function yrGlobe(cv){
+  if(!cv) return;
+  await loadD3(); if(!G) buildGlobe(); gColors(); if(globeStyle==="sat") await loadEarth();
+  const S = cv.width, gx = cv.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(shareRot(yrD.codes)).translate([S/2, S/2]).scale(S/2/1.12);
+  gx.clearRect(0,0,S,S); onlyHs = true; try{ paintGlobe(gx, pr, d3.geoPath(pr, gx), S, S, yrD.codes, null, S / Math.max(300, G.W || 300)); } finally{ onlyHs = false; }
+}
+async function openYear(){
+  const y = yearOf(); if(!y) return;
+  yrD = yearData(y); yrSlides = yrBuild(yrD); yrI = 0;
+  $("yr").hidden = false; document.body.classList.add("noscroll"); yrRender(); $("yrNext").focus({preventScroll:true});
+}
+function closeYear(){ clearTimeout(yrT); $("yr").hidden = true; document.body.classList.remove("noscroll"); $("yrOpen").focus({preventScroll:true}); }
+async function exportYearStory(){
+  if(!downloads) return;
+  const msg = $("yrMsg"), btn = $("yrShare"); btn.disabled = true; msg.textContent = t("making");
+  try{
+    const d = yrD, cs = getComputedStyle(document.documentElement), tk = n => cs.getPropertyValue(n).trim();
+    const CW = 1080, CH = 1920, cv = document.createElement("canvas"); cv.width = CW; cv.height = CH; const g = cv.getContext("2d");
+    const gr = g.createRadialGradient(CW/2, CH*0.45, 80, CW/2, CH*0.45, CH*0.75); gr.addColorStop(0, tk("--sky1") || "#1B2E5C"); gr.addColorStop(.55, tk("--sky2") || "#0A1430"); gr.addColorStop(1, tk("--sky3") || "#03060F");
+    g.fillStyle = gr; g.fillRect(0,0,CW,CH);
+    const F = (w, px) => `${w} ${px}px Manrope, system-ui, sans-serif`, pop = tk("--pop") || "#7FEAF5";
+    g.textAlign = "center";
+    g.fillStyle = "rgba(255,255,255,.72)"; g.font = F(700, 34); g.fillText(t("yrStoryK"), CW/2, 190);
+    g.fillStyle = "#fff"; g.font = F(800, 170); g.fillText(d.y, CW/2, 360);
+    // globus sa državama iz te godine
+    const S = 1500, im = document.createElement("canvas"); im.width = im.height = S;
+    const gx = im.getContext("2d"), pr = d3.geoOrthographic().clipAngle(90).precision(0.3).rotate(shareRot(d.codes)).translate([S/2, S/2]).scale(S/2/1.12);
+    onlyHs = true; try{ paintGlobe(gx, pr, d3.geoPath(pr, gx), S, S, d.codes, null, S / Math.max(300, G.W || 300)); } finally{ onlyHs = false; }
+    g.drawImage(im, (CW-820)/2, 420, 820, 820);
+    const st = [[d.list.length, t("yrStC")], [d.fresh.length, t("yrStN")], [d.trips, t("yrStT")], [d.cityNames.length, t("yrStG")]];
+    st.forEach(([n,l],i)=>{ const x = 135 + i*270; g.fillStyle = pop; g.font = F(800, 92); g.fillText(String(n), x, 1390); g.fillStyle = "rgba(255,255,255,.75)"; g.font = F(600, 30); g.fillText(l, x, 1440); });
+    g.font = "64px system-ui, sans-serif"; const fl = d.list.slice(0,10).map(c=>c.flag).join(" "); g.fillText(fl, CW/2, 1580);
+    g.fillStyle = "rgba(255,255,255,.72)"; g.font = F(700, 30); g.fillText(t("storyFoot"), CW/2, CH - 90);
+    const blob = await new Promise(ok => cv.toBlob(ok, "image/png"));
+    await downloads.save({filename: fill(t("yrFile"), {y:d.y}), data:blob});
+    msg.textContent = "";
+  }catch(e){ const c = e && e.code; msg.textContent = c==="declined" ? "" : t("cantSave"); }
+  finally{ btn.disabled = false; }
+}
+function yrUpdateEntry(){
+  const y = yearOf(), b = $("yrOpen"); if(!b) return;
+  b.hidden = !y || !downloads; if(y) $("yrOpenT").textContent = fill(t("yrOpenT"), {y});
+}
+$("yrOpen").addEventListener("click", openYear);
+$("yrClose").addEventListener("click", closeYear);
+$("yrNext").addEventListener("click", ()=>{ if(yrI < yrSlides.length-1){ yrI++; yrRender(); } else closeYear(); });
+$("yrPrev").addEventListener("click", ()=>{ if(yrI>0){ yrI--; yrRender(); } });
+$("yrSlide").addEventListener("click", e=>{ if(e.target.closest("#yrShare")){ clearTimeout(yrT); exportYearStory(); } });
+document.addEventListener("keydown", e=>{ if($("yr").hidden) return; if(e.key==="Escape") closeYear(); else if(e.key==="ArrowRight") $("yrNext").click(); else if(e.key==="ArrowLeft") $("yrPrev").click(); });
+
+/* ---------- mesečni predlog sa liste želja (1. u mesecu u 10:00) ---------- */
+const WISH_IDS = [7201,7202,7203,7204,7205,7206];
+function wishGet(){ try{ return localStorage.getItem("atlas-wishrem")==="on"; }catch(e){ return false; } }
+function wishUI(){ const on = wishGet(); document.querySelectorAll("#wishSeg [data-wish]").forEach(b=>b.setAttribute("aria-pressed", String((b.dataset.wish==="on")===on))); }
+async function scheduleWish(){
+  const N = window.__nativeNotify; if(!N || DEMO) return;
+  if(!wishGet()){ try{ await N.set([], WISH_IDS); }catch(e){} return; }
+  const now = new Date(), wish = COUNTRIES.filter(c=>isWant(c.code) && !isBeen(c.code)), list = [];
+  for(let i=1; i<=6; i++){
+    const at = new Date(now.getFullYear(), now.getMonth()+i, 1, 10, 0, 0), m = at.getMonth()+1;
+    const good = wish.filter(c=>bestIn(c.code, m)).sort((a,b)=>(prio[b.code]||0)-(prio[a.code]||0));
+    if(!good.length) continue;
+    const names = good.slice(0,3).map(c=>c.name).join(", ") + (good.length>3 ? fill(t("wishMore"), {n:good.length-3}) : "");
+    list.push({id:WISH_IDS[i-1], at:at.getTime(), title:t("wishTitle"), body:fill(t("wishBody"), {c:names}), open:"plan"});
+  }
+  try{ await N.set(list, WISH_IDS); }catch(e){}
+}
+async function wishSet(on){
+  const N = window.__nativeNotify; if(!N) return;
+  if(on){ let ok = false; try{ ok = await N.perm(); }catch(e){} if(!ok){ toast(t("remDenied"), true); on = false; } }
+  try{ localStorage.setItem("atlas-wishrem", on ? "on" : "off"); }catch(e){}
+  wishUI(); await scheduleWish(); if(on) toast(t("wishSet"));
+}
+$("wishSeg").addEventListener("click", e=>{ const b = e.target.closest("[data-wish]"); if(b) wishSet(b.dataset.wish==="on"); });
+window.addEventListener("nativeready", ()=>{ wishUI(); scheduleWish(); });
 
 /* ---------- brzo označavanje (prvi put i iz liste) ---------- */
 let qpCont = "E", qpReturn = null, qpChanged = false;

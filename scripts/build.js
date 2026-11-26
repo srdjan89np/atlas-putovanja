@@ -67,21 +67,22 @@ const bridge = `<script>
           return LN.requestPermissions().then(function (r) { return !!(r && r.display === "granted"); });
         });
       },
-      set: function (list) {
-        var ids = [7101, 7102, 7103, 7104, 7105, 7106, 7107].map(function (id) { return { id: id }; });
+      set: function (list, idList) {
+        var ids = (idList || [7101, 7102, 7103, 7104, 7105, 7106, 7107]).map(function (id) { return { id: id }; });
         return LN.cancel({ notifications: ids }).catch(function () {}).then(function () {
           if (!list || !list.length) return null;
           return LN.checkPermissions().then(function (p) {
             if (!p || p.display !== "granted") return null;
             return LN.schedule({ notifications: list.map(function (n) {
-              return { id: n.id, title: n.title, body: n.body, schedule: { at: new Date(n.at), allowWhileIdle: true }, smallIcon: "ic_stat_atlas", iconColor: "#38E1F2", extra: { open: "quiz" } };
+              return { id: n.id, title: n.title, body: n.body, schedule: { at: new Date(n.at), allowWhileIdle: true }, smallIcon: "ic_stat_atlas", iconColor: "#38E1F2", extra: { open: n.open || "quiz" } };
             }) });
           });
         });
       }
     };
-    LN.addListener("localNotificationActionPerformed", function () {
-      ready(function () { if (window.setPage) try { window.setPage("quiz"); } catch (e) {} });
+    LN.addListener("localNotificationActionPerformed", function (ev) {
+      var to = (ev && ev.notification && ev.notification.extra && ev.notification.extra.open) || "quiz";
+      ready(function () { setTimeout(function () { if (window.setPage) try { window.setPage(to); } catch (e) {} }, 300); });
     });
   }
   // Automatska rezervna kopija: Preferences (SharedPreferences) ulazi u Android Auto Backup na Google nalogu
