@@ -1,5 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#14263A"/>
-<circle cx="256" cy="256" r="150" fill="#C3D5E6"/><path d="M196 150c40-18 84-10 96 22s-22 44-10 78 62 22 70 62-36 82-92 82-104-36-108-96 8-130 44-148z" fill="#17734F"/>
-<path d="M330 140c22 8 44 30 54 58-22 6-44-2-52-20s-10-30-2-38z" fill="#B5650B"/>
-<circle cx="256" cy="256" r="150" fill="none" stroke="#fff" stroke-width="10"/>
-<circle cx="372" cy="372" r="64" fill="#17734F" stroke="#14263A" stroke-width="12"/><path d="M344 372l20 20 38-40" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#1B2E5C"/><stop offset=".6" stop-color="#0A1430"/><stop offset="1" stop-color="#03060F"/></radialGradient>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset=".7" stop-color="#38E1F2" stop-opacity=".35"/><stop offset="1" stop-color="#38E1F2" stop-opacity="0"/></radialGradient></defs>
+<rect width="512" height="512" fill="url(#bg)"/><circle cx="256" cy="262" r="190" fill="url(#glow)"/><defs><radialGradient id="sph" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#7FEAF5"/><stop offset=".55" stop-color="#1FA9C4"/><stop offset="1" stop-color="#0B4E6B"/></radialGradient>
+<clipPath id="c"><circle cx="256" cy="262" r="150"/></clipPath></defs>
+<g transform="translate(256 262) scale(1) translate(-256 -262)">
+<circle cx="256" cy="262" r="150" fill="url(#sph)"/>
+<g clip-path="url(#c)" fill="none" stroke="#E6FBFF" stroke-opacity=".45" stroke-width="5">
+<ellipse cx="256" cy="262" rx="60" ry="150"/><ellipse cx="256" cy="262" rx="115" ry="150"/><line x1="256" y1="100" x2="256" y2="420"/>
+<path d="M106 212 Q256 190 406 212"/><path d="M106 312 Q256 334 406 312"/><line x1="100" y1="262" x2="412" y2="262"/></g>
+<g transform="translate(318 168)"><path d="M0 -58 C32 -58 52 -34 52 -6 C52 28 0 72 0 72 C0 72 -52 28 -52 -6 C-52 -34 -32 -58 0 -58Z" fill="#FF6F7F" stroke="#0A1430" stroke-width="8"/><circle cx="0" cy="-8" r="18" fill="#0A1430"/></g></g></svg>
